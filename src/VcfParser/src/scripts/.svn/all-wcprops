@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/24/trunk/src/VcfParser/scripts
+END
+vcf_melt
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/14/trunk/src/VcfParser/scripts/vcf_melt
+END
+loadvcf.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/24/trunk/src/VcfParser/scripts/loadvcf.py
+END
+vcf_filter.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/14/trunk/src/VcfParser/scripts/vcf_filter.py
+END

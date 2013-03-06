@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test
+END
+issue_49.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/issue_49.vcf
+END
+freebayes.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/freebayes.vcf
+END
+walk_left.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/walk_left.vcf
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/__init__.py
+END
+bcftools.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/bcftools.vcf
+END
+issue-16.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/issue-16.vcf
+END
+null_genotype_mono.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/null_genotype_mono.vcf
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/README.md
+END
+prof.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/prof.py
+END
+example-4.1-sv.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/example-4.1-sv.vcf
+END
+tb.vcf.gz
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/tb.vcf.gz
+END
+gatk.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/gatk.vcf
+END
+test_vcf.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/test_vcf.py
+END
+example-4.0.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/example-4.0.vcf
+END
+example-4.1.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/example-4.1.vcf
+END
+example-4.1-bnd.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/example-4.1-bnd.vcf
+END
+tb.vcf.gz.tbi
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/tb.vcf.gz.tbi
+END
+1kg.vcf.gz
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/1kg.vcf.gz
+END
+samtools.vcf
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/14/trunk/src/VcfParser/vcf/test/samtools.vcf
+END
