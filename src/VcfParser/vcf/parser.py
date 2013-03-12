@@ -311,7 +311,7 @@ class Reader(object):
                         entry_type = 'Flag'
                         
             self.db.insertInfo(entryDbId, entry)
-'''
+            '''
             if entry_type == 'Integer':
                 vals = entry[1].split(',')
                 val = self._map(int, vals)
@@ -335,7 +335,7 @@ class Reader(object):
             retdict[ID] = val
 
         return retdict
-'''
+        '''
 
     def _parse_sample_format(self, samp_fmt):
         """ Parse the format of the calls in this _Record """
