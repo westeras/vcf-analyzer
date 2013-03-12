@@ -481,7 +481,7 @@ class Reader(object):
             #call = _Call(site, name, samp_fmt(*sampdat))
             #samp_data.append(call)
 
-        return samp_data
+        #return samp_data
 
     def _parse_alt(self, str):
         if re.search('[\[\]]', str) is not None:
@@ -560,7 +560,7 @@ class Reader(object):
         #        info, fmt, self._sample_indexes)
 
         if fmt is not None:
-            samples = self._parse_samples(row[9:], fmt, entryDbId)
+            self._parse_samples(row[9:], fmt, entryDbId)
             #record.samples = samples
             
         return False
