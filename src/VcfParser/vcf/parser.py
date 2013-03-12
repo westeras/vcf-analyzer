@@ -311,8 +311,8 @@ class Reader(object):
                         entry_type = 'Flag'
                         
             self.db.insertInfo(entryDbId, entry)
-
- '''           if entry_type == 'Integer':
+'''
+            if entry_type == 'Integer':
                 vals = entry[1].split(',')
                 val = self._map(int, vals)
             elif entry_type == 'Float':
