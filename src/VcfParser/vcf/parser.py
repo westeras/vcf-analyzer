@@ -243,16 +243,16 @@ class Reader(object):
 
             if line.startswith('##INFO'):
                 key, val = parser.read_info(line)
-                self.infos[key] = val
+                #self.infos[key] = val
                 self.db.handleInfo(key, val)
 
             elif line.startswith('##FILTER'):
                 key, val = parser.read_filter(line)
-                self.filters[key] = val
+                #self.filters[key] = val
 
             elif line.startswith('##ALT'):
                 key, val = parser.read_alt(line)
-                self.alts[key] = val
+                #self.alts[key] = val
 
             elif line.startswith('##FORMAT'):
                 key, val = parser.read_format(line)
