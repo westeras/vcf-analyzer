@@ -256,7 +256,7 @@ class Reader(object):
 
             elif line.startswith('##FORMAT'):
                 key, val = parser.read_format(line)
-                self.formats[key] = val
+                #self.formats[key] = val
                 #TODO Julia db connect
                 self.db.handleFormat(key, val)
 
@@ -311,7 +311,7 @@ class Reader(object):
                         entry_type = 'Flag'
                         
             self.db.insertInfo(entryDbId, entry)
-            
+
             if entry_type == 'Integer':
                 vals = entry[1].split(',')
                 val = self._map(int, vals)
@@ -354,7 +354,7 @@ class Reader(object):
             samp_fmt._nums.append(entry_num)
         return samp_fmt
 
-    def _parse_samples(self, samples, samp_fmt, site, EntryDbID):
+    def _parse_samples(self, samples, samp_fmt, EntryDbID):
         '''Parse a sample entry according to the format specified in the FORMAT
         column.
 
@@ -478,8 +478,8 @@ class Reader(object):
                     sampdat[i] = vals
 
             # create a call object
-            call = _Call(site, name, samp_fmt(*sampdat))
-            samp_data.append(call)
+            #call = _Call(site, name, samp_fmt(*sampdat))
+            #samp_data.append(call)
 
         return samp_data
 
@@ -556,12 +556,12 @@ class Reader(object):
             
         info = self._parse_info(row[7], entryDbId)
 
-        record = _Record(chrom, pos, ID, ref, alt, qual, filt,
-                info, fmt, self._sample_indexes)
+        #record = _Record(chrom, pos, ID, ref, alt, qual, filt,
+        #        info, fmt, self._sample_indexes)
 
         if fmt is not None:
-            samples = self._parse_samples(row[9:], fmt, record, entryDbId)
-            record.samples = samples
+            samples = self._parse_samples(row[9:], fmt, entryDbId)
+            #record.samples = samples
             
         return False
 
