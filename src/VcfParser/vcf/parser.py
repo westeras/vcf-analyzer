@@ -293,7 +293,7 @@ class Reader(object):
             return {}
 
         entries = info_str.split(';')
-        retdict = OrderedDict()
+        #retdict = OrderedDict()
 
         for entry in entries:
             entry = entry.split('=')
@@ -312,7 +312,7 @@ class Reader(object):
                         
             self.db.insertInfo(entryDbId, entry)
 
-            if entry_type == 'Integer':
+ '''           if entry_type == 'Integer':
                 vals = entry[1].split(',')
                 val = self._map(int, vals)
             elif entry_type == 'Float':
@@ -335,6 +335,7 @@ class Reader(object):
             retdict[ID] = val
 
         return retdict
+'''
 
     def _parse_sample_format(self, samp_fmt):
         """ Parse the format of the calls in this _Record """
@@ -554,7 +555,7 @@ class Reader(object):
         
         entryDbId = self.db.createEntry( self.vcfId, chrom, pos, queryId, ref, queryAlt, qual, filt, fmt)
             
-        info = self._parse_info(row[7], entryDbId)
+        self._parse_info(row[7], entryDbId)
 
         #record = _Record(chrom, pos, ID, ref, alt, qual, filt,
         #        info, fmt, self._sample_indexes)
