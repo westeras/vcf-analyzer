@@ -873,7 +873,7 @@ class DatabaseConnection():
             return -1   
             
         lastName = None
-        if ( len(first) > 0 ):
+        if ( first!= None and len(first) > 0 ):
             lastName = first[0]
         if ( lastName != None ):
             if ( name in lastName):
