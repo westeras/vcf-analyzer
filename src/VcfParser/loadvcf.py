@@ -9,5 +9,3 @@ while (not fileEnded):
     fileEnded = vcf_reader.next()
     
 pycallgraph.make_dot_graph('test.png')
-
-
