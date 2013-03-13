@@ -280,6 +280,7 @@ class Reader(object):
         self.db.createVcfIndividuals( self.vcfId, fields[9:] )
         
         self._sample_indexes = dict([(x,i) for (i,x) in enumerate(self.samples)])
+        
 
     def _map(self, func, iterable, bad='.'):
         '''``map``, but make bad values None.'''
@@ -871,7 +872,7 @@ class DatabaseConnection():
             return -1   
             
         lastName = None
-        if ( len(first) > 0 )
+        if ( len(first) > 0 ):
             lastName = first[0]
         if ( lastName != None ):
             if ( name in lastName):
