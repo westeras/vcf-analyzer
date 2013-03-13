@@ -1169,14 +1169,15 @@ class DatabaseConnection():
 
     def createVcfHeader(self, vcfId, header):
         
-        query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ({}, {} )".format(
+        header = header.replace("'", "`")
+        
+        query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ('{}', '{}')".format(
                     vcfId, header)
         try:
             self.cursor.execute(query)
             self.cnx.commit()
             return 0
         except:
-            print query
             self.cnx.rollback()
             return -1
     

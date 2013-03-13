@@ -24,7 +24,7 @@ class DatabaseConnector
     
     }
     
-    public CloseConnection()
+    public void CloseConnection()
     {
         if (conn!=null) 
         {
@@ -57,7 +57,7 @@ class DatabaseConnector
             throw new SQLException("Invadild Query" + sql);
         }
    
-        return -1
+        return -1;
     }
 
 }
