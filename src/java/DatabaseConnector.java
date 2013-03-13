@@ -15,15 +15,12 @@ class DatabaseConnector
     
     public DatabaseConnector() throws SQLException
     {
-        Connection conn = null;
-        Statement stmt = null;
+        this.conn = null;
+        this.stmt = null;
 
         Class.forName(JDBC_DRIVER);
 
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        stmt = conn.createStatement();
-        stmt.close();
-        conn.close();
     
     }
     
@@ -39,7 +36,7 @@ class DatabaseConnector
         }
     }
     
-    public long getVcfId( String vcfName)
+    public long getVcfId( String vcfName) throws IllegalArgumentException, SQLException
     {
         String sql = null;
         try
