@@ -248,7 +248,7 @@ class Reader(object):
                 key, val = parser.read_info(line)
                 #self.infos[key] = val
                 self.db.handleInfo(key, val)
-            '''
+                '''
             elif line.startswith('##FILTER'):
                 key, val = parser.read_filter(line)
                 #self.filters[key] = val
@@ -256,13 +256,13 @@ class Reader(object):
             elif line.startswith('##ALT'):
                 key, val = parser.read_alt(line)
                 #self.alts[key] = val
-            '''
+                '''
             elif line.startswith('##FORMAT'):
                 key, val = parser.read_format(line)
                 #self.formats[key] = val
                 #TODO Julia db connect
                 self.db.handleFormat(key, val)
-            '''
+                '''
             else:
                 key, val = parser.read_meta(line.strip())
                 if key in SINGULAR_METADATA:
@@ -271,7 +271,7 @@ class Reader(object):
                     if key not in self.metadata:
                         self.metadata[key] = []
                     self.metadata[key].append(val)
-            '''
+                '''
             line = self.reader.next()
 
         createVcfHeader( self.vcfId, self.vcfHeader )
