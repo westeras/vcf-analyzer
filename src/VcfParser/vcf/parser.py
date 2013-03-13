@@ -274,7 +274,7 @@ class Reader(object):
                 '''
             line = self.reader.next()
 
-        createVcfHeader( self.vcfId, self.vcfHeader )
+        self.db.createVcfHeader( self.vcfId, self.vcfHeader )
             
         fields = re.split('\t| +', line.rstrip())
         self.samples = fields[9:]
