@@ -39,9 +39,28 @@ class DatabaseConnector
         }
     }
     
-    public String getVcfId()
+    public long getVcfId( String vcfName)
     {
-        return null
+        String sql = null;
+        try
+        {
+            sql = "SELECT `VcfId` FROM `vcf_analyzer`.`Vcf` WHERE `VcfName` = '" + vcfName +"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            if (rs.next()) 
+            {
+                int id = Long.parseLong( rs.getString("VcfId") );
+                rs.close();
+                return id;
+            }
+        
+            throw new IllegalArgumentException("VCF: " + vcfName + " not found");
+            
+        } catch(SQLException se) {
+            throw new SQLException("Invadild Query" + sql);
+        }
+   
+        return -1
     }
 
 }
