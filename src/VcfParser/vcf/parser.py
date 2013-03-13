@@ -206,7 +206,7 @@ class Reader(object):
             self.reader = gzip.GzipFile(fileobj=self.reader)
             if sys.version > '3':
                 self.reader = codecs.getreader('ascii')(self.reader)
-
+'''
         #: metadata fields from header (string or hash, depending)
         self.metadata = None
         #: INFO fields from header
@@ -224,7 +224,7 @@ class Reader(object):
         self._prepend_chr = prepend_chr
         self._parse_metainfo()
         self._format_cache = {}
-
+'''
     def __iter__(self):
         return self
 
@@ -248,7 +248,7 @@ class Reader(object):
                 key, val = parser.read_info(line)
                 #self.infos[key] = val
                 self.db.handleInfo(key, val)
-
+'''
             elif line.startswith('##FILTER'):
                 key, val = parser.read_filter(line)
                 #self.filters[key] = val
@@ -256,13 +256,13 @@ class Reader(object):
             elif line.startswith('##ALT'):
                 key, val = parser.read_alt(line)
                 #self.alts[key] = val
-
+'''
             elif line.startswith('##FORMAT'):
                 key, val = parser.read_format(line)
                 #self.formats[key] = val
                 #TODO Julia db connect
                 self.db.handleFormat(key, val)
-
+'''
             else:
                 key, val = parser.read_meta(line.strip())
                 if key in SINGULAR_METADATA:
@@ -271,7 +271,7 @@ class Reader(object):
                     if key not in self.metadata:
                         self.metadata[key] = []
                     self.metadata[key].append(val)
-
+'''
             line = self.reader.next()
 
         fields = re.split('\t| +', line.rstrip())
@@ -301,6 +301,7 @@ class Reader(object):
 
         for entry in entries:
             entry = entry.split('=')
+'''
             ID = entry[0]
             #TODO: add DB upload and long if else for options
             try:
@@ -313,7 +314,7 @@ class Reader(object):
                         entry_type = 'String'
                     else:
                         entry_type = 'Flag'
-                        
+'''    
             self.db.insertInfo(entryDbId, entry)
             '''
             if entry_type == 'Integer':
