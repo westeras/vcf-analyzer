@@ -237,7 +237,6 @@ class Reader(object):
             setattr(self, attr, OrderedDict())
 
         parser = _vcf_metadata_parser()
-        #TODO: add DB upload
         line = self.reader.next()
         while line.startswith('##'):
             self.vcfHeader += line;
@@ -260,7 +259,6 @@ class Reader(object):
             elif line.startswith('##FORMAT'):
                 key, val = parser.read_format(line)
                 #self.formats[key] = val
-                #TODO Julia db connect
                 self.db.handleFormat(key, val)
                 '''
             else:
@@ -369,17 +367,12 @@ class Reader(object):
         NOTE: this method has a cython equivalent and care must be taken
         to keep the two methods equivalent
         '''
-
-        # check whether we already know how to parse this format
-        # TODO at some point add DB
         # TODO 1 remove print when ready
         print samp_fmt
         individGeno = samp_fmt.split(":")
         IndividualFunctions = []
         CustomGeno = []
-        #Supported
-        #TODO individual
-        #JULIA: AD DP, GLE, GL, EC GP, GT, FT, PL, GQ, HQ, PS, PQ        
+        #Supported   
         
         for genotype in individGeno:
             if ( genotype == "AD" ):
@@ -1183,17 +1176,12 @@ class DatabaseConnection():
             self.cnx.commit()
             return 0
         except:
+            print query
             self.cnx.rollback()
             return -1
     
-    
-    
-#TODO individual
-#JULIA:
-#ADAM: GT, FT, PL, GQ, HQ, PS, PQ
+#See the following link for VCF information
 #http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
-        
-        
         
 
 def stringToTypeEnum( string ):
