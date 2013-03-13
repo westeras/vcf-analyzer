@@ -186,7 +186,9 @@ class Reader(object):
             now = datetime.datetime.now()
             vcfName = now.strftime("%Y-%m-%d_%H:%M")
         self.vcfId = self.db.createVcf( vcfName )
-        #TODO add vcf header
+        
+        #add vcf header
+        self.vcfHeader = "";
         
         if not (fsock or filename):
             raise Exception('You must provide at least fsock or filename')
@@ -217,7 +219,7 @@ class Reader(object):
         self.formats = None
         self.samples = None
         self._sample_indexes = None
-        self._header_lines = []
+        #self._header_lines = []
         self._tabix = None
         self._prepend_chr = prepend_chr
         self._parse_metainfo()
@@ -238,7 +240,8 @@ class Reader(object):
         #TODO: add DB upload
         line = self.reader.next()
         while line.startswith('##'):
-            self._header_lines.append(line)
+            self.vcfHeader += line;
+            #self._header_lines.append(line)
             line = line.strip()
 
             if line.startswith('##INFO'):
@@ -867,7 +870,9 @@ class DatabaseConnection():
             self.cnx.rollback()
             return -1   
             
-        lastName = first[0]
+        lastName = None
+        if ( len(first) > 0 )
+            lastName = first[0]
         if ( lastName != None ):
             if ( name in lastName):
                 if ( name == lastName ):
@@ -1164,7 +1169,21 @@ class DatabaseConnection():
             self.cnx.rollback()
             return -1
         return 0
-   
+
+    def createVcfHeader(self, vcfId, header):
+        
+        query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ({}, {} )".format(
+                    vcfId, header)
+        try:
+            self.cursor.execute(query)
+            self.cnx.commit()
+            return 0
+        except:
+            self.cnx.rollback()
+            return -1
+    
+    
+    
 #TODO individual
 #JULIA:
 #ADAM: GT, FT, PL, GQ, HQ, PS, PQ
