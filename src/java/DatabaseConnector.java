@@ -46,7 +46,7 @@ class DatabaseConnector
             
             if (rs.next()) 
             {
-                int id = Long.parseLong( rs.getString("VcfId") );
+                long id = Long.parseLong( rs.getString("VcfId") );
                 rs.close();
                 return id;
             }
