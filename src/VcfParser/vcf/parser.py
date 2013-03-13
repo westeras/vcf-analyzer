@@ -206,7 +206,7 @@ class Reader(object):
             self.reader = gzip.GzipFile(fileobj=self.reader)
             if sys.version > '3':
                 self.reader = codecs.getreader('ascii')(self.reader)
-        '''
+        
         #: metadata fields from header (string or hash, depending)
         self.metadata = None
         #: INFO fields from header
@@ -224,7 +224,7 @@ class Reader(object):
         self._prepend_chr = prepend_chr
         self._parse_metainfo()
         self._format_cache = {}
-        '''
+        
     def __iter__(self):
         return self
 
