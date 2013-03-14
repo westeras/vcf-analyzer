@@ -8,7 +8,7 @@ class PythonHandler {
 		interpreter = new PythonInterpreter();
 	}
 	
-	public invokeParser(String vcfName) throws FileNotFoundException {
+	public void invokeParser(String vcfName) throws FileNotFoundException {
 		return;
 	}
 	
