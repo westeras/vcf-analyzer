@@ -14,7 +14,7 @@ class Main {
 	
 	public static void main(String[] args) throws PyException {
 		PythonHandler python = new PythonHandler();
-		python.invokeParser();
+		python.invokeParser("blah");
 	}
 	
 /*	public static void main(String[] args) throws ClassNotFoundException, SQLException, PyException {
