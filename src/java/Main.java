@@ -12,7 +12,12 @@ class Main {
 	static final String USER = "vcf_user";
 	static final String PASS = "vcf";
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, PyException {
+	public static void main(String[] args) throws PyException {
+		PythonHandler python = new PythonHandler();
+		python.invokeParser();
+	}
+	
+/*	public static void main(String[] args) throws ClassNotFoundException, SQLException, PyException {
 		Connection conn = null;
 		Statement stmt = null;
 
@@ -56,6 +61,6 @@ class Main {
 			}
 			System.out.println("Goodbye!");
 		}
-	}
+	} */
 }
 
