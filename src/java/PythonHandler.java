@@ -9,7 +9,7 @@ class PythonHandler {
 		interpreter = new PythonInterpreter();
 	}
 	
-	public void invokeParser(String vcfName) throws FileNotFoundException {
+	public void invokeParser(String vcfName) {
 		interpreter.exec("import sys");
 		interpreter.exec("print 'From Python'");
 	}
