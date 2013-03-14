@@ -1,6 +1,5 @@
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
-import java.io.FileNotFoundException;
 
 class PythonHandler {
 	PythonInterpreter interpreter;
@@ -11,7 +10,7 @@ class PythonHandler {
 	
 	public void invokeParser(String vcfName) {
 		interpreter.exec("import sys");
-		interpreter.exec("print 'From Python'");
+		interpreter.exec("import /home/git-vcf/src/VcfParser/loadvcf");
 	}
 	
 }
