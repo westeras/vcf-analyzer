@@ -1,5 +1,6 @@
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
+import java.io.FileNotFoundException;
 
 class PythonHandler {
 	PythonInterpreter interpreter;
@@ -9,7 +10,8 @@ class PythonHandler {
 	}
 	
 	public void invokeParser(String vcfName) throws FileNotFoundException {
-		return;
+		interpreter.exec("import sys");
+		interpreter.exec("print 'From Python'");
 	}
 	
 }
