@@ -16,9 +16,9 @@ class PythonHandler {
 		}
 		interpreter.exec("import sys");
 		interpreter.exec("import os");
-		// add call to load vcf script here
-		interpreter.exec("os.chdir('../VcfParser/')");
-		interpreter.exec("os.listdir('.')");
+		
+		//interpreter.exec("os.chdir('../VcfParser/')");
+		//interpreter.exec("os.listdir('.')");
 		System.out.println("VCF upload complete");
 	}
 	
