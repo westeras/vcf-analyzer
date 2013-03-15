@@ -13,4 +13,9 @@ class PythonHandler {
 		//interpreter.execfile("/home/git-vcf/src/VcfParser/loadvcf");
 	}
 	
+	private boolean fileExists(String filePath) {
+		File f = new File(filePath);
+		return f.exists();
+	}
+	
 }
