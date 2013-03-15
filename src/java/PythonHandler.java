@@ -15,7 +15,11 @@ class PythonHandler {
 			return;
 		}
 		interpreter.exec("import sys");
-		//interpreter.execfile("/home/git-vcf/src/VcfParser/loadvcf");
+		interpreter.exec("import os");
+		// add call to load vcf script here
+		interpreter.exec("os.chdir('../VcfParser/')");
+		interpreter.exec("os.listdir('.')");
+		System.out.println("VCF upload complete");
 	}
 	
 	private boolean fileExists(String filePath) {
