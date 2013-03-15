@@ -59,5 +59,113 @@ class DatabaseConnector
    
         return -1;
     }
+    
+    
+    public void CloseConnection() throws SQLException {
+		if (this.conn != null) {
+			this.conn.close();
+		}
+		if (this.stmt != null) {
+			this.stmt.close();
+		}
+	}
+
+	private boolean hasOpenStatementAndConnection() throws SQLException {
+		return !this.conn.isClosed() && !this.stmt.isClosed();
+	}
+
+	private void reopenConnectionAndStatement() throws SQLException,
+			ClassNotFoundException {
+		if (this.conn == null || this.conn.isClosed())
+			this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		if (this.stmt == null || this.stmt.isClosed())
+			this.stmt = this.conn.createStatement();
+	}
+
+	protected void uploadDivergence(String name) throws ClassNotFoundException,
+			SQLException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		String sql = String.format(
+				"INSERT into Divergence (DivName) VALUES (`%s`);", name);
+		ResultSet rs = this.stmt.executeQuery(sql);
+		while (rs.next()) {
+			System.out.println(rs.toString());
+		}
+	}
+
+	/**
+	 * 
+	 * TODO consider refactoring to one general upload method
+	 * 
+	 * @param chromosome
+	 * @param position
+	 * @param divValue
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	protected void uploadDivergenceLine(String chromosome, int position,
+			int divValue) throws ClassNotFoundException, SQLException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		String sql = String
+				.format("INSERT into DivergenceLine (DivId, Chromosome, Position, DivValue) VALUES (`%s`,`%s`,`%s`,`%s` );",
+						getHighestId("Divergence","DivId"), chromosome, position, divValue);
+		ResultSet rs = this.stmt.executeQuery(sql);
+		while (rs.next()) {
+			System.out.println(rs.toString());
+		}
+	}
+
+	/**
+	 * TODO: Finish Testing
+	 * @param tableName, String idName 
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	private int getHighestId(String tableName, String idName) throws ClassNotFoundException, SQLException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		String sql = String.format("SELECT %s FROM %s ORDER BY %s desc LIMIT 0,1;",idName,tableName,idName);
+		ResultSet rs = this.stmt.executeQuery(sql);
+		return Integer.parseInt(rs.getString("DivID"));
+	}
+
+	protected void uploadAnnotation(String name) throws ClassNotFoundException,
+			SQLException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		String sql = String.format(
+				"INSERT into Annotation (AnnoName) VALUES (`%s`);", name);
+		ResultSet rs = this.stmt.executeQuery(sql);
+		while (rs.next()) {
+			System.out.println(rs.toString());
+		}
+	}
+
+	/**
+	 * 
+	 * TODO consider refactoring to one general upload method
+	 * 
+	 * @param chromosome
+	 * @param startPosition
+	 * @param geneDirection
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	protected void uploadAnnotationLine(String chromosome, int startPosition, int endPosition,
+			String geneName, int geneDirection) throws ClassNotFoundException, SQLException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		String sql = String
+				.format("INSERT into AnnotationLine (AnnoID, Chromosome, StartPosition, EndPosition, GeneName, GeneDirection) VALUES (`%i`,`%s`,`%i`,`%i`,`%s`,`%i` );",
+						getHighestId("Annotation","AnnoLineID"), chromosome, startPosition, endPosition, geneName, geneDirection);
+		ResultSet rs = this.stmt.executeQuery(sql);
+		while (rs.next()) {
+			System.out.println(rs.toString());
+		}
+	}
 
 }
