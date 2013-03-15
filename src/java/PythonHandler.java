@@ -15,7 +15,7 @@ class PythonHandler {
 			return;
 		}
 		interpreter.exec("import sys");
-		//interpreter.exec("import os");
+		interpreter.exec("import os");
 		
 		//interpreter.exec("os.chdir('../VcfParser/')");
 		//interpreter.exec("os.listdir('.')");
