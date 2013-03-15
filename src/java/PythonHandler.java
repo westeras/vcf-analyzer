@@ -8,7 +8,11 @@ class PythonHandler {
 		interpreter = new PythonInterpreter();
 	}
 	
-	public void invokeParser(String vcfName) {
+	public void invokeParser(String vcfFilePath) {
+		if (!fileExists(vcfFilePath)) {
+			print("Fatal Error: file does not exist");
+			return;
+		}
 		interpreter.exec("import sys");
 		//interpreter.execfile("/home/git-vcf/src/VcfParser/loadvcf");
 	}
