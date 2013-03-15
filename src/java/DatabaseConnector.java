@@ -13,7 +13,7 @@ class DatabaseConnector
     private Connection conn;
     private Statement stmt;
     
-    public DatabaseConnector() throws SQLException
+    public DatabaseConnector() throws SQLException, ClassNotFoundException
     {
         this.conn = null;
         this.stmt = null;
@@ -22,18 +22,6 @@ class DatabaseConnector
 
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
     
-    }
-    
-    public void CloseConnection()
-    {
-        if (conn!=null) 
-        {
-            conn.close();
-        }
-        if (stmt!=null)
-        {
-            stmt.close();
-        }
     }
     
     public long getVcfId( String vcfName) throws IllegalArgumentException, SQLException
@@ -56,10 +44,29 @@ class DatabaseConnector
         } catch(SQLException se) {
             throw new SQLException("Invadild Query" + sql);
         }
-   
-        return -1;
     }
     
+    public String getVcfHeader( String vcfId) throws IllegalArgumentException, SQLException
+    {
+        String sql = null;
+        try
+        {
+            sql = "SELECT `VcfHeader` FROM `vcf_analyzer`.`Vcf` WHERE `VcfId` = '" + vcfId +"'";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            if (rs.next()) 
+            {
+                String result = rs.getString("Header");
+                rs.close();
+                return result;
+            }
+        
+            throw new IllegalArgumentException("VCF header for: " + vcfId + " not found");
+            
+        } catch(SQLException se) {
+            throw new SQLException("Invadild Query" + sql);
+        }
+    }    
     
     public void CloseConnection() throws SQLException {
 		if (this.conn != null) {

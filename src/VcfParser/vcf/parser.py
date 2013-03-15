@@ -298,9 +298,12 @@ class Reader(object):
 
         entries = info_str.split(';')
         #retdict = OrderedDict()
+        #infoFields = "";
 
         for entry in entries:
             entry = entry.split('=')
+            #infoFields += entry[0]
+            #infoFields += ";"
             '''
             ID = entry[0]
             #TODO: add DB upload and long if else for options
@@ -341,6 +344,10 @@ class Reader(object):
 
         return retdict
         '''
+        #CONSIDER: dicuss
+        #if ( len(infoFields) > 0 )
+        #    self.db.updateEntryInfo( entryDbId, infoFields[:-1] )
+        
 
     def _parse_sample_format(self, samp_fmt):
         """ Parse the format of the calls in this _Record """
@@ -820,6 +827,20 @@ class DatabaseConnection():
             self.cnx.rollback()
             return -1
 
+    ''' CONSIDER: discuss as group
+    def updateEntryInfo( self, entryId, infoString )
+        query = ("UPDATE `vcf_analyzer`.`VcfEntry` SET `InfoFields` = '{}' WHERE `EntryId` = '{}'".format(
+                 infoString, entryId )
+        
+        try:
+            self.cursor.execute(query)
+            self.cnx.commit()
+            return 0
+        except:
+            self.cnx.rollback()
+            return -1
+    '''
+            
     def createVcfIndividuals(self, vcfId, names ):
     
         queries = []
