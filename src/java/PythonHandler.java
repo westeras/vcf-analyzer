@@ -11,7 +11,7 @@ class PythonHandler {
 	
 	public void invokeParser(String vcfFilePath) {
 		if (!fileExists(vcfFilePath)) {
-			print("Fatal Error: file does not exist");
+			System.out.println("Fatal Error: file does not exist");
 			return;
 		}
 		interpreter.exec("import sys");
