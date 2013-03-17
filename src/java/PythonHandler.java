@@ -15,10 +15,12 @@ class PythonHandler {
 			return;
 		}
 		interpreter.exec("import sys");
-		interpreter.exec("import os");
+		interpreter.exec("print 'hello'");
+		interpreter.exec("print 'world'");
+		//interpreter.exec("import os");
 		
-		interpreter.exec("os.chdir('../VcfParser/')");
-		interpreter.exec("os.listdir('.')");
+		//interpreter.exec("os.chdir('../VcfParser/')");
+		//interpreter.exec("os.listdir('.')");
 		System.out.println("VCF upload complete");
 	}
 	
