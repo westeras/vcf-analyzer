@@ -21,7 +21,7 @@ class PythonHandler {
 		
 		//interpreter.exec("os.chdir('../VcfParser/')");
 		//interpreter.exec("os.listdir('.')");
-		System.out.println("VCF upload complete");
+		//System.out.println("VCF upload complete");
 	}
 	
 	private boolean fileExists(String filePath) {
