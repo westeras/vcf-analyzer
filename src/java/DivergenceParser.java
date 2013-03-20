@@ -25,6 +25,8 @@ public class DivergenceParser {
 		this.divergenceFile=divFile;
 	}
 	
+
+
 	public ArrayList<String[]> parseFile() throws FileNotFoundException, ClassNotFoundException, SQLException{
 		FileInputStream fileIn=new FileInputStream(this.divergenceFile);
 		Scanner reader=new Scanner(fileIn);

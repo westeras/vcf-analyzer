@@ -18,6 +18,13 @@ public class UploadDivergenceCommand extends Command{
 		this.fileLocation=new File(fileLocation);
 		this.options=options;
 	}
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param fileLocation2
+	 * @param options2
+	 */
+
 	@Override
 	public void execute() {
 		try {
