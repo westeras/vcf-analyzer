@@ -18,6 +18,7 @@ class PythonHandler {
 		interpreter.exec("print 'hello'");
 		interpreter.exec("print 'world'");
 		interpreter.exec("sys.path.append('/home/git_vcf/src/')");
+		interpreter.exec("import loadvcf");
 		//interpreter.exec("import os");
 		
 		//interpreter.exec("os.chdir('../VcfParser/')");
