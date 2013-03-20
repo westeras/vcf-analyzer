@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -16,24 +17,24 @@ public class DivergenceParser {
 	private File divergenceFile;
 	
 	/**
-	 * Takes the name of a file to be parsed.
-	 * Alternatively, could actually take the file object.
+	 * Takes the file to be parsed
 	 *
-	 * @param pathname
+	 * @param divFile
 	 */
-	public DivergenceParser(String pathname){
-		this.divergenceFile=new File(pathname);
+	public DivergenceParser(File divFile){
+		this.divergenceFile=divFile;
 	}
 	
-	public void parseFile() throws FileNotFoundException, ClassNotFoundException, SQLException{
+	public ArrayList<String[]> parseFile() throws FileNotFoundException, ClassNotFoundException, SQLException{
 		FileInputStream fileIn=new FileInputStream(this.divergenceFile);
 		Scanner reader=new Scanner(fileIn);
 		DatabaseConnector connection=new DatabaseConnector();
+		ArrayList<String[]> rows = new ArrayList<String[]>();
 		while (reader.hasNextLine()){
-			String[] parsedLine=parseLine(reader.nextLine());
-			connection.uploadDivergenceLine(parsedLine[0],Integer.valueOf(parsedLine[1]),Integer.valueOf(parsedLine[2]));
+			String[] columns=parseLine(reader.nextLine());
+			rows.add(columns);
 		}
-		
+		return rows;
 	}
 	private String[] parseLine(String line){
 		StringTokenizer tokenizer=new StringTokenizer(line);
