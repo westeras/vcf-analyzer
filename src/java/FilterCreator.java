@@ -6,5 +6,4 @@ public class FilterCreator {
 		this.commandList = commandList;
 	}
 	
-	
 }
