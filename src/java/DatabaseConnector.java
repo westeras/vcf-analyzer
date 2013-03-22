@@ -1,5 +1,10 @@
 import java.sql.*;
+
 import javax.sql.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 class DatabaseConnector
@@ -9,6 +14,9 @@ class DatabaseConnector
     
     static final String USER = "vcf_user";
     static final String PASS = "vcf";
+    
+    private static final ArrayList<String> EntryFixedInfo = new ArrayList<String>( 
+    		Arrays.asList( "CHROM", "FILTER", "ID", "POS", "REF", "QUAL", "ALT") );
     
     private Connection conn;
     private Statement stmt;
@@ -42,11 +50,11 @@ class DatabaseConnector
             throw new IllegalArgumentException("VCF: " + vcfName + " not found");
             
         } catch(SQLException se) {
-            throw new SQLException("Invalid Query: " + sql);
+            throw new SQLException("Invalid Query" + sql);
         }
     }
     
-    public String getVcfHeader( String vcfId) throws IllegalArgumentException, SQLException
+    public String getVcfHeader( long vcfId) throws IllegalArgumentException, SQLException
     {
         String sql = null;
         try
@@ -82,9 +90,103 @@ class DatabaseConnector
 			
 			throw new IllegalArgumentException("Filter: " + filterName + " not found");
 		} catch(SQLException se) {
-			throw new SQLException("Invalid Query: " + sql);
-		}
-	}
+            throw new SQLException("Invalid Query" + sql);
+        }
+    }    
+    public ResultSet getVcfEntries( long vcfId ) throws SQLException
+    {
+        String sql = null;
+        try
+        {
+            sql = "SELECT * FROM `vcf_analyzer`.`VcfEntry` WHERE `VcfId` = '" 
+            		+ vcfId +"' ORDER BY `EntryId` ASC";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            return rs;
+            
+        } catch(SQLException se) {
+            throw new SQLException("Invalid Query" + sql);
+        }
+    } 
+
+    public void getInfoData( long entryId, ArrayList<String> infoTableName,
+    		ArrayList<ResultSet> infoData ) throws SQLException
+    {
+        String sql = "";
+        try
+        {
+        	sql = "SELECT `InfoName` FROM `vcf_analyzer`.`InfoTable` ORDER BY `InfoName` ASC";
+            ResultSet rs = this.stmt.executeQuery(sql);
+            ArrayList<String> names = new ArrayList<String>();
+            while (rs.next())
+            {
+            	String infoName = rs.getString("InfoName");
+            	if ( !EntryFixedInfo.contains( infoName) )
+            	{
+            		sql = String.format( "SELECT * FROM `vcf_analyzer`.`%s` WHERE `entryId` = '%d'",
+            				infoName, entryId );
+            		ResultSet infoSet = this.stmt.executeQuery(sql);
+            		if (!infoSet.isBeforeFirst())
+            		{
+            			//not empty
+            			infoData.add(infoSet);
+            			infoTableName.add( infoName );
+            		}
+            	}
+
+            }
+            
+        } catch(SQLException se) {
+            throw new SQLException("Invalid Query" + sql);
+        }	
+    }
+    
+    public ResultSet getIndividuals( long entryId ) throws SQLException
+    {
+        
+        String sql = "";
+        try
+        {
+            sql = "SELECT * FROM `vcf_analyzer`.`IndividualEntry` WHERE `EntryId` = '" 
+            		+ entryId +"' ORDER BY `IndID` ASC";
+            ResultSet rs = this.stmt.executeQuery(sql);
+            
+            return rs;
+            
+        } catch(SQLException se) {
+            throw new SQLException("Invalid Query" + sql);
+        }
+         
+    }
+    
+    public ArrayList<ResultSet> getIndividualData( long indId, 
+    		ArrayList<String> genotypeTableName ) throws SQLException
+    {
+    	ArrayList<ResultSet> genotypeData = new ArrayList<ResultSet>();
+    	
+        String sql = "";
+        try
+        {
+            for ( String tableName : genotypeTableName )
+            {
+        		sql = String.format( "SELECT * FROM `vcf_analyzer`.`%s` WHERE `IndID` = '%d'",
+        				tableName, indId );
+        		ResultSet infoSet = this.stmt.executeQuery(sql);
+        		if (!infoSet.isBeforeFirst())
+        		{
+        			//not empty
+        			genotypeData.add(infoSet);
+        		}
+        		else
+        		{
+        			genotypeData.add(null);
+        		}
+        	}
+            return genotypeData;
+        } catch(SQLException se) {
+            throw new SQLException("Invalid Query" + sql);
+        }	
+    }
     
     public void CloseConnection() throws SQLException {
 		if (this.conn != null) {

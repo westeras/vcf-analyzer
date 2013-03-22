@@ -25,7 +25,7 @@ public class vcfWriter
         this.writer.newLine();
     }
     
-    public void writeEntryFromDB( ResultSet entryData, 
+    public void writeEntry( ResultSet entryData, 
                                     ArrayList<ResultSet> infoData,
                                     ArrayList<String> infoName ) throws IOException, SQLException
     {
@@ -45,9 +45,37 @@ public class vcfWriter
             this.writer.write( '\t' );
             this.writer.write( entryData.getString("Filter") );
             this.writer.write( '\t' );
-            //TODO info data
+
+    	    for (int i =0; i< infoData.size(); i++ )
+    		{
+    		    if (i!= 0)
+    		    {
+    		    	this.writer.write(";");
+    		    }
+    		    
+    		    ResultSet rs = infoData.get(i);
+    		    String infoDatum = "";
+    		    if (rs.next()) 
+    			{
+    			    ResultSetMetaData rsMetaData = rs.getMetaData();
+
+    			    int numberOfColumns = rsMetaData.getColumnCount();
+    		    	
+    			    if (numberOfColumns > 1)
+    			    {
+    			    	infoDatum = rs.getNString(2);
+    			    	this.writer.write( infoName.get(i)+"="+infoDatum );
+    			    }
+    			    else
+    			    {
+    			    	this.writer.write( infoName.get(i) );
+    			    }
+    			}
+    		    rs.close();
+
+    		}
+            
             this.writer.write( entryData.getString("Format") );
-            this.writer.write( '\t' );
         
         } catch (IOException exception) {
             throw new IOException("Error writing file");
@@ -56,7 +84,161 @@ public class vcfWriter
         }
     }
     
-    public void stopWriting()
+    public void writeIndividual( 
+            ArrayList<ResultSet> genotypeData,
+            ArrayList<String> genotypeName ) throws IOException, SQLException
+	{
+    	this.writer.write("\t");
+    	if ( genotypeData == null)
+    	{
+    		return;
+    	}
+    	
+    	for (int i=0; i < genotypeName.size(); i++)
+    	{
+    		if ( i!= 0)
+    		{
+    			this.writer.write(":");
+    		}
+    		if ( isSpecialCase(genotypeName.get(i) ) )
+    		{
+    				
+    			this.writer.write( formatSpecialCase( genotypeName.get(i), genotypeData.get(i) ) );
+    		}
+    		else
+    		{
+    			this.writer.write( formatStandardCase( genotypeName.get(i), genotypeData.get(i) ) );
+    		}	
+    		
+    		genotypeData.get(i).close();
+    	} 	
+    	
+	}
+    
+	private String formatStandardCase(String genotypeName, ResultSet rs) throws SQLException {
+
+	    ResultSetMetaData rsMetaData = rs.getMetaData();
+
+	    int numberOfColumns = rsMetaData.getColumnCount();
+	    
+	    String indData = "";
+	    String nullValues = null;
+	    
+	    for (int i=2; i<= numberOfColumns; i++)
+	    {
+	    	String separator = ",";
+	    	if (i==2)
+	    	{
+	    		separator = "";
+	    	}
+	    	
+	    	String genoDatum = rs.getNString(i);
+	    	if ( rs.wasNull() )
+	    	{
+	    		if ( nullValues == null )
+	    			nullValues = separator + ".";
+	    		else
+	    			nullValues += separator + ".";
+	    	}
+	    	else
+	    	{
+	    		if ( nullValues == null )
+	    		{
+	    			//valid value; append stored nulls
+	    			indData += nullValues;
+	    			nullValues = null;
+	    		}
+	    		indData += separator + genoDatum;
+	    	}
+	    	
+	    }
+	    if (indData.isEmpty())
+	    {
+	    	indData = ".";
+	    }
+	    
+		return indData;
+	}
+
+	private boolean isSpecialCase(String genotypeName ) throws SQLException
+	{
+		return genotypeName.equals( "GT");
+	}
+	
+	private String formatSpecialCase(String genotypeName, ResultSet data) throws IOException, SQLException {
+		if ( genotypeName.equals( "GT") )
+		{
+			int i = 0;
+			String gtData = "";
+			if (data.next() )
+			{
+				appendAllele( gtData, data, "1") ;
+				if ( appendPhase( gtData, data, "1") )
+				{
+					appendAllele( gtData, data, "2") ;
+					if (appendPhase( gtData, data, "2") )
+					{
+						appendAllele( gtData, data, "3");
+					}
+				}
+				return gtData;
+			}
+			else
+			{
+				return ".";
+			}
+			
+		}
+		return "";
+	}
+	
+	private void appendAllele( String gtData, ResultSet data, String count )throws SQLException
+	{
+		String allele = data.getString("Allele" +count);
+		if ( data.wasNull() )
+		{
+			gtData += ".";
+		}
+		else
+		{
+			gtData += allele;
+		}
+		
+	}
+	
+	private boolean appendPhase( String gtData, ResultSet data, String count )throws SQLException
+	{
+		byte phase = data.getByte("Phase" +count);
+		if ( data.wasNull() )
+		{
+			//end of data
+			return false;
+		}
+		else
+		{
+			if ( phase == 0 )
+			{
+				gtData = "/";
+			}
+			else if ( phase == 1 )
+			{
+				gtData = "|";
+			}
+			else
+			{
+				throw new SQLException("Invalid GT data");
+			}
+			return true;
+		}
+	}
+
+	public void writeEOL() throws IOException
+    {
+    	this.writer.write("\n");
+    	
+    }
+    
+    public void closeWriter()
     {
         if ( this.writer != null )
         {
