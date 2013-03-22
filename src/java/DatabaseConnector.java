@@ -42,7 +42,7 @@ class DatabaseConnector
             throw new IllegalArgumentException("VCF: " + vcfName + " not found");
             
         } catch(SQLException se) {
-            throw new SQLException("Invadild Query" + sql);
+            throw new SQLException("Invalid Query: " + sql);
         }
     }
     
@@ -64,9 +64,27 @@ class DatabaseConnector
             throw new IllegalArgumentException("VCF header for: " + vcfId + " not found");
             
         } catch(SQLException se) {
-            throw new SQLException("Invadild Query" + sql);
+            throw new SQLException("Invalid Query: " + sql);
         }
-    }    
+    }
+	
+	public int getFilterID(String filterName) throws IllegalArgumentException, SQLException {
+		String sql = null;
+		try {
+			sql = "SELECT `FilID` FROM `vcf_analyzer`.`Filter` WHERE `FilName` = '" + filterName + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()) {
+				int id = Integer.parseInt(rs.getString("FilId"));
+				rs.close();
+				return id;
+			}
+			
+			throw new IllegalArgumentException("Filter: " + filterName + " not found");
+		} catch(SQLException se) {
+			throw new SQLException("Invalid Query: " + sql);
+		}
+	}
     
     public void CloseConnection() throws SQLException {
 		if (this.conn != null) {

@@ -1,0 +1,11 @@
+#CHROM POS DIVERGENCE
+scaffold_1	100	1
+scaffold_1	101	1
+scaffold_1	102	0
+scaffold_1	103	1
+scaffold_1	104	1
+scaffold_1	105	-1
+scaffold_1	106	0
+scaffold_1	107	0
+scaffold_1	108	1
+scaffold_1	109	-1
