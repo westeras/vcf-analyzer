@@ -916,7 +916,7 @@ class DatabaseConnection():
     def createDP( self, indId, dpStr ):
     
         if (dpStr == "."):
-            dpStr = "NULL"
+            return;
             
         query = ("INSERT INTO `vcf_analyzer`.`DP` (`IndID`, `ReadDepth`) " +
                 "VALUES ( '{}', '{}' )").format(
@@ -932,7 +932,7 @@ class DatabaseConnection():
     
         query = ""
         if ( glStr == "." ):
-            query = "INSERT INTO `vcf_analyzer`.`GL` (`IndID`, `AA`, `AB`, `BB`) " + "VALUES ( NULL, NULL, NULL, NULL' )"
+            return
         else:
             entries = glStr.split(',')
             for i in range(len(entries)):
@@ -959,21 +959,22 @@ class DatabaseConnection():
             return -1
             
     def createGT(self, indID, gtStr):
+    
+        if (gtStr == "."):
+            return #not sure what to do about this case
         gtStrList = list(gtStr)
         outList = []
         n = len(gtStr)
 
         for i in range(n):
-            if (gtStrList[i] == '0'):
-                outList.append('0')
-            elif (gtStrList[i] == '1'):
-                outList.append('1')
-            elif (gtStrList[i] == '/'):
+            if (gtStrList[i] == '/'):
                 outList.append('0')
             elif (gtStrList[i] == '|'):
                 outList.append('1')
             elif (gtStrList[i] == '.'):
                 outList.append("NULL")
+            else:
+                outList.append( tStrList[i] )
                 
         if (n == 1):
             query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', NULL, NULL, NULL, NULL)".format(indID, outList[0])
@@ -996,6 +997,9 @@ class DatabaseConnection():
         return
         
     def createFT(self, indID, ftStr):
+        if (ftStr == "."):
+            return #not sure what to do about this case
+    
         query = "INSERT INTO `vcf_analyzer`.`FT` VALUES ('{}', '{}')".format(indID, ftStr)
         
         try:
@@ -1028,6 +1032,9 @@ class DatabaseConnection():
                 return -1
         
     def createGQ(self, indID, gqStr):
+        if (gqStr == "."):
+            return #not sure what to do about this case
+    
         query = "INSERT INTO `vcf_analyzer`.`GQ` VALUES ('{}', '{}')".format(indID, gqStr)
         
         try:
@@ -1053,6 +1060,9 @@ class DatabaseConnection():
                 return -1
         
     def createPS(self, indID, psStr):
+    
+        if (psStr == "."):
+            return #not sure what to do about this case
         query = "INSERT INTO `vcf_analyzer`.`PS` VALUES ('{}', '{}')".format(indID, psStr)
         
         try:
@@ -1063,6 +1073,9 @@ class DatabaseConnection():
             return -1
             
     def createPQ(self, indID, pqStr):
+    
+        if (pqStr == "."):
+            return #not sure what to do about this case
         query = "INSERT INTO `vcf_analyzer`.`PQ` VALUES ('{}', '{}')".format(indID, pqStr)
         
         try:
@@ -1074,6 +1087,9 @@ class DatabaseConnection():
             
     def createGLE(self, indId, gleStr):
         #NOTE no good example found; assuming comma separated
+        if (gleStr == "."):
+            return #not sure what to do about this case
+        
         values = gleStr.split(",")
         for i in range (len(values)):
             if (values[i] == "."):
@@ -1095,6 +1111,9 @@ class DatabaseConnection():
             return -1
         
     def createEC(self, indId, ecStr):
+    
+        if (ecStr == "."):
+            return #not sure what to do about this case
         values = ecStr.split(",")
         for i in range (len(values)):
             if (values[i] == "."):
@@ -1115,6 +1134,8 @@ class DatabaseConnection():
             return -1
         
     def createAD(self, indId, adStr):
+        if (adStr == "."):
+            return #not sure what to do about this case
     
         values = adStr.split(",")
         for i in range (len(values)):
@@ -1137,6 +1158,9 @@ class DatabaseConnection():
             return -1
             
     def createGP(self, indId, gpStr):
+    
+        if (gpStr == "."):
+            return #not sure what to do about this case
         values = gpStr.split(",")
         for i in range (len(values)):
             if (values[i] == "."):
@@ -1157,6 +1181,9 @@ class DatabaseConnection():
             return -1
             
     def createIndividualDefault(self, tableName, indId, valStr):
+    
+        if (valStr == "."):
+            return #not sure what to do about this case
     
         try:
             query = "SELECT 'Count' FROM GenotypeTable WHERE GenoName ='" + tableName +"'"

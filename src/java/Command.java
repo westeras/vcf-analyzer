@@ -6,6 +6,6 @@
  *         Created Mar 14, 2013.
  */
 public abstract class Command {
-	public abstract void execute();
+	public abstract String execute();
 	public abstract void pipeOutput();
 }
