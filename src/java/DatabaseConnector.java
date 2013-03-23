@@ -224,7 +224,7 @@ class DatabaseConnector {
 		String sql = String
 				.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
 						name, chromosome, position, divValue);
-		ResultSet rs = this.stmt.executeQuery(sql);
+		ResultSet rs = this.stmt.executeUpdate(sql);
 		while (rs.next()) {
 			System.out.println(rs.toString());
 		}
@@ -247,7 +247,7 @@ class DatabaseConnector {
 		String sql = String.format(
 				"SELECT %s FROM %s ORDER BY %s desc LIMIT 0,1;", idName,
 				tableName, idName);
-		ResultSet rs = this.stmt.executeQuery(sql);
+		ResultSet rs = this.stmt.executeUpdate(sql);
 		return Integer.parseInt(rs.getString("DivID"));
 	}
 

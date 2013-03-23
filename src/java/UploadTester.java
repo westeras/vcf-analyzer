@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -19,10 +20,23 @@ public class UploadTester {
 	 * @throws ClassNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, SQLException {
-		Command uploadDivCommand= new UploadDivergenceCommand("Examples/divergence.txt","","");
-		uploadDivCommand.execute();
-		Command uploadAnnotCommand=new UploadAnnotationCommand("Examples/annot.txt","","");
-		uploadAnnotCommand.execute();
+		System.out.println(testFormat("DivName","Chromosome",1,2));
+//		Command uploadDivCommand= new UploadDivergenceCommand("Examples/divergence.txt","","");
+//		uploadDivCommand.execute();
+//		Command uploadAnnotCommand=new UploadAnnotationCommand("Examples/annot.txt","","");
+//		uploadAnnotCommand.execute();
+	}
+	
+	
+	protected static String testFormat(String name, String chromosome,
+			int position, int divValue) throws ClassNotFoundException,
+			SQLException {
+
+		String sql = String
+				.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
+						name, chromosome, position, divValue);
+		return sql;
+
 	}
 
 }
