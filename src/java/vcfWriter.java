@@ -5,6 +5,7 @@ import java.sql.*;
 public class vcfWriter
 {
     private BufferedWriter writer;
+    private int infoCount = 0;
     
     public vcfWriter( String filename ) throws IOException
     {
@@ -47,6 +48,7 @@ public class vcfWriter
             this.writer.write( entryData.getString("Filter") );
             this.writer.write( '\t' );
 
+            this.infoCount = 0;
     	    for (int i =0; i< infoData.size(); i++ )
     		{
     		    if (i!= 0)
@@ -81,8 +83,43 @@ public class vcfWriter
         } catch (IOException exception) {
             throw new IOException("Error writing file");
         } catch (SQLException exception) {
-            throw new SQLException("VCF Entry data improperly formatted");
+        	throw exception;
+        	//TODO change back
+            //throw new SQLException("VCF Entry data improperly formatted");
         }
+    }
+    
+    public void writeEntryEnd( ResultSet entryData ) throws IOException, SQLException
+    {
+    	this.writer.write("/t");
+    	this.writer.write( entryData.getString("Format") );
+    }
+    
+    public void writeInfoSection( String infoName, ResultSet infoData) throws IOException, SQLException
+    {
+	    if (this.infoCount!= 0)
+	    {
+	    	this.writer.write(";");
+	    }
+	    
+	    String infoDatum = "";
+	    if (infoData.next()) 
+		{
+		    ResultSetMetaData rsMetaData = infoData.getMetaData();
+
+		    int numberOfColumns = rsMetaData.getColumnCount();
+	    	
+		    if (numberOfColumns > 1)
+		    {
+		    	infoDatum = infoData.getNString(2);
+		    	this.writer.write( infoName+"="+infoDatum );
+		    }
+		    else
+		    {
+		    	this.writer.write( infoName );
+		    }
+		}
+	    infoData.close();
     }
     
     public void writeIndividual( 

@@ -97,8 +97,8 @@ public class FilterApplier
 						writer.writeIndividual( genotypeData, genotypes );
 					}
 					individuals.close();
+					writer.writeEOL();
 				}
-				writer.writeEOL();
 
 		    }
 			entries.close();

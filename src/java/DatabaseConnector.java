@@ -19,6 +19,7 @@ class DatabaseConnector {
 
 	private Connection conn;
 	private Statement stmt;
+	private ArrayList<Statement> stmtList;
 
 	public DatabaseConnector() throws SQLException, ClassNotFoundException {
 		
@@ -123,14 +124,16 @@ class DatabaseConnector {
 			sql = "SELECT `InfoName` FROM `vcf_analyzer`.`InfoTable` ORDER BY `InfoName` ASC";
 			ResultSet rs = this.stmt.executeQuery(sql);
 			ArrayList<String> names = new ArrayList<String>();
-			stmt2 = conn.createStatement();
+			int i = 0;
+			stmtList = new ArrayList<Statement>();
 			while (rs.next()) {
+				stmtList.add( conn.createStatement() );
 				String infoName = rs.getString("InfoName");
 				if (!EntryFixedInfo.contains(infoName)) {
 					sql = String
 							.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `EntryId` = '%d'",
 									infoName, entryId);
-					ResultSet infoSet = stmt2.executeQuery(sql);
+					ResultSet infoSet = stmtList.get(i).executeQuery(sql);
 					if (!infoSet.isBeforeFirst()) {
 						// not empty
 						infoData.add(infoSet);
@@ -196,6 +199,14 @@ class DatabaseConnector {
 		}
 		if (this.stmt != null) {
 			this.stmt.close();
+		}
+		
+		if (this.stmtList != null )
+		{
+			for( Statement state : this.stmtList)
+			{
+				state.close();
+			}
 		}
 	}
 
