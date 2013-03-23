@@ -110,6 +110,8 @@ public class FilterApplier
 			{
 				writer.closeWriter();
 			}
+			//TODO remove
+			exception.printStackTrace();
 			return exception.getMessage();
 		}
     }
