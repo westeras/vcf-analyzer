@@ -139,7 +139,8 @@ class DatabaseConnector {
 			}
 
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query " + sql);
+			throw se;
+			//throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
