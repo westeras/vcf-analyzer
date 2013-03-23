@@ -116,37 +116,6 @@ class DatabaseConnector {
 		}
 	}
 
-	public void getInfoData(long entryId, ArrayList<String> infoTableName,
-			ArrayList<ResultSet> infoData) throws SQLException {
-		String sql = "";
-		try {
-			sql = "SELECT `InfoName` FROM `vcf_analyzer`.`InfoTable` ORDER BY `InfoName` ASC";
-			ResultSet rs = this.stmt.executeQuery(sql);
-			ArrayList<String> names = new ArrayList<String>();
-			int i = 0;
-			stmtList = new ArrayList<Statement>();
-			while (rs.next()) {
-				stmtList.add( conn.createStatement() );
-				String infoName = rs.getString("InfoName");
-				if (!EntryFixedInfo.contains(infoName)) {
-					sql = String
-							.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `EntryId` = '%d'",
-									infoName, entryId);
-					ResultSet infoSet = stmtList.get(i).executeQuery(sql);
-					if (!infoSet.isBeforeFirst()) {
-						// not empty
-						infoData.add(infoSet);
-						infoTableName.add(infoName);
-					}
-				}
-
-			}
-
-
-		} catch (SQLException se) {
-			throw new SQLException("Invalid Query " + sql);
-		}
-	}
 
 	public ArrayList<String> getInfoTableNames() throws SQLException
 	{
@@ -206,6 +175,26 @@ class DatabaseConnector {
 
 	}
 
+	public ResultSet getIndividualDatum(long indId,
+			String genotypeTableName) throws SQLException {
+
+		String sql = "";
+		try 
+		{
+			sql = String
+					.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `IndID` = '%d'",
+							genotypeTableName, indId);
+			ResultSet infoSet = this.stmt.executeQuery(sql);
+			if (!infoSet.isBeforeFirst()) {
+				// not empty
+				return infoSet;
+			} 
+			return null;
+		} catch (SQLException se) {
+			throw new SQLException("Invalid Query " + sql);
+		}
+	}
+	
 	public ArrayList<ResultSet> getIndividualData(long indId,
 			ArrayList<String> genotypeTableName) throws SQLException {
 		ArrayList<ResultSet> genotypeData = new ArrayList<ResultSet>();

@@ -7,6 +7,7 @@ public class vcfWriter
     private BufferedWriter writer;
     private int infoCount = 0;
     private String writeBuffer = "";
+	private boolean individualMiddle;
     
     public vcfWriter( String filename ) throws IOException
     {
@@ -52,73 +53,14 @@ public class vcfWriter
         } catch (SQLException exception) {
         	throw new SQLException("VCF Entry data improperly formatted");
         }
-        /*
-    	    public void writeEntry( ResultSet entryData, 
-                                    ArrayList<ResultSet> infoData,
-                                    ArrayList<String> infoName ) throws SQLException
-        try {
-            this.writer.write( entryData.getString("Chrom") );
-            this.writer.write( '\t' );
-            this.writer.write( entryData.getString("Pos") );
-            this.writer.write( '\t' );
-            this.writer.write( entryData.getString("Id") );
-            this.writer.write( '\t' );
-            this.writer.write( entryData.getString("Ref") );
-            this.writer.write( '\t' );
-            this.writer.write( entryData.getString("Alt") );
-            this.writer.write( '\t' );
-            this.writer.write( entryData.getString("Qual") );
-            this.writer.write( '\t' );
-            this.writer.write( entryData.getString("Filter") );
-            this.writer.write( '\t' );
-
-            this.infoCount = 0;
-    	    for (int i =0; i< infoData.size(); i++ )
-    		{
-    		    if (i!= 0)
-    		    {
-    		    	this.writer.write(";");
-    		    }
-    		    
-    		    ResultSet rs = infoData.get(i);
-    		    String infoDatum = "";
-    		    if (rs.next()) 
-    			{
-    			    ResultSetMetaData rsMetaData = rs.getMetaData();
-
-    			    int numberOfColumns = rsMetaData.getColumnCount();
-    		    	
-    			    if (numberOfColumns > 1)
-    			    {
-    			    	infoDatum = rs.getNString(2);
-    			    	this.writer.write( infoName.get(i)+"="+infoDatum );
-    			    }
-    			    else
-    			    {
-    			    	this.writer.write( infoName.get(i) );
-    			    }
-    			}
-    		    rs.close();
-
-    		}
-            
-            this.writer.write( entryData.getString("Format") );
-        
-        } catch (IOException exception) {
-            throw new IOException("Error writing file");
-        } catch (SQLException exception) {
-        	throw exception;
-        	//TODO change back
-            //throw new SQLException("VCF Entry data improperly formatted");
-        } */
     }
     
     public void writeEntryEnd( ResultSet entryData ) throws IOException, SQLException
     {
     	this.writer.write( this.writeBuffer );
-    	this.writer.write("/t");
+    	this.writer.write("\t");
     	this.writer.write( entryData.getString("Format") );
-    	this.writer.write( "/n");
+    	this.writer.write( "\n");
     }
     
     public void writeInfoSection( String infoName, ResultSet infoData) throws IOException, SQLException
@@ -179,6 +121,51 @@ public class vcfWriter
     	
 	}
     
+    public void writeIndividualStart()
+    {
+    	this.writeBuffer = "\t";
+    	this.individualMiddle = false;
+    	
+    }
+    
+    public void writeIndividualEnd() throws IOException
+    {
+    	this.writer.write(this.writeBuffer);
+    }
+    
+    public void writeIndividualDatum( 
+            ResultSet genotypeData,
+            String genotypeName ) throws SQLException
+	{
+    	if ( genotypeData == null)
+    	{
+    		return;
+    	}
+    	
+
+		if ( this.individualMiddle )
+		{
+			this.writeBuffer +=(":");
+		}
+		else
+		{
+			this.individualMiddle = true;
+		}
+		
+		if ( isSpecialCase(genotypeName ) )
+		{
+				
+			this.writeBuffer +=( formatSpecialCase( genotypeName, genotypeData ) );
+		}
+		else
+		{
+			this.writeBuffer +=( formatStandardCase( genotypeName, genotypeData ) );
+		}	
+		
+		genotypeData.close();	
+    	
+	}
+    
 	private String formatStandardCase(String genotypeName, ResultSet rs) throws SQLException {
 
 	    ResultSetMetaData rsMetaData = rs.getMetaData();
@@ -229,7 +216,7 @@ public class vcfWriter
 		return genotypeName.equals( "GT");
 	}
 	
-	private String formatSpecialCase(String genotypeName, ResultSet data) throws IOException, SQLException {
+	private String formatSpecialCase(String genotypeName, ResultSet data) throws SQLException {
 		if ( genotypeName.equals( "GT") )
 		{
 			int i = 0;

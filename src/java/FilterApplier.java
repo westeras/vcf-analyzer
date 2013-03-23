@@ -68,28 +68,26 @@ public class FilterApplier
 			
 			while (entries.next() )
 		    {
-				System.out.println("entry");
 				long entryId = entries.getLong("EntryId");
 				ArrayList<String> infoTableName = new ArrayList<String>();
-	    		//ArrayList<ResultSet> infoData = new ArrayList<ResultSet>();
-				
-				//this.nestedConnection.getInfoData(entryId, infoTableName, infoData);
+
 	    		writer.writeEntryStart( entries );
 	    		
 	    		ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
 	    		for (int j=0; j< tableNames.size(); j++)
 	    		{
 	    			ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, tableNames.get(j));
-	    			writer.writeInfoSection( tableNames.get(j), entryInfoData );
+	    			if (entryInfoData!=null)
+	    			{
+	    				writer.writeInfoSection( tableNames.get(j), entryInfoData );
+	    			}
 	    		}
 	    		writer.writeEntryEnd(entries);
 	    		
 				//TODO test entry
-	    		/*
+	    		
 				if (passing)
 				{
-					
-					//writer.writeEntry( entries, infoData, infoTableName );
 					//individual level
 					String indFormat = entries.getString("Format");
 					ArrayList<String> genotypes = new ArrayList<String>( 
@@ -98,21 +96,27 @@ public class FilterApplier
 					ResultSet individuals = this.nestedConnection.getIndividuals( entryId );
 					while (individuals.next() )
 					{
-						System.out.println("individuals");
-						long indId = entries.getLong("IndID");
-					
-						ArrayList<ResultSet> genotypeData = this.nestedConnection2.getIndividualData( indId, genotypes);
+						writer.writeIndividualStart();
 						
+						long indId = entries.getLong("IndID");
+						for (int k=0; k< genotypes.size(); k++)
+						{
+							ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
+							writer.writeIndividualDatum( genotypeData, genotypes.get(k));
+						}
+						
+						//if pass
+						writer.writeIndividualEnd();
 						//if pass write
 						//if fail close genotypeData
 						//writer closes genotypeData,
-						writer.writeIndividual( genotypeData, genotypes );
+						//writer.writeIndividual( genotypeData, genotypes );
 					}
 					individuals.close();
 					
 					writer.writeEOL();
 					
-				}*/
+				}
 
 		    }
 			entries.close();

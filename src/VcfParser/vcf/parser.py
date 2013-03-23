@@ -272,6 +272,9 @@ class Reader(object):
                 '''
             line = self.reader.next()
 
+        #get last header line
+        self.vcfHeader += line;
+            
         self.db.createVcfHeader( self.vcfId, self.vcfHeader )
             
         fields = re.split('\t| +', line.rstrip())
