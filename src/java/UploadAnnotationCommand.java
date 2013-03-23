@@ -23,7 +23,7 @@ public class UploadAnnotationCommand extends Command{
 		}
 	}
 	@Override
-	public void execute() {
+	public String execute() {
 	 try {
 		DatabaseConnector connection=new DatabaseConnector();
 		AnnotationParser parser=new AnnotationParser(this.fileLocation);
@@ -46,6 +46,7 @@ public class UploadAnnotationCommand extends Command{
 		// TODO Auto-generated catch-block stub.
 		exception.printStackTrace();
 	}
+	return "Upload Successful";
 		
 	}
 
