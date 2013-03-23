@@ -974,7 +974,7 @@ class DatabaseConnection():
             elif (gtStrList[i] == '.'):
                 outList.append("NULL")
             else:
-                outList.append( tStrList[i] )
+                outList.append( gtStrList[i] )
                 
         if (n == 1):
             query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', NULL, NULL, NULL, NULL)".format(indID, outList[0])
