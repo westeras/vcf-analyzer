@@ -79,7 +79,7 @@ public class vcfWriter
 	    	
 		    if (numberOfColumns > 1)
 		    {
-		    	infoDatum = infoData.getNString(2);
+		    	infoDatum = infoData.getString(2);
 		    	this.writer.write( infoName+"="+infoDatum );
 		    }
 		    else
@@ -183,7 +183,7 @@ public class vcfWriter
 	    		separator = "";
 	    	}
 	    	
-	    	String genoDatum = rs.getNString(i);
+	    	String genoDatum = rs.getString(i);
 	    	if ( rs.wasNull() )
 	    	{
 	    		if ( nullValues == null )
