@@ -98,7 +98,7 @@ public class FilterApplier
 					{
 						writer.writeIndividualStart();
 						
-						long indId = entries.getLong("IndID");
+						long indId = individuals.getLong("IndID");
 						for (int k=0; k< genotypes.size(); k++)
 						{
 							ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
