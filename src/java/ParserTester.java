@@ -21,7 +21,7 @@ public class ParserTester {
 	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, SQLException {
-		AnnotationParser annotParser=new AnnotationParser(new File("Examples\\annot.txt"));
+		AnnotationParser annotParser=new AnnotationParser(new File("Examples/annot.txt"));
 		                                                           
 		ArrayList<String[]> rowsToUpload=annotParser.parseFile();
 		for (String[] row : rowsToUpload){
@@ -33,7 +33,7 @@ public class ParserTester {
 			System.out.printf("%s %s %s %s %s\n", chrom, startPosition, endPosition, geneName, geneDirection);
 		}	
 		System.out.println("Done testing annotation parser");
-		DivergenceParser divParser=new DivergenceParser(new File("Examples\\divergence.txt"));
+		DivergenceParser divParser=new DivergenceParser(new File("Examples/divergence.txt"));
 		rowsToUpload=divParser.parseFile();
 		for (String[] row : rowsToUpload){
 			String chromosome=row[0];
