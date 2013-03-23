@@ -74,8 +74,7 @@ public class FilterApplier
 	    		ArrayList<ResultSet> infoData = new ArrayList<ResultSet>();
 				
 				this.nestedConnection.getInfoData(entryId, infoTableName, infoData);
-				//test entry
-				/*
+				//TODO test entry
 				if (passing)
 				{
 					writer.writeEntry( entries, infoData, infoTableName );
@@ -92,14 +91,13 @@ public class FilterApplier
 					
 						ArrayList<ResultSet> genotypeData = this.nestedConnection2.getIndividualData( indId, genotypes);
 						
-						//if pass
-						//if fail
+						//if pass write
+						//if fail close genotypeData
 						//writer closes genotypeData,
 						writer.writeIndividual( genotypeData, genotypes );
 					}
 					individuals.close();
 				}
-				*/
 				writer.writeEOL();
 
 		    }

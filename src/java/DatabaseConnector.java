@@ -146,10 +146,7 @@ class DatabaseConnector {
 			{
 				stmt2.close();
 			}
-			throw se;
-
-			//TODO error here
-			//throw new SQLException("Invalid Query " + sql);
+			throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
