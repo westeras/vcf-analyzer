@@ -119,7 +119,6 @@ class DatabaseConnector {
 	public void getInfoData(long entryId, ArrayList<String> infoTableName,
 			ArrayList<ResultSet> infoData) throws SQLException {
 		String sql = "";
-		Statement stmt2 = null;
 		try {
 			sql = "SELECT `InfoName` FROM `vcf_analyzer`.`InfoTable` ORDER BY `InfoName` ASC";
 			ResultSet rs = this.stmt.executeQuery(sql);
@@ -142,13 +141,8 @@ class DatabaseConnector {
 				}
 
 			}
-			stmt2.close();
 
 		} catch (SQLException se) {
-			if ( stmt2 != null)
-			{
-				stmt2.close();
-			}
 			throw new SQLException("Invalid Query " + sql);
 		}
 	}
