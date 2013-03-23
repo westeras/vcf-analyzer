@@ -24,10 +24,12 @@ public class UploadAnnotationCommand extends Command{
 	}
 	@Override
 	public String execute() {
+		String resultStmnt="Upload Successful!";
 	 try {
 		DatabaseConnector connection=new DatabaseConnector();
 		AnnotationParser parser=new AnnotationParser(this.fileLocation);
 		ArrayList<String[]> rowsToUpload=parser.parseFile();
+		
 		for (String[] row : rowsToUpload){
 			String chrom =row[0];
 			String startPosition=row[1];
@@ -46,7 +48,8 @@ public class UploadAnnotationCommand extends Command{
 		// TODO Auto-generated catch-block stub.
 		exception.printStackTrace();
 	}
-	return "Upload Successful";
+	 return resultStmnt;
+	
 		
 	}
 

@@ -213,10 +213,11 @@ class DatabaseConnector {
 	 * @param chromosome
 	 * @param position
 	 * @param divValue
+	 * @return TODO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	protected void uploadDivergence(String name, String chromosome,
+	protected int uploadDivergence(String name, String chromosome,
 			int position, int divValue) throws ClassNotFoundException,
 			SQLException {
 		if (!hasOpenStatementAndConnection())
@@ -224,10 +225,8 @@ class DatabaseConnector {
 		String sql = String
 				.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
 						name, chromosome, position, divValue);
-		ResultSet rs = this.stmt.executeUpdate(sql);
-		while (rs.next()) {
-			System.out.println(rs.toString());
-		}
+		int rs = this.stmt.executeUpdate(sql);
+		return rs;
 	}
 
 	/**
@@ -247,7 +246,7 @@ class DatabaseConnector {
 		String sql = String.format(
 				"SELECT %s FROM %s ORDER BY %s desc LIMIT 0,1;", idName,
 				tableName, idName);
-		ResultSet rs = this.stmt.executeUpdate(sql);
+		ResultSet rs = this.stmt.executeQuery(sql);
 		return Integer.parseInt(rs.getString("DivID"));
 	}
 
@@ -255,10 +254,11 @@ class DatabaseConnector {
 	 * TODO consider refactoring to one general upload method
 	 * 
 	 * @param annoName
+	 * @return TODO
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	protected void uploadAnnotation(String annoName, String chromosome,
+	protected int uploadAnnotation(String annoName, String chromosome,
 			int startPosition, int endPosition, String geneName, String geneDirection) throws ClassNotFoundException,
 			SQLException {
 		if (!hasOpenStatementAndConnection())
@@ -266,10 +266,8 @@ class DatabaseConnector {
 		String sql = String
 				.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
 						chromosome, startPosition, endPosition,geneName, geneDirection,annoName);
-		ResultSet rs = this.stmt.executeQuery(sql);
-		while (rs.next()) {
-			System.out.println(rs.toString());
-		}
+		int rs = this.stmt.executeUpdate(sql);
+		return rs;
 	}
 
 
