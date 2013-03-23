@@ -102,7 +102,11 @@ public class FilterApplier
 						for (int k=0; k< genotypes.size(); k++)
 						{
 							ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
-							writer.writeIndividualDatum( genotypeData, genotypes.get(k));
+							
+							if ( genotypeData != null )
+							{
+								writer.writeIndividualDatum( genotypeData, genotypes.get(k));
+							}
 						}
 						
 						//if pass
