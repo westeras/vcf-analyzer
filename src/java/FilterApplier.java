@@ -62,6 +62,7 @@ public class FilterApplier
 			
 			while (entries.next() )
 		    {
+				System.out.println("entry");
 				long entryId = entries.getLong("EntryId");
 				ArrayList<String> infoTableName = new ArrayList<String>();
 	    		ArrayList<ResultSet> infoData = new ArrayList<ResultSet>();
@@ -79,6 +80,7 @@ public class FilterApplier
 					ResultSet individuals = this.connection.getIndividuals( entryId );
 					while (individuals.next() )
 					{
+						System.out.println("individuals");
 						long indId = entries.getLong("IndID");
 					
 						ArrayList<ResultSet> genotypeData = this.connection.getIndividualData( indId, genotypes);

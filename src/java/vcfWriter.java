@@ -12,6 +12,7 @@ public class vcfWriter
         {
             File outFile = new File(filename);
             this.writer = new BufferedWriter(new FileWriter(outFile));
+            System.out.println("writer created");
         }
         catch (IOException e)
         {
