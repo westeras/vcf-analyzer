@@ -222,7 +222,7 @@ class DatabaseConnector {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
 		String sql = String
-				.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%i','%i');",
+				.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
 						name, chromosome, position, divValue);
 		ResultSet rs = this.stmt.executeQuery(sql);
 		while (rs.next()) {
@@ -264,7 +264,7 @@ class DatabaseConnector {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
 		String sql = String
-				.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%i','%i','%s','%s','%s');",
+				.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
 						chromosome, startPosition, endPosition,geneName, geneDirection,annoName);
 		ResultSet rs = this.stmt.executeQuery(sql);
 		while (rs.next()) {
