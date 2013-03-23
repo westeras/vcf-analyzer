@@ -56,9 +56,10 @@ public class FilterApplier
 			writer = new vcfWriter(this.fileName);
 			
 			long vcfId = this.connection.getVcfId( this.vcfName);
-			ResultSet entries = this.connection.getVcfEntries( vcfId );
 			
 			writer.writeHeader( this.connection.getVcfHeader(vcfId) );
+			
+			ResultSet entries = this.connection.getVcfEntries( vcfId );
 			
 			while (entries.next() )
 		    {
@@ -92,10 +93,10 @@ public class FilterApplier
 					}
 					individuals.close();
 				}
-				entries.close();
 				writer.writeEOL();
 
 		    }
+			entries.close();
 			writer.closeWriter();
 			return "Completed filter";
 			
