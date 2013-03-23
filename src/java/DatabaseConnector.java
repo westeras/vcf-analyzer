@@ -118,17 +118,19 @@ class DatabaseConnector {
 	public void getInfoData(long entryId, ArrayList<String> infoTableName,
 			ArrayList<ResultSet> infoData) throws SQLException {
 		String sql = "";
+		Statement stmt2 = null;
 		try {
 			sql = "SELECT `InfoName` FROM `vcf_analyzer`.`InfoTable` ORDER BY `InfoName` ASC";
 			ResultSet rs = this.stmt.executeQuery(sql);
 			ArrayList<String> names = new ArrayList<String>();
+			stmt2 = conn.createStatement();
 			while (rs.next()) {
 				String infoName = rs.getString("InfoName");
 				if (!EntryFixedInfo.contains(infoName)) {
 					sql = String
 							.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `EntryId` = '%d'",
 									infoName, entryId);
-					ResultSet infoSet = this.stmt.executeQuery(sql);
+					ResultSet infoSet = stmt2.executeQuery(sql);
 					if (!infoSet.isBeforeFirst()) {
 						// not empty
 						infoData.add(infoSet);
@@ -137,9 +139,16 @@ class DatabaseConnector {
 				}
 
 			}
+			stmt2.close();
 
 		} catch (SQLException se) {
+			if ( stmt2 != null)
+			{
+				stmt2.close();
+			}
 			throw se;
+
+			//TODO error here
 			//throw new SQLException("Invalid Query " + sql);
 		}
 	}
