@@ -11,7 +11,9 @@ public class FilterApplier
     private String filterName;
     private String vcfName;
     private String fileName;
-	private DatabaseConnector connection;    
+	private DatabaseConnector connection;   
+	private DatabaseConnector nestedConnection;
+	private DatabaseConnector nestedConnection2;
 
     public FilterApplier( String filterName, String vcfName, String filename )
     {
@@ -25,6 +27,8 @@ public class FilterApplier
     	
     	try {
     		this.connection = new DatabaseConnector();
+    		this.nestedConnection = new DatabaseConnector();
+    		this.nestedConnection2 = new DatabaseConnector();
     	}
     	catch( Exception e)
     	{
@@ -38,7 +42,8 @@ public class FilterApplier
 			//TODO load filter
 			this.output = applyFilter();
 			connection.CloseConnection();
-	
+			nestedConnection.CloseConnection();
+			nestedConnection2.CloseConnection();
 		    }
 		catch (Exception e)
 		    {
@@ -78,13 +83,13 @@ public class FilterApplier
 					ArrayList<String> genotypes = new ArrayList<String>( 
 				    		Arrays.asList( indFormat.split(":") ));
 					
-					ResultSet individuals = this.connection.getIndividuals( entryId );
+					ResultSet individuals = this.nestedConnection.getIndividuals( entryId );
 					while (individuals.next() )
 					{
 						System.out.println("individuals");
 						long indId = entries.getLong("IndID");
 					
-						ArrayList<ResultSet> genotypeData = this.connection.getIndividualData( indId, genotypes);
+						ArrayList<ResultSet> genotypeData = this.nestedConnection2.getIndividualData( indId, genotypes);
 						
 						//if pass
 						//if fail
