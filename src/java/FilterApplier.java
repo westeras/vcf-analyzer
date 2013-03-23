@@ -71,13 +71,25 @@ public class FilterApplier
 				System.out.println("entry");
 				long entryId = entries.getLong("EntryId");
 				ArrayList<String> infoTableName = new ArrayList<String>();
-	    		ArrayList<ResultSet> infoData = new ArrayList<ResultSet>();
+	    		//ArrayList<ResultSet> infoData = new ArrayList<ResultSet>();
 				
-				this.nestedConnection.getInfoData(entryId, infoTableName, infoData);
+				//this.nestedConnection.getInfoData(entryId, infoTableName, infoData);
+	    		writer.writeEntryStart( entries );
+	    		
+	    		ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
+	    		for (int j=0; j< tableNames.size(); j++)
+	    		{
+	    			ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, tableNames.get(j));
+	    			writer.writeInfoSection( tableNames.get(j), entryInfoData );
+	    		}
+	    		writer.writeEntryEnd(entries);
+	    		
 				//TODO test entry
+	    		/*
 				if (passing)
 				{
-					writer.writeEntry( entries, infoData, infoTableName );
+					
+					//writer.writeEntry( entries, infoData, infoTableName );
 					//individual level
 					String indFormat = entries.getString("Format");
 					ArrayList<String> genotypes = new ArrayList<String>( 
@@ -97,8 +109,10 @@ public class FilterApplier
 						writer.writeIndividual( genotypeData, genotypes );
 					}
 					individuals.close();
+					
 					writer.writeEOL();
-				}
+					
+				}*/
 
 		    }
 			entries.close();

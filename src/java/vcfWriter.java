@@ -6,6 +6,7 @@ public class vcfWriter
 {
     private BufferedWriter writer;
     private int infoCount = 0;
+    private String writeBuffer = "";
     
     public vcfWriter( String filename ) throws IOException
     {
@@ -27,11 +28,34 @@ public class vcfWriter
         this.writer.newLine();
     }
     
-    public void writeEntry( ResultSet entryData, 
-                                    ArrayList<ResultSet> infoData,
-                                    ArrayList<String> infoName ) throws IOException, SQLException
+    public void writeEntryStart( ResultSet entryData ) throws SQLException
     {
+        try {
+        	this.writeBuffer = "";
+            this.writeBuffer +=( entryData.getString("Chrom") );
+            this.writeBuffer +=( '\t' );
+            this.writeBuffer +=( entryData.getString("Pos") );
+            this.writeBuffer +=( '\t' );
+            this.writeBuffer +=( entryData.getString("Id") );
+            this.writeBuffer +=( '\t' );
+            this.writeBuffer +=( entryData.getString("Ref") );
+            this.writeBuffer +=( '\t' );
+            this.writeBuffer +=( entryData.getString("Alt") );
+            this.writeBuffer +=( '\t' );
+            this.writeBuffer +=( entryData.getString("Qual") );
+            this.writeBuffer +=( '\t' );
+            this.writeBuffer +=( entryData.getString("Filter") );
+            this.writeBuffer +=( '\t' );
+
+            this.infoCount = 0;
         
+        } catch (SQLException exception) {
+        	throw new SQLException("VCF Entry data improperly formatted");
+        }
+        /*
+    	    public void writeEntry( ResultSet entryData, 
+                                    ArrayList<ResultSet> infoData,
+                                    ArrayList<String> infoName ) throws SQLException
         try {
             this.writer.write( entryData.getString("Chrom") );
             this.writer.write( '\t' );
@@ -86,13 +110,15 @@ public class vcfWriter
         	throw exception;
         	//TODO change back
             //throw new SQLException("VCF Entry data improperly formatted");
-        }
+        } */
     }
     
     public void writeEntryEnd( ResultSet entryData ) throws IOException, SQLException
     {
+    	this.writer.write( this.writeBuffer );
     	this.writer.write("/t");
     	this.writer.write( entryData.getString("Format") );
+    	this.writer.write( "/n");
     }
     
     public void writeInfoSection( String infoName, ResultSet infoData) throws IOException, SQLException
@@ -126,7 +152,7 @@ public class vcfWriter
             ArrayList<ResultSet> genotypeData,
             ArrayList<String> genotypeName ) throws IOException, SQLException
 	{
-    	this.writer.write("\t");
+    	this.writeBuffer +=("\t");
     	if ( genotypeData == null)
     	{
     		return;
@@ -136,16 +162,16 @@ public class vcfWriter
     	{
     		if ( i!= 0)
     		{
-    			this.writer.write(":");
+    			this.writeBuffer +=(":");
     		}
     		if ( isSpecialCase(genotypeName.get(i) ) )
     		{
     				
-    			this.writer.write( formatSpecialCase( genotypeName.get(i), genotypeData.get(i) ) );
+    			this.writeBuffer +=( formatSpecialCase( genotypeName.get(i), genotypeData.get(i) ) );
     		}
     		else
     		{
-    			this.writer.write( formatStandardCase( genotypeName.get(i), genotypeData.get(i) ) );
+    			this.writeBuffer +=( formatStandardCase( genotypeName.get(i), genotypeData.get(i) ) );
     		}	
     		
     		genotypeData.get(i).close();

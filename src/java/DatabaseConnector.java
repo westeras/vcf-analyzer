@@ -142,11 +142,54 @@ class DatabaseConnector {
 
 			}
 
+
 		} catch (SQLException se) {
 			throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
+	public ArrayList<String> getInfoTableNames() throws SQLException
+	{
+		String sql = "";
+		ArrayList<String> tables = new ArrayList<String>();
+		try 
+		{
+			sql = "SELECT `InfoName` FROM `vcf_analyzer`.`InfoTable` ORDER BY `InfoName` ASC";
+			ResultSet rs = this.stmt.executeQuery(sql);
+			ArrayList<String> names = new ArrayList<String>();
+			while (rs.next()) {
+				String infoName = rs.getString("InfoName");
+				if (!EntryFixedInfo.contains(infoName)) {
+					tables.add(infoName);
+				}
+			}
+			rs.close();
+			return names;
+		} catch (SQLException se) {
+			throw new SQLException("Invalid Query " + sql);
+		}
+	}
+	
+	public ResultSet getInfoDatum(long entryId, String infoTableName ) throws SQLException {
+		String sql = "";
+		try {
+
+			if (!EntryFixedInfo.contains(infoTableName)) {
+				sql = String
+						.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `EntryId` = '%d'",
+								infoTableName, entryId);
+				ResultSet infoSet = this.stmt.executeQuery(sql);
+				if (!infoSet.isBeforeFirst()) {
+					// not empty
+					return infoSet;
+				}
+			}
+			return null;
+		} catch (SQLException se) {
+			throw new SQLException("Invalid Query " + sql);
+		}
+	}
+	
 	public ResultSet getIndividuals(long entryId) throws SQLException {
 
 		String sql = "";
