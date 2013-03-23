@@ -20,11 +20,12 @@ public class UploadTester {
 	 * @throws ClassNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, SQLException {
-		System.out.println(testFormat("DivName","Chromosome",1,2));
-//		Command uploadDivCommand= new UploadDivergenceCommand("Examples/divergence.txt","","");
-//		uploadDivCommand.execute();
-//		Command uploadAnnotCommand=new UploadAnnotationCommand("Examples/annot.txt","","");
-//		uploadAnnotCommand.execute();
+		
+		System.out.println("Testing Format: \n"+testFormat("DivName","Chromosome",1,2)+"\n");
+		Command uploadDivCommand= new UploadDivergenceCommand("Examples/divergence.txt","","");
+		uploadDivCommand.execute();
+		Command uploadAnnotCommand=new UploadAnnotationCommand("Examples/annot.txt","","");
+		uploadAnnotCommand.execute();
 	}
 	
 	
