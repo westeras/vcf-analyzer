@@ -95,8 +95,18 @@ class DatabaseConnector {
 	        }
     	}
     
-    	public int createFilterEntry(int filterID, int operator, String[] operands) {
-    		return 0;
+    	public int createFilterEntry(int filterID, int operator, String[] operands) throws SQLException {
+    		String sql = null;
+    		try {
+    			sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "')";
+    			ResultSet rs = stmt.executeQuery(sql);
+    			
+    			int filterEntryID = rs.getInt(0);
+    			
+    			return filterEntryID;
+    		} catch(SQLException se) {
+	            throw new SQLException("Invalid Query: " + sql);
+	        }
     	}
 
 	public int getFilterID(String filterName) throws IllegalArgumentException,
