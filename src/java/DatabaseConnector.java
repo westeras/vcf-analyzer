@@ -21,18 +21,25 @@ class DatabaseConnector {
 	private Statement stmt;
 
 	public DatabaseConnector() throws SQLException, ClassNotFoundException {
-		this.conn = null;
-		this.stmt = null;
-
-		Class.forName(JDBC_DRIVER);
-
-		conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		
+		try{
+			this.conn = null;
+			this.stmt = null;
+	
+			Class.forName(JDBC_DRIVER);
+	
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement();
+		}
+		catch (Exception e) {
+			throw new SQLException("Could not connect to database");
+		}
 
 	}
 
 	public long getVcfId(String vcfName) throws IllegalArgumentException,
 			SQLException {
-		String sql = null;
+		String sql = "";
 		try {
 			sql = "SELECT `VcfId` FROM `vcf_analyzer`.`Vcf` WHERE `VcfName` = '"
 					+ vcfName + "'";
@@ -53,7 +60,7 @@ class DatabaseConnector {
 
 	public String getVcfHeader(long vcfId) throws IllegalArgumentException,
 			SQLException {
-		String sql = null;
+		String sql = "";
 		try {
 			sql = "SELECT `VcfHeader` FROM `vcf_analyzer`.`Vcf` WHERE `VcfId` = '"
 					+ vcfId + "'";
@@ -75,7 +82,7 @@ class DatabaseConnector {
 
 	public int getFilterID(String filterName) throws IllegalArgumentException,
 			SQLException {
-		String sql = null;
+		String sql = "";
 		try {
 			sql = "SELECT `FilID` FROM `vcf_analyzer`.`Filter` WHERE `FilName` = '"
 					+ filterName + "'";
@@ -95,7 +102,7 @@ class DatabaseConnector {
 	}
 
 	public ResultSet getVcfEntries(long vcfId) throws SQLException {
-		String sql = null;
+		String sql = "";
 		try {
 			sql = "SELECT * FROM `vcf_analyzer`.`VcfEntry` WHERE `VcfId` = '"
 					+ vcfId + "' ORDER BY `EntryId` ASC";
