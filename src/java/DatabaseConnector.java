@@ -54,7 +54,7 @@ class DatabaseConnector {
 			throw new IllegalArgumentException("VCF: " + vcfName + " not found");
 
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query" + sql);
+			throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
@@ -97,7 +97,7 @@ class DatabaseConnector {
 			throw new IllegalArgumentException("Filter: " + filterName
 					+ " not found");
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query" + sql);
+			throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
@@ -111,7 +111,7 @@ class DatabaseConnector {
 			return rs;
 
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query" + sql);
+			throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
@@ -126,7 +126,7 @@ class DatabaseConnector {
 				String infoName = rs.getString("InfoName");
 				if (!EntryFixedInfo.contains(infoName)) {
 					sql = String
-							.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `entryId` = '%d'",
+							.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `EntryId` = '%d'",
 									infoName, entryId);
 					ResultSet infoSet = this.stmt.executeQuery(sql);
 					if (!infoSet.isBeforeFirst()) {
@@ -139,7 +139,7 @@ class DatabaseConnector {
 			}
 
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query" + sql);
+			throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
@@ -154,7 +154,7 @@ class DatabaseConnector {
 			return rs;
 
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query" + sql);
+			throw new SQLException("Invalid Query " + sql);
 		}
 
 	}
@@ -179,7 +179,7 @@ class DatabaseConnector {
 			}
 			return genotypeData;
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query" + sql);
+			throw new SQLException("Invalid Query " + sql);
 		}
 	}
 
