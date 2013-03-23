@@ -33,6 +33,7 @@ public class UploadDivergenceCommand extends Command{
 
 	@Override
 	public String execute() {
+		String resultStmnt=this.fileLocation.toString()+" Uploaded Successfully!";
 		try {
 			DatabaseConnector connection=new DatabaseConnector();
 			DivergenceParser parser=new DivergenceParser(this.fileLocation);
@@ -53,7 +54,8 @@ public class UploadDivergenceCommand extends Command{
 			// TODO Auto-generated catch-block stub.
 			exception.printStackTrace();
 		}
-		return "Upload Successful";
+		System.out.println(resultStmnt);
+		return resultStmnt;
 		
 		
 		

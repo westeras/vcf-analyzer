@@ -22,9 +22,14 @@ public class UploadAnnotationCommand extends Command{
 			this.name=getDate();
 		}
 	}
+	
+	/*
+	 * TODO: figure out how to tell if the upload was successful
+	 */
+	
 	@Override
 	public String execute() {
-		String resultStmnt="Upload Successful!";
+		String resultStmnt=this.fileLocation.toString()+" Uploaded Successfully!";
 	 try {
 		DatabaseConnector connection=new DatabaseConnector();
 		AnnotationParser parser=new AnnotationParser(this.fileLocation);
@@ -37,6 +42,7 @@ public class UploadAnnotationCommand extends Command{
 			String geneName=row[3];
 			String geneDirection=row[4];
 			connection.uploadAnnotation(this.name,chrom, Integer.valueOf(startPosition),Integer.valueOf(endPosition), geneName, geneDirection);
+			
 		}			
 	} catch (ClassNotFoundException exception) {
 		// TODO Auto-generated catch-block stub.
@@ -48,6 +54,7 @@ public class UploadAnnotationCommand extends Command{
 		// TODO Auto-generated catch-block stub.
 		exception.printStackTrace();
 	}
+	 System.out.println(resultStmnt);
 	 return resultStmnt;
 	
 		
