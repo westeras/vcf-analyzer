@@ -19,9 +19,9 @@ public class UploadTester {
 	 * @throws ClassNotFoundException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, SQLException {
-		Command uploadDivCommand= new UploadDivergenceCommand("Examples\\divergence.txt","","");
+		Command uploadDivCommand= new UploadDivergenceCommand("Examples/divergence.txt","","");
 		uploadDivCommand.execute();
-		Command uploadAnnotCommand=new UploadAnnotationCommand("Examples\\annot.txt","","");
+		Command uploadAnnotCommand=new UploadAnnotationCommand("Examples/annot.txt","","");
 		uploadAnnotCommand.execute();
 	}
 
