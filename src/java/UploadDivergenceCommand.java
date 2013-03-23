@@ -13,10 +13,15 @@ import java.util.ArrayList;
 public class UploadDivergenceCommand extends Command{
 	private File fileLocation;
 	private String options;
+	private String name;
 	
-	public UploadDivergenceCommand(String fileLocation, String options){
+	public UploadDivergenceCommand(String fileLocation, String options, String name){
 		this.fileLocation=new File(fileLocation);
 		this.options=options;
+		this.name=name;
+		if (this.name==""){
+			this.name=getDate();
+		}
 	}
 	/**
 	 * TODO Put here a description of what this constructor does.
@@ -32,7 +37,10 @@ public class UploadDivergenceCommand extends Command{
 			DivergenceParser parser=new DivergenceParser(this.fileLocation);
 			ArrayList<String[]> rowsToUpload=parser.parseFile();
 			for (String[] row : rowsToUpload){
-				connection.uploadDivergenceLine(row[0], Integer.valueOf(row[1]),Integer.valueOf(row[2]));
+				String chromosome=row[0];
+				String position=row[1];
+				String divValue=row[2];
+				connection.uploadDivergence(this.name,chromosome, Integer.valueOf(position),Integer.valueOf(divValue));
 			}			
 		} catch (ClassNotFoundException exception) {
 			// TODO Auto-generated catch-block stub.

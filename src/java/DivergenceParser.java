@@ -30,7 +30,6 @@ public class DivergenceParser {
 	public ArrayList<String[]> parseFile() throws FileNotFoundException, ClassNotFoundException, SQLException{
 		FileInputStream fileIn=new FileInputStream(this.divergenceFile);
 		Scanner reader=new Scanner(fileIn);
-		DatabaseConnector connection=new DatabaseConnector();
 		ArrayList<String[]> rows = new ArrayList<String[]>();
 		while (reader.hasNextLine()){
 			String[] columns=parseLine(reader.nextLine());
