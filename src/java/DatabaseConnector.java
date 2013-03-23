@@ -62,7 +62,7 @@ class DatabaseConnector {
 			SQLException {
 		String sql = "";
 		try {
-			sql = "SELECT `VcfHeader` FROM `vcf_analyzer`.`Vcf` WHERE `VcfId` = '"
+			sql = "SELECT `Header` FROM `vcf_analyzer`.`VcfHeader` WHERE `VcfId` = '"
 					+ vcfId + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
