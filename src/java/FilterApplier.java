@@ -73,8 +73,9 @@ public class FilterApplier
 				ArrayList<String> infoTableName = new ArrayList<String>();
 	    		ArrayList<ResultSet> infoData = new ArrayList<ResultSet>();
 				
-				this.connection.getInfoData(entryId, infoTableName, infoData);
+				this.nestedConnection.getInfoData(entryId, infoTableName, infoData);
 				//test entry
+				/*
 				if (passing)
 				{
 					writer.writeEntry( entries, infoData, infoTableName );
@@ -98,6 +99,7 @@ public class FilterApplier
 					}
 					individuals.close();
 				}
+				*/
 				writer.writeEOL();
 
 		    }
