@@ -25,7 +25,8 @@ public class FilterCreator {
 		for (int i = 0; i < operatorList.size(); i++) {
 			if (currentCommand.contains(operatorList.get(i))) {
 				String[] arguments = currentCommand.split(operatorList.get(i));
-				dbConnector.createFilterEntry(this.filterID, i, arguments);
+				String[] operands = arguments[1].split(" ");
+				dbConnector.createFilterEntry(this.filterID, i, arguments[0], operands);
 			}
 		}
 	}

@@ -95,10 +95,22 @@ class DatabaseConnector {
 	        }
     	}
     
-    	public int createFilterEntry(int filterID, int operator, String[] operands) throws SQLException {
+    	public int createFilterEntry(int filterID, int operator, String infoName, String[] operands) throws SQLException {
     		String sql = null;
     		try {
-    			sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "')";
+    			if (operands.length == 1) 	{
+    				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "', '" 
+    						+ infoName + "', '" + operator + "', '" + operands[0] + "')";
+    			} else if (operands.length == 2) {
+    				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "', '" 
+    						+ infoName + "', '" + operator + "', '" + operands[0] + "', '" + operands[1] + "')";
+    			} else if (operands.length == 0) {
+    				System.out.println("No operands given");
+    				return 0;
+    			} else {
+    				System.out.println("Too many operands given");
+    				return 0;
+    			}
     			ResultSet rs = stmt.executeQuery(sql);
     			
     			int filterEntryID = rs.getInt(0);
