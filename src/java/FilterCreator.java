@@ -20,7 +20,7 @@ public class FilterCreator {
 		}
 	}
 	
-	private void parseCommand(int index) {
+	private void parseCommand(int index) throws SQLException {
 		String currentCommand = this.commandList[index];
 		for (int i = 0; i < operatorList.size(); i++) {
 			if (currentCommand.contains(operatorList.get(i))) {
