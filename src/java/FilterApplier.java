@@ -116,7 +116,7 @@ public class FilterApplier
 					}
 					
 					individuals.close();
-					
+					writer.writeEOL();
 				}
 
 		    }

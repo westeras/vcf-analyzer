@@ -60,7 +60,6 @@ public class vcfWriter
     	this.writer.write( this.writeBuffer );
     	this.writer.write("\t");
     	this.writer.write( entryData.getString("Format") );
-    	this.writer.write( "\n");
     }
     
     public void writeInfoSection( String infoName, ResultSet infoData) throws IOException, SQLException
@@ -142,8 +141,6 @@ public class vcfWriter
 
 	    int numberOfColumns = rsMetaData.getColumnCount();
 	    
-	    System.out.println(genotypeName + " "+ numberOfColumns);
-	    
 	    String indData = "";
 	    String nullValues = null;
 	    
@@ -165,6 +162,7 @@ public class vcfWriter
 	    	}
 	    	else
 	    	{
+	    		System.out.println(genoDatum);
 	    		if ( nullValues == null )
 	    		{
 	    			//valid value; append stored nulls

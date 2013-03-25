@@ -188,10 +188,8 @@ class DatabaseConnector {
 						.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `EntryId` = '%d'",
 								infoTableName, entryId);
 				ResultSet infoSet = this.stmt.executeQuery(sql);
-				if (!infoSet.isBeforeFirst()) {
-					// not empty
-					return infoSet;
-				}
+
+				return infoSet;
 			}
 			return null;
 		} catch (SQLException se) {
