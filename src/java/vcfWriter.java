@@ -111,33 +111,33 @@ public class vcfWriter
     		return;
     	}
     	
-
-		if ( this.individualMiddle )
-		{
-			this.writeBuffer +=(":");
-		}
-		else
-		{
-			this.individualMiddle = true;
-		}
-		
-		if ( isSpecialCase(genotypeName ) )
-		{
-				
-			this.writeBuffer +=( formatSpecialCase( genotypeName, genotypeData ) );
-		}
-		else
-		{
-			this.writeBuffer +=( formatStandardCase( genotypeName, genotypeData ) );
-		}	
-		
+    	if (genotypeData.next() )
+    	{
+			if ( this.individualMiddle )
+			{
+				this.writeBuffer +=(":");
+			}
+			else
+			{
+				this.individualMiddle = true;
+			}
+			
+			if ( isSpecialCase(genotypeName ) )
+			{
+					
+				this.writeBuffer +=( formatSpecialCase( genotypeName, genotypeData ) );
+			}
+			else
+			{
+				this.writeBuffer +=( formatStandardCase( genotypeName, genotypeData ) );
+			}	
+    	}
 		genotypeData.close();	
     	
 	}
     
 	private String formatStandardCase(String genotypeName, ResultSet rs) throws SQLException {
 
-		String tester = rs.getString("IndID");
 	    ResultSetMetaData rsMetaData = rs.getMetaData();
 
 	    int numberOfColumns = rsMetaData.getColumnCount();
