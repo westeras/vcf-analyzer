@@ -74,6 +74,7 @@ public class FilterApplier
 	    		writer.writeEntryStart( entries );
 	    		
 	    		ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
+	    		System.out.println( tableNames );
 	    		for (int j=0; j< tableNames.size(); j++)
 	    		{
 	    			ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, tableNames.get(j));
