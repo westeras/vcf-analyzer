@@ -84,7 +84,7 @@ class DatabaseConnector {
 	public int createFilter(String filterName) throws SQLException {
 	    	String sql = null;
 	    	try {
-	    		sql = String.format("INSERT into `Filter` (`FilId`, `FilName`, `AndOr`) VALUES (NULL, '%s', 0);", filterName);
+	    		sql = String.format("INSERT into `Filter` (`FilId`, `FilName`, `AndOr`) VALUES (NULL, '%s', '0');", filterName);
 	    		ResultSet rs = stmt.executeQuery(sql);
 	    		
 	    		int filterID = rs.getInt(0);
