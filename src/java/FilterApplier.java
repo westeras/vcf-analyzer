@@ -106,6 +106,7 @@ public class FilterApplier
 							if ( genotypeData != null )
 							{
 								writer.writeIndividualDatum( genotypeData, genotypes.get(k));
+								genotypeData.close();
 							}
 						}
 						

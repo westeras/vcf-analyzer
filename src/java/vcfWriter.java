@@ -90,37 +90,6 @@ public class vcfWriter
 	    infoData.close();
     }
     
-    public void writeIndividual( 
-            ArrayList<ResultSet> genotypeData,
-            ArrayList<String> genotypeName ) throws IOException, SQLException
-	{
-    	this.writeBuffer +=("\t");
-    	if ( genotypeData == null)
-    	{
-    		return;
-    	}
-    	
-    	for (int i=0; i < genotypeName.size(); i++)
-    	{
-    		if ( i!= 0)
-    		{
-    			this.writeBuffer +=(":");
-    		}
-    		if ( isSpecialCase(genotypeName.get(i) ) )
-    		{
-    				
-    			this.writeBuffer +=( formatSpecialCase( genotypeName.get(i), genotypeData.get(i) ) );
-    		}
-    		else
-    		{
-    			this.writeBuffer +=( formatStandardCase( genotypeName.get(i), genotypeData.get(i) ) );
-    		}	
-    		
-    		genotypeData.get(i).close();
-    	} 	
-    	
-	}
-    
     public void writeIndividualStart()
     {
     	this.writeBuffer = "\t";
