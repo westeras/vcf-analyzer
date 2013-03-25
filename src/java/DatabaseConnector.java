@@ -85,9 +85,9 @@ class DatabaseConnector {
 	    	String sql = null;
 	    	try {
 	    		sql = String.format("INSERT into `Filter` (`FilId`, `FilName`, `AndOr`) VALUES (NULL, '%s', '0');", filterName);
-	    		ResultSet rs = stmt.executeQuery(sql);
+	    		this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 	    		
-	    		int filterID = rs.getInt(0);
+	    		int filterID = this.stmt.getGeneratedKeys().getInt(0);
 	    		
 	    		return filterID;
 	    	} catch(SQLException se) {
