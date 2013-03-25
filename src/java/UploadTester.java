@@ -1,25 +1,14 @@
 import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JFileChooser;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 public class UploadTester {
 	private Connection connection;
