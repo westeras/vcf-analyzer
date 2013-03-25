@@ -73,7 +73,6 @@ public class vcfWriter
 	    if (infoData.next()) 
 		{
 		    ResultSetMetaData rsMetaData = infoData.getMetaData();
-
 		    int numberOfColumns = rsMetaData.getColumnCount();
 	    	
 		    if (numberOfColumns > 1)
@@ -162,8 +161,7 @@ public class vcfWriter
 	    	}
 	    	else
 	    	{
-	    		System.out.println(genoDatum);
-	    		if ( nullValues == null )
+	    		if ( nullValues != null )
 	    		{
 	    			//valid value; append stored nulls
 	    			indData += nullValues;

@@ -187,6 +187,7 @@ class DatabaseConnector {
 				sql = String
 						.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `EntryId` = '%d'",
 								infoTableName, entryId);
+				System.out.println(sql);
 				ResultSet infoSet = this.stmt.executeQuery(sql);
 
 				return infoSet;
