@@ -65,8 +65,9 @@ public class vcfWriter
     {
 	    if (this.infoCount!= 0)
 	    {
-	    	this.writer.write(";");
+	    	this.writeBuffer += (";");
 	    }
+	    this.infoCount++;
 	    
 	    String infoDatum = "";
 	    if (infoData.next()) 
@@ -77,11 +78,11 @@ public class vcfWriter
 		    if (numberOfColumns > 1)
 		    {
 		    	infoDatum = infoData.getString(2);
-		    	this.writer.write( infoName+"="+infoDatum );
+		    	this.writeBuffer +=( infoName+"="+infoDatum );
 		    }
 		    else
 		    {
-		    	this.writer.write( infoName );
+		    	this.writeBuffer +=( infoName );
 		    }
 		}
 	    infoData.close();
