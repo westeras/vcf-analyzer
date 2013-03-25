@@ -42,6 +42,7 @@ public class FilterCreator {
 	}
 	
 	private void fillOperatorList() {
+		this.operatorList = new HashMap<String, Integer>();
 		this.operatorList.put("<", 0);
 		this.operatorList.put("less than", 0);
 		this.operatorList.put(">", 1);
