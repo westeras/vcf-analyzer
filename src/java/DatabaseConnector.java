@@ -84,7 +84,7 @@ class DatabaseConnector {
 	public int createFilter(String filterName) throws SQLException {
 	    	String sql = null;
 	    	try {
-	    		sql = "INSERT INTO `vcf_analyzer`.`Filter`(`FilId`, `FilName`, `AndOr`) VALUES (NULL, '" + filterName + "', 0)";
+	    		sql = "INSERT INTO `Filter` (`FilId`, `FilName`, `AndOr`) VALUES (NULL, '" + filterName + "', 0);";
 	    		ResultSet rs = stmt.executeQuery(sql);
 	    		
 	    		int filterID = rs.getInt(0);
@@ -100,10 +100,10 @@ class DatabaseConnector {
     		try {
     			if (operands.length == 1) 	{
     				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "', '" 
-    						+ infoName + "', '" + operator + "', '" + operands[0] + "')";
+    						+ infoName + "', '" + operator + "', '" + operands[0] + "');";
     			} else if (operands.length == 2) {
     				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "', '" 
-    						+ infoName + "', '" + operator + "', '" + operands[0] + "', '" + operands[1] + "')";
+    						+ infoName + "', '" + operator + "', '" + operands[0] + "', '" + operands[1] + "');";
     			} else if (operands.length == 0) {
     				System.out.println("No operands given");
     				return 0;
