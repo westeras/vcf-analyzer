@@ -81,9 +81,12 @@ class DatabaseConnector {
 		}
 	}
 	
-	public int createFilter(String filterName) throws SQLException {
+	public int createFilter(String filterName) throws SQLException, ClassNotFoundException {
 	    	String sql = null;
 	    	try {
+	    		if (!hasOpenStatementAndConnection())
+	    			reopenConnectionAndStatement();
+	    		
 	    		sql = String.format("INSERT into `Filter` (`FilId`, `FilName`, `AndOr`) VALUES (NULL, '%s', '0');", filterName);
 	    		this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 	    		
