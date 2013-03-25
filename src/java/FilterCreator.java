@@ -1,6 +1,5 @@
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -17,6 +16,10 @@ public class FilterCreator {
 		
 		this.filterID = dbConnector.createFilter(filterName);
 		
+		uploadEntries();
+	}
+
+	protected void uploadEntries() throws SQLException {
 		for (int i = 0; i < this.commandList.length; i++) {
 			parseCommand(i);
 		}
@@ -24,11 +27,16 @@ public class FilterCreator {
 	
 	private void parseCommand(int index) throws SQLException {
 		String currentCommand = this.commandList[index];
+		ArrayList<String> infoNames = dbConnector.getInfoTableNames();
+		
 		for (String key : this.commandList) {
 			if (currentCommand.contains(key)) {
 				String[] arguments = currentCommand.split(key);
+				for (String arg : arguments) { arg = arg.trim(); }
 				String[] operands = arguments[1].split(" ");
-				dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), arguments[0], operands);
+				if (infoNames.contains(arguments[0])) {
+					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), arguments[0], operands);
+				}
 			}
 		}
 	}
@@ -43,6 +51,7 @@ public class FilterCreator {
 		this.operatorList.put("=", 4);
 		this.operatorList.put("equal to", 4);
 		this.operatorList.put("between", 5);
-		
 	}
+	
+	
 }
