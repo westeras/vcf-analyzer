@@ -67,11 +67,12 @@ public class vcfWriter
 	    {
 	    	this.writeBuffer += (";");
 	    }
-	    this.infoCount++;
 	    
 	    String infoDatum = "";
 	    if (infoData.next()) 
 		{
+		    this.infoCount++;
+	    	
 		    ResultSetMetaData rsMetaData = infoData.getMetaData();
 		    int numberOfColumns = rsMetaData.getColumnCount();
 	    	
