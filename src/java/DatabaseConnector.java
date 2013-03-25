@@ -91,7 +91,7 @@ class DatabaseConnector {
 	    		
 	    		return filterID;
 	    	} catch(SQLException se) {
-	            throw new SQLException("Invalid Query: " + sql);
+	            throw new SQLException(se.getMessage());
 	        }
     	}
     
