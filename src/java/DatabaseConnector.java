@@ -83,11 +83,8 @@ class DatabaseConnector {
 	
 	public int createFilter(String filterName) throws SQLException, ClassNotFoundException {
 	    	String sql = null;
-	    	try {
-	    		if (!hasOpenStatementAndConnection())
-	    			reopenConnectionAndStatement();
-	    		
-	    		sql = String.format("INSERT into `Filter` (`FilId`, `FilName`, `AndOr`) VALUES (NULL, '%s', '0');", filterName);
+	    	try {	    		
+	    		sql = String.format("INSERT into `Filter` VALUES (NULL, '%s', '0');", filterName);
 	    		this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 	    		
 	    		int filterID = this.stmt.getGeneratedKeys().getInt(0);
@@ -101,7 +98,7 @@ class DatabaseConnector {
     	public int createFilterEntry(int filterID, int operator, String infoName, String[] operands) throws SQLException {
     		String sql = null;
     		try {
-    			if (operands.length == 1) 	{
+    			if (operands.length == 1) {
     				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "', '" 
     						+ infoName + "', '" + operator + "', '" + operands[0] + "');";
     			} else if (operands.length == 2) {
