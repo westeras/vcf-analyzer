@@ -137,6 +137,7 @@ public class vcfWriter
     
 	private String formatStandardCase(String genotypeName, ResultSet rs) throws SQLException {
 
+		String tester = rs.getString("IndID");
 	    ResultSetMetaData rsMetaData = rs.getMetaData();
 
 	    int numberOfColumns = rsMetaData.getColumnCount();

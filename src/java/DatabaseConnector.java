@@ -234,30 +234,7 @@ class DatabaseConnector {
 			throw new SQLException("Invalid Query " + sql);
 		}
 	}
-	
-	public ArrayList<ResultSet> getIndividualData(long indId,
-			ArrayList<String> genotypeTableName) throws SQLException {
-		ArrayList<ResultSet> genotypeData = new ArrayList<ResultSet>();
 
-		String sql = "";
-		try {
-			for (String tableName : genotypeTableName) {
-				sql = String
-						.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `IndID` = '%d'",
-								tableName, indId);
-				ResultSet infoSet = this.stmt.executeQuery(sql);
-				if (!infoSet.isBeforeFirst()) {
-					// not empty
-					genotypeData.add(infoSet);
-				} else {
-					genotypeData.add(null);
-				}
-			}
-			return genotypeData;
-		} catch (SQLException se) {
-			throw new SQLException("Invalid Query " + sql);
-		}
-	}
 
 	public void CloseConnection() throws SQLException {
 		if (this.conn != null) {
