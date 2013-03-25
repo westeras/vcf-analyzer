@@ -142,6 +142,8 @@ public class vcfWriter
 
 	    int numberOfColumns = rsMetaData.getColumnCount();
 	    
+	    System.out.println(genotypeName + " "+ numberOfColumns);
+	    
 	    String indData = "";
 	    String nullValues = null;
 	    

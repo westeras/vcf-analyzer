@@ -224,8 +224,6 @@ class DatabaseConnector {
 			sql = String
 					.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `IndID` = '%d'",
 							genotypeTableName, indId);
-			//TODO remove
-			System.out.println(sql);
 			ResultSet infoSet = this.stmt.executeQuery(sql);
 			/*
 			if (!infoSet.isBeforeFirst()) {

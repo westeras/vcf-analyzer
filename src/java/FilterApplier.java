@@ -107,13 +107,14 @@ public class FilterApplier
 							genotypeData.close();
 						}
 						
+						writer.writeIndividualEnd();
 						//if pass
 						//if pass write
 						//if fail close genotypeData
 						//writer closes genotypeData,
 						//writer.writeIndividual( genotypeData, genotypes );
 					}
-					writer.writeIndividualEnd();
+					
 					individuals.close();
 					
 				}
