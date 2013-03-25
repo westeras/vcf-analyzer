@@ -103,23 +103,18 @@ public class FilterApplier
 						{
 							ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
 							
-							if ( genotypeData != null )
-							{
-								writer.writeIndividualDatum( genotypeData, genotypes.get(k));
-								genotypeData.close();
-							}
+							writer.writeIndividualDatum( genotypeData, genotypes.get(k));
+							genotypeData.close();
 						}
 						
 						//if pass
-						writer.writeIndividualEnd();
 						//if pass write
 						//if fail close genotypeData
 						//writer closes genotypeData,
 						//writer.writeIndividual( genotypeData, genotypes );
 					}
+					writer.writeIndividualEnd();
 					individuals.close();
-					
-					writer.writeEOL();
 					
 				}
 
