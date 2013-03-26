@@ -20,6 +20,7 @@ public class FilterCreator {
 	}
 
 	protected void uploadEntries() throws SQLException {
+		System.out.println(this.commandList.length);
 		for (int i = 0; i < this.commandList.length; i++) {
 			parseCommand(i);
 		}
