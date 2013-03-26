@@ -89,9 +89,8 @@ class DatabaseConnector {
 	    		
 	    		ResultSet rs = this.stmt.getGeneratedKeys();
 	    		rs.next();
-	    		System.out.println(rs.getString(1));
+	    		return rs.getInt(1);
 	    		
-	    		return 0;
 	    	} catch(SQLException se) {
 	            throw new SQLException(se.getMessage());
 	        }
