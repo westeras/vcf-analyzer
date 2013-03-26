@@ -42,7 +42,7 @@ public class UploadTester {
 		int i=0;
 		while (rs.next()){
 			System.out.println("i = "+i);
-			String []resultRow={rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(rs.getString(5)),rs.getString(6),rs.getString(7)};
+			String []resultRow={String.valueOf(rs.getInt("AnnoID")),rs.getString("Chromosome"),String.valueOf(rs.getInt("StartPosition")),String.valueOf(rs.getInt("EndPosition")),rs.getString("GeneName"),rs.getString("GeneDirection"),rs.getString("AnnoName")};
 			assertEquals(correctAnswers.get(i)[0],resultRow[0]);
 			assertEquals(correctAnswers.get(i)[1],resultRow[1]);
 			assertEquals(correctAnswers.get(i)[2],resultRow[2]);
