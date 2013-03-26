@@ -41,7 +41,6 @@ public class UploadTester {
 		ArrayList<String[]> correctAnswers= parser.parseFile();
 		int i=0;
 		while (rs.next()){
-			System.out.println("i = "+i);
 			String []resultRow={rs.getString("Chromosome"),String.valueOf(rs.getInt("StartPosition")),String.valueOf(rs.getInt("EndPosition")),rs.getString("GeneName"),rs.getString("GeneDirection")};
 			for (int j=0;j<5;j++){
 				assertEquals(correctAnswers.get(i)[j],resultRow[j]);
@@ -51,6 +50,24 @@ public class UploadTester {
 		rs.close();
 	}
 		
+	@Test
+	public void testUploadDivergence() throws SQLException, FileNotFoundException, ClassNotFoundException {
+		Command uploadDivCommand=new UploadDivergenceCommand("Examples/divergence.txt","","");
+		DivergenceParser parser= new DivergenceParser(new File("Examples/divergence.txt"));
+		uploadDivCommand.execute();
+		ResultSet rs=this.stmt.executeQuery("Select * from `Divergence`");
+		ArrayList<String[]> correctAnswers= parser.parseFile();
+		int i=0;
+		while (rs.next()){
+			String []resultRow={rs.getString("Chromosome"),String.valueOf(rs.getInt("Position")),String.valueOf(rs.getInt("DivValue"))};
+			for (int j=0;j<3;j++){
+				assertEquals(correctAnswers.get(i)[j],resultRow[j]);
+			}
+			i++;
+		}
+		rs.close();
+	}
+	
 	@After
 	public void cleanUpConnection() throws SQLException {
 		if (this.connection != null) {
