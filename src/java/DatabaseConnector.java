@@ -100,11 +100,11 @@ class DatabaseConnector {
     		String sql = null;
     		try {
     			if (operands.length == 1) {
-    				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "', '" 
-    						+ infoName + "', '" + operator + "', '" + operands[0] + "');";
+    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%d', '%s');", 
+    						filterID, infoName, operator, operands[0]);
     			} else if (operands.length == 2) {
-    				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '" + filterID + "', '" 
-    						+ infoName + "', '" + operator + "', '" + operands[0] + "', '" + operands[1] + "');";
+    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%d', '%s', '%s');", 
+    						filterID, infoName, operator, operands[0], operands[1]);
     			} else if (operands.length == 0) {
     				System.out.println("No operands given");
     				return 0;
@@ -113,12 +113,12 @@ class DatabaseConnector {
     				return 0;
     			}
     			ResultSet rs = stmt.executeQuery(sql);
-    			
-    			int filterEntryID = rs.getInt(0);
+    			rs.next();
+    			int filterEntryID = rs.getInt(1);
     			
     			return filterEntryID;
     		} catch(SQLException se) {
-	            throw new SQLException("Invalid Query: " + sql);
+	            throw new SQLException(se.getMessage());
 	        }
     	}
 
