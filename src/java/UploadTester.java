@@ -1,10 +1,14 @@
 import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -29,15 +33,25 @@ public class UploadTester {
 	}
 
 	@Test
-	public void testUploadAnnotation() throws SQLException {
+	public void testUploadAnnotation() throws SQLException, FileNotFoundException, ClassNotFoundException {
 		Command uploadAnnotCommand=new UploadAnnotationCommand("Examples/annot.txt","","");
+		AnnotationParser parser= new AnnotationParser(new File("Examples/annot.txt"));
 		uploadAnnotCommand.execute();
 		ResultSet rs=this.stmt.executeQuery("Select * from `Annotation`");
+		ArrayList<String[]> correctAnswers= parser.parseFile();
+		int i=0;
 		while (rs.next()){
-			System.out.println(rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getString(4)+rs.getString(rs.getString(5))+rs.getString(6)+rs.getString(7));
+			String []resultRow={rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(rs.getString(5)),rs.getString(6),rs.getString(7)};
+			assertEquals(correctAnswers.get(i)[0],resultRow[0]);
+			assertEquals(correctAnswers.get(i)[1],resultRow[1]);
+			assertEquals(correctAnswers.get(i)[2],resultRow[2]);
+			assertEquals(correctAnswers.get(i)[3],resultRow[3]);
+			assertEquals(correctAnswers.get(i)[4],resultRow[4]);
+			assertEquals(correctAnswers.get(i)[5],resultRow[5]);
+			assertEquals(correctAnswers.get(i)[6],resultRow[6]);
 		}
 		rs.close();
-		fail();
+		
 		
 	}
 		
