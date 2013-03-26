@@ -100,7 +100,7 @@ class DatabaseConnector {
     		String sql = null;
     		try {
     			if (operands.length == 1) {
-    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%d', '%s');", 
+    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%d', '%s', NULL);", 
     						filterID, infoName, operator, operands[0]);
     			} else if (operands.length == 2) {
     				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%d', '%s', '%s');", 
