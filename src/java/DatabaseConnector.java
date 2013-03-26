@@ -100,10 +100,10 @@ class DatabaseConnector {
     		String sql = null;
     		try {
     			if (operands.length == 1) {
-    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%d', '%s', NULL);", 
+    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', NULL);", 
     						filterID, infoName, operator, operands[0]);
     			} else if (operands.length == 2) {
-    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%d', '%s', '%s');", 
+    				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', '%s');", 
     						filterID, infoName, operator, operands[0], operands[1]);
     			} else if (operands.length == 0) {
     				System.out.println("No operands given");
