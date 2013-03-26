@@ -18,7 +18,6 @@ public class FilterCreator {
 	}
 
 	protected void uploadEntries() throws SQLException {
-		System.out.println(this.commandList.length);
 		for (int i = 0; i < this.commandList.length; i++) {
 			parseCommand(i);
 		}
@@ -28,14 +27,12 @@ public class FilterCreator {
 		String currentCommand = this.commandList[index];
 		ArrayList<String> infoNames = dbConnector.getInfoTableNames();
 		
-		for (String info : infoNames) {
-			System.out.println(info);
-		}
-		
 		for (String key : this.operatorList.keySet()) {
 			if (currentCommand.contains(key)) {
 				String[] arguments = currentCommand.split(key);
-				for (String arg : arguments) { arg = arg.trim(); }
+				
+				for (int i = 0; i < arguments.length; i++) { arguments[i] = arguments[i].trim(); }
+				for (int i = 0; i < arguments.length; i++) { System.out.println(arguments[i]); }
 				String[] operands = arguments[1].split(" ");
 				if (infoNames.contains(arguments[0])) {
 					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), arguments[0], operands);
