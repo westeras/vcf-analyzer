@@ -23,7 +23,7 @@ public class FilterCreatorTest {
 			stmt = conn.createStatement();
 		}
 		catch (Exception e) {
-			throw new SQLException("Could not connect to database");
+			throw new SQLException(e.getMessage());
 		}
 		
 		String sql = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilter'";

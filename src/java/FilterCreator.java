@@ -15,8 +15,6 @@ public class FilterCreator {
 		fillOperatorList();
 		
 		this.filterID = dbConnector.createFilter(filterName);
-		
-		uploadEntries();
 	}
 
 	protected void uploadEntries() throws SQLException {
@@ -29,6 +27,10 @@ public class FilterCreator {
 	private void parseCommand(int index) throws SQLException {
 		String currentCommand = this.commandList[index];
 		ArrayList<String> infoNames = dbConnector.getInfoTableNames();
+		
+		for (String info : infoNames) {
+			System.out.println(info);
+		}
 		
 		for (String key : this.operatorList.keySet()) {
 			if (currentCommand.contains(key)) {
