@@ -55,10 +55,10 @@ public class FilterApplier
 
     private String applyFilter()
     {
-    	vcfWriter writer = null;
+    	VcfWriter writer = null;
 		try {
 			boolean passing = true;
-			writer = new vcfWriter(this.fileName);
+			writer = new VcfWriter(this.fileName);
 			
 			long vcfId = this.connection.getVcfId( this.vcfName);
 			

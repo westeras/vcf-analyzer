@@ -2,14 +2,14 @@ import java.io.*;
 import java.util.*;
 import java.sql.*;
 
-public class vcfWriter
+public class VcfWriter
 {
     private BufferedWriter writer;
     private int infoCount = 0;
     private String writeBuffer = "";
 	private boolean individualMiddle;
     
-    public vcfWriter( String filename ) throws IOException
+    public VcfWriter( String filename ) throws IOException
     {
         try
         {
