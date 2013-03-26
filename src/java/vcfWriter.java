@@ -25,7 +25,6 @@ public class vcfWriter
     public void writeHeader(String header) throws IOException
     {
         this.writer.write( header);
-        this.writer.newLine();
     }
     
     public void writeEntryStart( ResultSet entryData ) throws SQLException
@@ -63,14 +62,14 @@ public class vcfWriter
     
     public void writeInfoSection( String infoName, ResultSet infoData) throws IOException, SQLException
     {
-	    if (this.infoCount!= 0)
-	    {
-	    	this.writeBuffer += (";");
-	    }
 	    
 	    String infoDatum = "";
 	    if (infoData.next()) 
 		{
+		    if (this.infoCount!= 0)
+		    {
+		    	this.writeBuffer += (";");
+		    }
 		    this.infoCount++;
 	    	
 		    ResultSetMetaData rsMetaData = infoData.getMetaData();
