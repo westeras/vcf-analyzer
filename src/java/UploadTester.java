@@ -41,6 +41,7 @@ public class UploadTester {
 		ArrayList<String[]> correctAnswers= parser.parseFile();
 		int i=0;
 		while (rs.next()){
+			System.out.println("i = "+i);
 			String []resultRow={rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(rs.getString(5)),rs.getString(6),rs.getString(7)};
 			assertEquals(correctAnswers.get(i)[0],resultRow[0]);
 			assertEquals(correctAnswers.get(i)[1],resultRow[1]);
@@ -49,6 +50,7 @@ public class UploadTester {
 			assertEquals(correctAnswers.get(i)[4],resultRow[4]);
 			assertEquals(correctAnswers.get(i)[5],resultRow[5]);
 			assertEquals(correctAnswers.get(i)[6],resultRow[6]);
+			i++;
 		}
 		rs.close();
 		
