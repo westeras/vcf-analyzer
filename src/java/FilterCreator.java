@@ -29,7 +29,7 @@ public class FilterCreator {
 		String currentCommand = this.commandList[index];
 		ArrayList<String> infoNames = dbConnector.getInfoTableNames();
 		
-		for (String key : this.commandList) {
+		for (String key : this.operatorList.keySet()) {
 			if (currentCommand.contains(key)) {
 				String[] arguments = currentCommand.split(key);
 				for (String arg : arguments) { arg = arg.trim(); }
