@@ -189,23 +189,17 @@ public class VcfWriter
 		{
 			int i = 0;
 			String gtData = "";
-			if (data.next() )
+
+			appendAllele( gtData, data, "1") ;
+			if ( appendPhase( gtData, data, "1") )
 			{
-				appendAllele( gtData, data, "1") ;
-				if ( appendPhase( gtData, data, "1") )
+				appendAllele( gtData, data, "2") ;
+				if (appendPhase( gtData, data, "2") )
 				{
-					appendAllele( gtData, data, "2") ;
-					if (appendPhase( gtData, data, "2") )
-					{
-						appendAllele( gtData, data, "3");
-					}
+					appendAllele( gtData, data, "3");
 				}
-				return gtData;
 			}
-			else
-			{
-				return ".";
-			}
+			return gtData;
 			
 		}
 		return "";
