@@ -36,7 +36,7 @@ public class FilterCreatorTest {
 		}
 		
 		String filterName = "testFilter";
-		String[] operands = {"AC > 1", "AF = 0", "QD between 10 15", "bogus < 55"};
+		String[] operands = {"AC > 1", "AF = 0", "QD between 10 15", "bogus < 55", "AC greater than 55.55"};
 		FilterCreator testCreator = new FilterCreator(filterName, operands);
 		testCreator.uploadEntries();
 	}
