@@ -43,21 +43,12 @@ public class UploadTester {
 		while (rs.next()){
 			System.out.println("i = "+i);
 			String []resultRow={rs.getString("Chromosome"),String.valueOf(rs.getInt("StartPosition")),String.valueOf(rs.getInt("EndPosition")),rs.getString("GeneName"),rs.getString("GeneDirection")};
-//			assertEquals(correctAnswers.get(i)[0],resultRow[0]);
-//			assertEquals(correctAnswers.get(i)[1],resultRow[1]);
-//			assertEquals(correctAnswers.get(i)[2],resultRow[2]);
-//			assertEquals(correctAnswers.get(i)[3],resultRow[3]);
-//			assertEquals(correctAnswers.get(i)[4],resultRow[4]);
-//			assertEquals(correctAnswers.get(i)[5],resultRow[5]);
-//			assertEquals(correctAnswers.get(i)[6],resultRow[6]);
 			for (int j=0;j<5;j++){
-				System.out.println("Correct answer= "+correctAnswers.get(i)[j]+ " Result= "+resultRow[j]);
+				assertEquals(correctAnswers.get(i)[j],resultRow[j]);
 			}
 			i++;
 		}
 		rs.close();
-		
-		
 	}
 		
 	@After
