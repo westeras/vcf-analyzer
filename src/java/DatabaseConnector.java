@@ -112,7 +112,9 @@ class DatabaseConnector {
     				System.out.println("Too many operands given");
     				return 0;
     			}
-    			ResultSet rs = stmt.executeQuery(sql);
+    			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+    			
+    			ResultSet rs = this.stmt.getGeneratedKeys();
     			rs.next();
     			int filterEntryID = rs.getInt(1);
     			
