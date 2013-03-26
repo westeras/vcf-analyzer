@@ -701,7 +701,7 @@ class Writer(object):
         return "%s=%s" % (str(x), self._stringify(y, none=none, delim=delim))
 
     def _map(self, func, iterable, none='.'):
-        '''``map``, but make None values none.'''
+        #``map``, but make None values none.
         return [func(x) if x is not None else none
                 for x in iterable]
 '''
