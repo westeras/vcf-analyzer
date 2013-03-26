@@ -31,13 +31,19 @@ public class FilterCreator {
 			if (currentCommand.contains(key)) {
 				String[] arguments = currentCommand.split(key);
 				
-				for (int i = 0; i < arguments.length; i++) { arguments[i] = arguments[i].trim(); }
-				for (int i = 0; i < arguments.length; i++) { System.out.println(arguments[i]); }
+				trimAllArguments(arguments);
+				
 				String[] operands = arguments[1].split(" ");
 				if (infoNames.contains(arguments[0])) {
 					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), arguments[0], operands);
 				}
 			}
+		}
+	}
+
+	private void trimAllArguments(String[] arguments) {
+		for (int i = 0; i < arguments.length; i++) { 
+			arguments[i] = arguments[i].trim(); 
 		}
 	}
 	

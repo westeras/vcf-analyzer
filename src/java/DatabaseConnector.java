@@ -112,7 +112,6 @@ class DatabaseConnector {
     				System.out.println("Too many operands given");
     				return 0;
     			}
-    			System.out.println(sql);
     			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
     			
     			ResultSet rs = this.stmt.getGeneratedKeys();
