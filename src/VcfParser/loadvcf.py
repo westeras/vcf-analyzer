@@ -2,7 +2,7 @@
 #pycallgraph.start_trace()
 
 import vcf
-vcf_reader = vcf.Reader(vcfName='testVCF_adam', open('../testvcf2.vcf'))
+vcf_reader = vcf.Reader(vcfName='testVCF_adam', fsock=open('../testvcf2.vcf'))
 
 fileEnded = False
 while (not fileEnded):
