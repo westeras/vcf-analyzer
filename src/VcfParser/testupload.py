@@ -1,5 +1,5 @@
 import vcf
-vcf_reader = vcf.Reader(vcfName='testVCF_adam', fsock=open('../infoTableVcf.vcf'))
+vcf_reader = vcf.Reader(vcfName='testVCF_adam', fsock=open('../testVcf2.vcf'))
 
 fileEnded = False
 while (not fileEnded):
