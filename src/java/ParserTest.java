@@ -76,7 +76,7 @@ public class ParserTest {
 		for (String infoField : infoFields) {
 			for (Integer ind : individualList) {
 				sql = String.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `IndID`='%s'", infoField, ind);
-	
+				System.out.println(sql);
 				try {
 					rs = stmt.executeQuery(sql);
 					rs.next();
