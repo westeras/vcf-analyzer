@@ -16,7 +16,7 @@ public class TestFilter {
 		command.execute();
 		
 		//compare files
-		BufferedReader testBuffer = new BufferedReader(new FileReader("TestFile.txt"));
+		BufferedReader testBuffer = new BufferedReader(new FileReader("FilterTest.txt"));
 		BufferedReader goalBuffer = new BufferedReader(new FileReader("FilterPass.txt"));
 		
 		String goal = goalBuffer.readLine();
