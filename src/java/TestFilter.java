@@ -39,6 +39,9 @@ public class TestFilter {
 		{
 			System.out.println(String.format( "FAIL: Filter test\n\tgoal: %s\n\tfile: %s", goal, toTest) );
 		}
+		
+		testBuffer.close();
+		goalBuffer.close();
 
 	}
 

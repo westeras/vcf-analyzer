@@ -188,40 +188,37 @@ public class VcfWriter
 		if ( genotypeName.equals( "GT") )
 		{
 			int i = 0;
-			String gtData = "";
-
+			StringBuilder gtData = new StringBuilder();
 			appendAllele( gtData, data, "1") ;
-			System.out.println(gtData);
 			if ( appendPhase( gtData, data, "1") )
 			{
-				System.out.println(gtData);
 				appendAllele( gtData, data, "2") ;
 				if (appendPhase( gtData, data, "2") )
 				{
 					appendAllele( gtData, data, "3");
 				}
 			}
-			return gtData;
+			return gtData.toString();
 			
 		}
 		return "";
 	}
 	
-	private void appendAllele( String gtData, ResultSet data, String count )throws SQLException
+	private void appendAllele( StringBuilder gtData, ResultSet data, String count )throws SQLException
 	{
 		String allele = data.getString("Allele" +count);
 		if ( data.wasNull() )
 		{
-			gtData += ".";
+			gtData.append(".");
 		}
 		else
 		{
-			gtData += allele;
+			gtData.append(allele);
 		}
 		
 	}
 	
-	private boolean appendPhase( String gtData, ResultSet data, String count )throws SQLException
+	private boolean appendPhase( StringBuilder gtData, ResultSet data, String count )throws SQLException
 	{
 		byte phase = data.getByte("Phase" +count);
 		if ( data.wasNull() )
@@ -233,11 +230,11 @@ public class VcfWriter
 		{
 			if ( phase == 0 )
 			{
-				gtData = "/";
+				gtData.append("/");
 			}
 			else if ( phase == 1 )
 			{
-				gtData = "|";
+				gtData.append( "|");
 			}
 			else
 			{
