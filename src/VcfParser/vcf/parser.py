@@ -606,7 +606,7 @@ class Reader(object):
         self.reader = self._tabix.fetch(chrom, start, end)
         return self
 
-'''
+
 class Writer(object):
     """ VCF Writer """
 
@@ -704,7 +704,7 @@ class Writer(object):
         #``map``, but make None values none.
         return [func(x) if x is not None else none
                 for x in iterable]
-'''
+
 class DatabaseConnection():
 
     def __init__(self):
