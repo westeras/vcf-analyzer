@@ -190,10 +190,8 @@ public class VcfWriter
 			int i = 0;
 			StringBuilder gtData = new StringBuilder();
 			appendAllele( gtData, data, "1") ;
-			System.out.println(gtData);
 			if ( appendPhase( gtData, data, "1") )
 			{
-				System.out.println(gtData);
 				appendAllele( gtData, data, "2") ;
 				if (appendPhase( gtData, data, "2") )
 				{
