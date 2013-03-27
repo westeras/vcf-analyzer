@@ -7,7 +7,7 @@
 public class TestFilter {
 
 	public static void main(String[] args) {
-		FilterApplier command = new FilterApplier("", "2013-03-25_09:51", "filteredData.txt" );
+		FilterApplier command = new FilterApplier("", "2013-03-25_09:51", "TestFile.txt" );
 		command.execute();
 	}
 
