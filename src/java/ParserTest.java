@@ -58,7 +58,7 @@ public class ParserTest {
 		ArrayList<Integer> individualList = new ArrayList<Integer>();
 		for (Integer entry : entryList) {
 			try {
-				sql = String.format("SELECT `IndId` FROM `vcf_analyzer`.`VcfEntry` WHERE `VcfId`='%s'", entry);
+				sql = String.format("SELECT `IndId` FROM `vcf_analyzer`.`IndividualEntry` WHERE `VcfId`='%s'", entry);
 				rs = stmt.executeQuery(sql);
 				
 				while (rs.next()) {
