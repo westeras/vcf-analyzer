@@ -70,17 +70,19 @@ public class ParserTest {
 			}
 		}
 		
-		System.out.println(individualList);
-		
-		for (Integer ind : individualList) {
-			sql = String.format("SELECT * FROM `vcf_analyzer`.`GT` WHERE `IndID`='%s'", ind);
-			
-			try {
-				rs = stmt.executeQuery(sql);
-				rs.next();
-				if (!rs.getInt("IndID")) { System.out.println("Error uploading GT"); return; }
-			} catch (SQLException se) {
-				throw new SQLException(se.getMessage());
+		ArrayList<String> infoFields = new ArrayList<String>(Arrays.asList("GT", "AD", "DP", "GQ", "PL"));
+
+		for (String infoField : infoFields) {
+			for (Integer ind : individualList) {
+				sql = String.format("SELECT * FROM `vcf_analyzer`.`%s` WHERE `IndID`='%s'", infoField, ind);
+	
+				try {
+					rs = stmt.executeQuery(sql);
+					rs.next();
+					if (rs.getString("IndID") == null) { System.out.println("Error uploading GT"); return; }
+				} catch (SQLException se) {
+					throw new SQLException(se.getMessage());
+				}
 			}
 		}
 	}
