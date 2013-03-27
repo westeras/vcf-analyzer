@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class ParserTest {
@@ -79,7 +80,7 @@ public class ParserTest {
 				try {
 					rs = stmt.executeQuery(sql);
 					rs.next();
-					if (rs.getString("IndID") == null) { System.out.println("Error uploading GT"); return; }
+					if (rs.getString("IndID") == null) { System.out.println(String.format("Error uploading %s", infoField)); return; }
 				} catch (SQLException se) {
 					throw new SQLException(se.getMessage());
 				}
