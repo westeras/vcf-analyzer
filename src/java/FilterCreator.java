@@ -2,7 +2,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+// ########### What does this guy do?
+/**
+ * Talk about it here!
+**/
 public class FilterCreator {
 	String[] commandList;
 	DatabaseConnector dbConnector;
