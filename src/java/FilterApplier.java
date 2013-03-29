@@ -11,7 +11,7 @@ public abstract class FilterApplier extends Command
     private String output = "Incomplete";
     protected String filterName;
     protected String vcfName;
-    private String fileName;
+    protected String fileName;
 	private DatabaseConnector connection;   
 	private DatabaseConnector nestedConnection;
 	private DatabaseConnector nestedConnection2;

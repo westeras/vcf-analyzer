@@ -6,7 +6,7 @@ import javax.sql.*;
 
 public class FilterWriteApplier extends FilterApplier
 {
-    private String fileName;
+
 
     public FilterWriteApplier( String filterName, String vcfName, String filename )
     {

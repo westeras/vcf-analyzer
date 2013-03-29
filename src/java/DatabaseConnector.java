@@ -335,6 +335,24 @@ class DatabaseConnector {
 		return rs;
 	}
 
+	public void insertEntryPass( int filterId, long entryId, char pass) throws SQLException, ClassNotFoundException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		
+		String sql = String
+				.format("INSERT into `vcf_analyzer`.`FilterEntryPass` (`FilId`, `EntryId`, `Pass`) VALUES ('%d','%d','%d');",
+						filterId, entryId, pass);
+		this.stmt.executeUpdate(sql);
+	}
 
+	public void insertIndividualPass( int filterId, long entryId, char pass) throws SQLException, ClassNotFoundException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		
+		String sql = String
+				.format("INSERT into `vcf_analyzer`.`FilterIndividualPass` (`FilId`, `IndID`, `Pass`) VALUES ('%d','%d','%d');",
+						filterId, entryId, pass);
+		this.stmt.executeUpdate(sql);
+	}
 
 }
