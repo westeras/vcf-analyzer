@@ -34,55 +34,12 @@ public class CommandLineInterpreter
 			
 			if (commandLine.hasOption("updiv")){
 				
-				String[] args = commandLine.getOptionValues("updiv");
-				UploadDivergenceCommand command;
-				
-				if(args == null){
-					result = "Please input arguments";
-				}else if(args.length == 1){
-					command = new UploadDivergenceCommand(
-							commandLine.getOptionValues("updiv")[0], 
-							null,
-							"");
-					
-					result = command.execute();
-				}else if(args.length == 2){
-					command = new UploadDivergenceCommand(
-							commandLine.getOptionValues("updiv")[0], 
-							null,
-							commandLine.getOptionValues("updiv")[1]);
-					
-					result = command.execute();
-				}else{
-					result = "Incorrect number of arguments";
-				}
-				
+				result = uploadCommand(commandLineArguments, commandLine, "updiv");
 			}
 			
 			if (commandLine.hasOption("upano")){
 				
-				String[] args = commandLine.getOptionValues("upano");
-				UploadAnnotationCommand command;
-				
-				if(args == null){
-					result = "Please input arguments";
-				}else if(args.length == 1){
-					command = new UploadAnnotationCommand(
-							commandLine.getOptionValues("upano")[0], 
-							null,
-							"");
-					
-					result = command.execute();
-				}else if(args.length == 2){
-					command = new UploadAnnotationCommand(
-							commandLine.getOptionValues("upano")[0], 
-							null,
-							commandLine.getOptionValues("upano")[1]);
-					
-					result = command.execute();
-				}else{
-					result = "Incorrect number of arguments";
-				}
+				result = uploadCommand(commandLineArguments, commandLine, "upano");
 				
 			}
 			
@@ -114,6 +71,43 @@ public class CommandLineInterpreter
 		
 		return result;
 	}  
+	
+	/**
+	 * Uploads either divergence file or annotation file
+	 * @param commandLineArguments
+	 * @param commandLine
+	 * @param type
+	 * @return the name of the upload
+	 */
+	
+	public static String uploadCommand(final String[] commandLineArguments, CommandLine commandLine, String type){
+		String[] args = commandLine.getOptionValues("updiv");
+		UploadDivergenceCommand command;
+		
+		String result = "";
+		
+		if(args == null){
+			result = "Please input arguments";
+		}else if(args.length == 1){
+			command = new UploadDivergenceCommand(
+					commandLine.getOptionValues(type)[0], 
+					null,
+					"");
+			
+			result = command.execute();
+		}else if(args.length == 2){
+			command = new UploadDivergenceCommand(
+					commandLine.getOptionValues(type)[0], 
+					null,
+					commandLine.getOptionValues(type)[1]);
+			
+			result = command.execute();
+		}else{
+			result = "Incorrect number of arguments";
+		}
+		
+		return result;
+	}
   
 	/**
 	 * Constructs the actual commands.
