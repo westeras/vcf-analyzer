@@ -4,23 +4,16 @@ import java.util.Arrays;
 
 import javax.sql.*;
 
-public class FilterApplier
+public abstract class FilterApplier extends Command
 {
 
     private String output = "Incomplete";
-    private String filterName;
-    private String vcfName;
+    protected String filterName;
+    protected String vcfName;
     private String fileName;
 	private DatabaseConnector connection;   
 	private DatabaseConnector nestedConnection;
 	private DatabaseConnector nestedConnection2;
-
-    public FilterApplier( String filterName, String vcfName, String filename )
-    {
-		this.filterName = filterName;
-		this.vcfName = vcfName;
-		this.fileName = filename;
-    }
     
     //@Override
     public String execute() {
@@ -79,6 +72,7 @@ public class FilterApplier
 	    			ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, tableNames.get(j));
 	    			if (entryInfoData!=null)
 	    			{
+	    				//writes each info datum; eg 
 	    				writer.writeInfoSection( tableNames.get(j), entryInfoData );
 	    			}
 	    		}
@@ -122,7 +116,7 @@ public class FilterApplier
 		    }
 			entries.close();
 			writer.closeWriter();
-			return "Applied filter. See "+ this.fileName;
+			return getSuccessMessage();
 			
 		} catch (Exception exception) {
 			if (writer != null)
@@ -138,5 +132,7 @@ public class FilterApplier
 	// TODO Auto-generated method stub.
 	
     }
+    
+    abstract protected String getSuccessMessage();
 
 }

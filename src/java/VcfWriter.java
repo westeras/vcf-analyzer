@@ -220,7 +220,7 @@ public class VcfWriter
 	
 	private boolean appendPhase( StringBuilder gtData, ResultSet data, String count )throws SQLException
 	{
-		byte phase = data.getByte("Phase" +count);
+		String phase = data.getString("Phase" +count);
 		if ( data.wasNull() )
 		{
 			//end of data
@@ -228,11 +228,11 @@ public class VcfWriter
 		}
 		else
 		{
-			if ( phase == 0 )
+			if ( phase.equals("0") )
 			{
 				gtData.append("/");
 			}
-			else if ( phase == 1 )
+			else if (  phase.equals("1") )
 			{
 				gtData.append( "|");
 			}
