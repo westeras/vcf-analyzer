@@ -27,6 +27,7 @@ class DatabaseConnector {
 			this.conn = null;
 			this.stmt = null;
 	
+			// ########### What is this supposed to do?
 			Class.forName(JDBC_DRIVER);
 	
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
