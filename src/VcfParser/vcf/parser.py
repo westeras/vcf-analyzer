@@ -606,7 +606,7 @@ class Reader(object):
         self.reader = self._tabix.fetch(chrom, start, end)
         return self
 
-'''
+
 class Writer(object):
     """ VCF Writer """
 
@@ -704,18 +704,20 @@ class Writer(object):
         #``map``, but make None values none.
         return [func(x) if x is not None else none
                 for x in iterable]
-'''
+
 class DatabaseConnection():
 
     def __init__(self):
         #Connect to database
+        ########### Why are there hard coded username and password information
         self.cnx = mysql.connector.connect(user = 'vcf_user', password = 'vcf', host = 'localhost', database = 'vcf_analyzer', buffered=True)
         self.cursor = self.cnx.cursor()
         
     def dbClose(self):
         self.cursor.close()
         self.cnx.close()
-        
+    
+    ########### Kind of a long method
     def handleInfo(self, infoName, infoData):
         query = ("SELECT count(*) FROM InfoTable WHERE InfoName='" + infoName + "'")
         self.cursor.execute(query)
@@ -813,7 +815,8 @@ class DatabaseConnection():
                 self.cnx.rollback()
                 return -1
                 
-            
+    
+    ########### Many many parameters being passed in 
     def createEntry(self, vcfId, chrom, pos, id, ref, alt, qual, filter, format):
         query = ("INSERT INTO `vcf_analyzer`.`VcfEntry` (`EntryId`, `VcfId`, `Chrom`, `Pos`, `Id`, `Ref`, `Alt`, `Qual`, `Filter`, `Format`) " +
                 "VALUES ( NULL, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')").format(
@@ -978,7 +981,8 @@ class DatabaseConnection():
                 outList.append("NULL")
             else:
                 outList.append( gtStrList[i] )
-                
+        
+        ########### This is a place where doing the static query builder along with Python arrays could reduce this
         if (n == 1):
             query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', NULL, NULL, NULL, NULL)".format(indID, outList[0])
         elif (n == 2):
