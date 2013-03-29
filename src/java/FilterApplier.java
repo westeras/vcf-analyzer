@@ -7,6 +7,7 @@ import javax.sql.*;
 public class FilterApplier
 {
 
+    // ########### A distinct lack of coding standards as far as tabs/spaces
     private String output = "Incomplete";
     private String filterName;
     private String vcfName;
@@ -22,6 +23,7 @@ public class FilterApplier
 		this.fileName = filename;
     }
     
+    // ########### Why is the override annotation commented out?
     //@Override
     public String execute() {
     	
@@ -30,6 +32,8 @@ public class FilterApplier
     		this.nestedConnection = new DatabaseConnector();
     		this.nestedConnection2 = new DatabaseConnector();
     	}
+    	// ########### doing this Pokemon exception handling is usually a sign that maybe
+    	// it isn't this class's responsibility to handle this exception. Should probably reconsider
     	catch( Exception e)
     	{
     		this.output = "Cannot connect to database";
@@ -66,6 +70,9 @@ public class FilterApplier
 			
 			ResultSet entries = this.connection.getVcfEntries( vcfId );
 			
+			// ########### Things get a little complex here. I think I can see some
+			// discrete steps (I may be wrong). If so, then these can be extracted 
+			// into separate methods
 			while (entries.next() )
 		    {
 				long entryId = entries.getLong("EntryId");
