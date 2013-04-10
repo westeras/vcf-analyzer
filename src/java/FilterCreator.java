@@ -47,8 +47,6 @@ public class FilterCreator {
 				} else {
 					System.out.println("Invalid info name or genotype name");
 				}
-			} else {
-				System.out.println("Invalid operator!");
 			}
 		}
 	}
