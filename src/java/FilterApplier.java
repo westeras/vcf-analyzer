@@ -7,59 +7,73 @@ import javax.sql.*;
 public abstract class FilterApplier extends Command
 {
 
-    // ########### A distinct lack of coding standards as far as tabs/spaces
-    private String output = "Incomplete";
-    protected String filterName;
-    protected String vcfName;
-    protected String fileName;
-	private DatabaseConnector connection;   
-	private DatabaseConnector nestedConnection;
-	private DatabaseConnector nestedConnection2;
-    
-    // ########### Why is the override annotation commented out?
-    //@Override
-    public String execute() {
-    	
-    	try {
-    		this.connection = new DatabaseConnector();
-    		this.nestedConnection = new DatabaseConnector();
-    		this.nestedConnection2 = new DatabaseConnector();
-    	}
-    	// ########### doing this Pokemon exception handling is usually a sign that maybe
-    	// it isn't this class's responsibility to handle this exception. Should probably reconsider
-    	catch( Exception e)
-    	{
-    		this.output = "Cannot connect to database";
-    		return this.output;
-    	}
+	private String output = "Incomplete";
+	protected String filterName;
+	protected String vcfName;
+	protected String fileName;
+	protected DatabaseConnector connection;	
+	protected DatabaseConnector nestedConnection;
+	protected DatabaseConnector nestedConnection2;
+	
+	public FilterApplier(String vcfName, String filterName)
+	{
+		this.vcfName = vcfName;
+		this.filterName = filterName;		
+	}
+	
+	protected abstract String getSuccessMessage();
+	protected abstract void initializeVcf( long vcfId ) throws Exception;
+	protected abstract void processUntestedEntry( ResultSet entries ) throws Exception;
+	protected abstract void processUntestedEntryInfo( 
+			String tableName, ResultSet entryInfoData ) throws Exception;
+	protected abstract void processPassingEntry( ResultSet entries ) throws Exception;
+	protected abstract void processUntestedIndividual() throws Exception;
+	protected abstract void processUntestedIndividualData( String genotypeName, ResultSet genotypeData ) throws Exception;
+	protected abstract void processPassingIndividual() throws Exception;
+	protected abstract void finializeEntry() throws Exception;
+	protected abstract void closeFiltering();
+	
+	@Override
+	public String execute() {
+		
+		try {
+			this.connection = new DatabaseConnector();
+			this.nestedConnection = new DatabaseConnector();
+			this.nestedConnection2 = new DatabaseConnector();
+		}
+		// ########### doing this Pokemon exception handling is usually a sign that maybe
+		// it isn't this class's responsibility to handle this exception. Should probably reconsider
+		catch( Exception e)
+		{
+			this.output = "Cannot connect to database";
+			return this.output;
+		}
 	
 		try
-		    {
+			{
 
 			//TODO load filter
 			this.output = applyFilter();
 			connection.CloseConnection();
 			nestedConnection.CloseConnection();
 			nestedConnection2.CloseConnection();
-		    }
+			}
 		catch (Exception e)
-		    {
+			{
 			this.output = e.getMessage();
-		    }
+			}
 		return this.output;
 	
-    }
+	}
 
-    private String applyFilter()
-    {
-    	VcfWriter writer = null;
+	private String applyFilter()
+	{
 		try {
 			boolean passing = true;
-			writer = new VcfWriter(this.fileName);
 			
 			long vcfId = this.connection.getVcfId( this.vcfName);
 			
-			writer.writeHeader( this.connection.getVcfHeader(vcfId) );
+			initializeVcf( vcfId );
 			
 			ResultSet entries = this.connection.getVcfEntries( vcfId );
 			
@@ -67,79 +81,74 @@ public abstract class FilterApplier extends Command
 			// discrete steps (I may be wrong). If so, then these can be extracted 
 			// into separate methods
 			while (entries.next() )
-		    {
+			{
 				long entryId = entries.getLong("EntryId");
 				ArrayList<String> infoTableName = new ArrayList<String>();
 
-	    		writer.writeEntryStart( entries );
-	    		
-	    		ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
-	    		for (int j=0; j< tableNames.size(); j++)
-	    		{
-	    			ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, tableNames.get(j));
-	    			if (entryInfoData!=null)
-	    			{
-	    				//writes each info datum; eg 
-	    				writer.writeInfoSection( tableNames.get(j), entryInfoData );
-	    			}
-	    		}
-	    		writer.writeEntryEnd(entries);
-	    		
+				processUntestedEntry( entries );
+				
+				ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
+				for (int j=0; j< tableNames.size(); j++)
+				{
+					ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, tableNames.get(j));
+					if (entryInfoData!=null)
+					{
+						//writes each info datum; eg 
+						processUntestedEntryInfo( tableNames.get(j), entryInfoData );
+					}
+				}
+
+				
 				//TODO test entry
-	    		
+				
 				if (passing)
 				{
+					processPassingEntry(entries);
+					
 					//individual level
 					String indFormat = entries.getString("Format");
 					ArrayList<String> genotypes = new ArrayList<String>( 
-				    		Arrays.asList( indFormat.split(":") ));
+							Arrays.asList( indFormat.split(":") ));
 					
 					ResultSet individuals = this.nestedConnection.getIndividuals( entryId );
 					while (individuals.next() )
 					{
-						writer.writeIndividualStart();
+						processUntestedIndividual();
 						
 						long indId = individuals.getLong("IndID");
 						for (int k=0; k< genotypes.size(); k++)
 						{
 							ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
 							
-							writer.writeIndividualDatum( genotypeData, genotypes.get(k));
+							processUntestedIndividualData( genotypes.get(k), genotypeData);
 							genotypeData.close();
 						}
 						
-						writer.writeIndividualEnd();
-						//if pass
-						//if pass write
-						//if fail close genotypeData
-						//writer closes genotypeData,
-						//writer.writeIndividual( genotypeData, genotypes );
+						if (passing)
+						{
+							processPassingIndividual();
+						}
 					}
 					
 					individuals.close();
-					writer.writeEOL();
+					finializeEntry();
 				}
 
-		    }
+			}
 			entries.close();
-			writer.closeWriter();
+			closeFiltering();
 			return getSuccessMessage();
 			
 		} catch (Exception exception) {
-			if (writer != null)
-			{
-				writer.closeWriter();
-			}
+			closeFiltering();
 			return exception.getMessage();
 		}
-    }
+	}
 
-    //@Override
-    public void pipeOutput() {
+	//@Override
+	public void pipeOutput() {
 	// TODO Auto-generated method stub.
 	
-    }
-    
-    abstract protected String getSuccessMessage();
+	}
 
 }

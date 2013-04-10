@@ -12,7 +12,7 @@ import java.io.IOException;
 public class TestFilter {
 
 	public static void main(String[] args) throws IOException {
-		FilterApplier command = new FilterApplier("", "2013-03-25_09:51", "FilterTest.txt" );
+		FilterApplier command = new FilterApplierWriter("", "2013-03-25_09:51", "FilterTest.txt" );
 		command.execute();
 		
 		//compare files
