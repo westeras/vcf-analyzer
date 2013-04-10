@@ -40,7 +40,7 @@ public class FilterCreator {
 				trimAllArguments(arguments);
 				String[] operands = arguments[1].split(" ");
 				String[] identifiers = arguments[0].split(" ");
-				String limit = "0";
+				String[] limit = {"0"};
 				
 				String genoName = identifiers[1];
 				
