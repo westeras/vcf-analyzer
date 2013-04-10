@@ -71,7 +71,7 @@ public class ParserTest {
 			}
 		}
 		
-		ArrayList<String> infoFields = new ArrayList<String>(Arrays.asList("AD", "DP", "GQ", "PL"));
+		ArrayList<String> infoFields = new ArrayList<String>(Arrays.asList("GT", "AD", "DP", "GQ", "PL"));
 
 		for (String infoField : infoFields) {
 			for (Integer ind : individualList) {
