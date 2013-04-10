@@ -45,11 +45,8 @@ public class FilterCreator {
 				String genoName = identifiers[1];
 				
 				if (arguments[0].contains("limit")) {
-					String[] limits = identifiers[1].split("=");
-					System.out.println("Ident: " + identifiers[1]);
+					String[] limits = identifiers[1].split(":");
 					limit = limits[1];
-					
-					System.out.println("Limit: " + limit);
 					genoName = identifiers[2];
 				}
 				
