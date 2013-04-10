@@ -137,13 +137,13 @@ class DatabaseConnector {
 		try {
 			if (operands.length == 1) {
 				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, NULL);",
-								filterID, genoName, operator, operands[0]);
+						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, '%s');",
+								filterID, genoName, operator, operands[0], limit);
 			} else if (operands.length == 2) {
 				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', NULL);",
+						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');",
 								filterID, genoName, operator, operands[0],
-								operands[1]);
+								operands[1], limit);
 			} else if (operands.length == 0) {
 				System.out.println("No operands given");
 				return 0;
