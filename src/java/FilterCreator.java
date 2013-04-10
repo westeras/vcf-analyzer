@@ -31,8 +31,8 @@ public class FilterCreator {
 		String currentCommand = this.commandList[index];
 		ArrayList<String> infoNames = dbConnector.getInfoTableNames();
 		ArrayList<String> genoNames = dbConnector.getGenotypeTableNames();
-		ArrayList<String> indNames = Arrays.asList("ind", "IND", "Ind", "individual", "in");
-		ArrayList<String> entryNames = Arrays.asList("entry", "ENT", "ent");
+		ArrayList<String> indNames = Arrays.asList({"ind", "IND", "Ind", "individual", "in"});
+		ArrayList<String> entryNames = Arrays.asList({"entry", "ENT", "ent"});
 		
 		for (String key : this.operatorList.keySet()) {
 			if (currentCommand.contains(key)) {
