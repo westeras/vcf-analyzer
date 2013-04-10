@@ -369,5 +369,11 @@ class DatabaseConnector {
 						filterId, entryId, pass);
 		this.stmt.executeUpdate(sql);
 	}
-
+	
+	public ResultSet executeQuery(String sql) throws ClassNotFoundException, SQLException{
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		return this.stmt.executeQuery(sql);
+	}
+	
 }
