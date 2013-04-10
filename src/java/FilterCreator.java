@@ -70,7 +70,7 @@ public class FilterCreator {
 		operatorList.put("equal to", 4);
 		operatorList.put("equals", 4);
 		operatorList.put("between", 5);
-		operatorList.put("between exclusive", 6)
+		operatorList.put("between exclusive", 6);
 		operatorList.put("exists", 7);
 		operatorList.put("not exists", 8);
 		operatorList.put("null", 9);
