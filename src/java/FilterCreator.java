@@ -41,9 +41,9 @@ public class FilterCreator {
 				String[] operands = arguments[1].split(" ");
 				String[] identifiers = arguments[0].split(" ");
 				
-				if (infoNames.contains(identifiers[1]) && indNames.contains(identifiers[0])) {
+				if (genoNames.contains(identifiers[1]) && indNames.contains(identifiers[0])) {
 					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), identifiers[1], operands);
-				} else if (genoNames.contains(identifiers[1]) && entryNames.contains(identifiers[0])) {
+				} else if (infoNames.contains(identifiers[1]) && entryNames.contains(identifiers[0])) {
 					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), identifiers[1], operands);
 				} else {
 					System.out.println("Invalid info name or genotype name");

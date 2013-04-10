@@ -36,9 +36,9 @@ public class FilterCreatorTest {
 		}
 		
 		String filterName = "testFilter";
-		String[] operands = {"ind AC>1", "ind AF=0", "entry AD=4", 
-				"ent DP > 10", "entry GLE between 2 10", "ind QD between 10 15", 
-				"entry bogus < 55", "ind AC greater than 55.55"};
+		String[] operands = {"ind AD>1", "ind DP=0", "entry AC=4", 
+				"ent AF>10", "entry DS between 2 10", "ind PQ between 10 15", 
+				"entry bogus < 55", "ind AD greater than 55.55"};
 		FilterCreator testCreator = new FilterCreator(filterName, operands);
 		testCreator.uploadEntries();
 	}
