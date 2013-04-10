@@ -40,9 +40,17 @@ public class FilterCreator {
 				trimAllArguments(arguments);
 				String[] operands = arguments[1].split(" ");
 				String[] identifiers = arguments[0].split(" ");
+				String limit = "0";
 				
-				if (genoNames.contains(identifiers[1]) && indNames.contains(identifiers[0])) {
-					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), identifiers[1], operands);
+				String genoName = identifiers[1];
+				
+				if (identifiers.length > 2) {
+					limit = identifiers[1].split("=")[1];
+					genoName = identifiers[2];
+				}
+				
+				if (genoNames.contains(genoName) && indNames.contains(identifiers[0])) {
+					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), genoName, operands, limit);
 				} else if (infoNames.contains(identifiers[1]) && entryNames.contains(identifiers[0])) {
 					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), identifiers[1], operands);
 				} else {

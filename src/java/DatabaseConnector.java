@@ -132,7 +132,7 @@ class DatabaseConnector {
 	}
 
 	public int createIndividualEntry(int filterID, int operator,
-			String genoName, String[] operands) throws SQLException {
+			String genoName, String[] operands, int limit) throws SQLException {
 		String sql = null;
 		try {
 			if (operands.length == 1) {
@@ -159,7 +159,6 @@ class DatabaseConnector {
 
 			return filterEntryID;
 		} catch (SQLException se) {
-			System.out.println(sql);
 			throw new SQLException(se.getMessage());
 		}
 	}
