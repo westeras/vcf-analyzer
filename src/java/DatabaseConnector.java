@@ -132,7 +132,7 @@ class DatabaseConnector {
 	}
 
 	public int createIndividualEntry(int filterID, int operator,
-			String genoName, String[] operands, int limit) throws SQLException {
+			String genoName, String[] operands, String limit) throws SQLException {
 		String sql = null;
 		try {
 			if (operands.length == 1) {
@@ -142,8 +142,7 @@ class DatabaseConnector {
 			} else if (operands.length == 2) {
 				sql = String
 						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');",
-								filterID, genoName, operator, operands[0],
-								operands[1], limit);
+								filterID, genoName, operator, operands[0], operands[1], limit);
 			} else if (operands.length == 0) {
 				System.out.println("No operands given");
 				return 0;
