@@ -46,7 +46,7 @@ public class FilterCreator {
 				} else if (infoNames.contains(identifiers[1]) && entryNames.contains(identifiers[0])) {
 					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), identifiers[1], operands);
 				} else {
-					System.out.println("Invalid info name or genotype name");
+					System.out.println("Invalid info name or genotype name: " + identifiers[1]);
 				}
 			}
 		}
