@@ -58,7 +58,7 @@ public class FilterCreator {
 		}
 	}
 	
-	public static void fillOperatorList() {
+	public static HashMap<String, Integer> fillOperatorList() {
 		HashMap<String, Integer> operatorList = new HashMap<String, Integer>();
 		operatorList.put("<", 0);
 		operatorList.put("less than", 0);
