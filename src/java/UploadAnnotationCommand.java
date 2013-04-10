@@ -37,12 +37,13 @@ public class UploadAnnotationCommand extends Command{
 		
 		for (String[] row : rowsToUpload){
 			String chromosome =row[0];
-			String startPosition=row[1];
-			String endPosition=row[2];
+			int startPosition=Integer.valueOf(row[1]);
+			int endPosition=Integer.valueOf(row[2]);
 			String geneName=row[3];
 			String geneDirection=row[4];
 			String sql = String
-					.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
+					.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, " +
+							"`EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
 							chromosome, startPosition, endPosition, geneName,
 							geneDirection, this.name);
 			connection.upload(sql);
