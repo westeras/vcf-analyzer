@@ -49,6 +49,9 @@ public class FilterCreator {
 					genoName = identifiers[2];
 				}
 				
+				System.out.println("GenoName: " + genoName);
+				System.out.println("identifiers[0]: " + identifiers[0]);
+				
 				if (genoNames.contains(genoName) && indNames.contains(identifiers[0])) {
 					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), genoName, operands, limit);
 				} else if (infoNames.contains(identifiers[1]) && entryNames.contains(identifiers[0])) {
