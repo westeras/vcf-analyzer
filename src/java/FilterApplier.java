@@ -14,6 +14,8 @@ public abstract class FilterApplier extends Command
 	protected DatabaseConnector connection;	
 	protected DatabaseConnector nestedConnection;
 	protected DatabaseConnector nestedConnection2;
+	private ArrayList<FilterParameter> entryParameters;
+	private ArrayList<FilterParameter> individualParameters;
 	
 	public FilterApplier(String vcfName, String filterName)
 	{
@@ -21,6 +23,7 @@ public abstract class FilterApplier extends Command
 		this.filterName = filterName;		
 	}
 	
+	//Template methods
 	protected abstract String getSuccessMessage();
 	protected abstract void initializeVcf( long vcfId ) throws Exception;
 	protected abstract void processUntestedEntry( ResultSet entries ) throws Exception;
@@ -51,8 +54,7 @@ public abstract class FilterApplier extends Command
 	
 		try
 			{
-
-			//TODO load filter
+			loadFilter();
 			this.output = applyFilter();
 			connection.CloseConnection();
 			nestedConnection.CloseConnection();
@@ -60,12 +62,27 @@ public abstract class FilterApplier extends Command
 			}
 		catch (Exception e)
 			{
+			connection.CloseConnection();
+			nestedConnection.CloseConnection();
+			nestedConnection2.CloseConnection();
 			this.output = e.getMessage();
 			}
 		return this.output;
 	
 	}
 
+	private void loadFilter() throws Exception
+	{
+		int filterId = this.connection.getFilterID(this.filterName);
+		this.connection.getFilterEntries(filterId);
+		
+		this.connection.getFilterIndividuals(filterId);
+		
+		//entryParameters = connection.;
+		//individualParameters;
+		
+	}
+	
 	private String applyFilter()
 	{
 		try {
@@ -83,7 +100,6 @@ public abstract class FilterApplier extends Command
 			while (entries.next() )
 			{
 				long entryId = entries.getLong("EntryId");
-				ArrayList<String> infoTableName = new ArrayList<String>();
 
 				processUntestedEntry( entries );
 				

@@ -942,14 +942,16 @@ class DatabaseConnection():
             for i in range(len(entries)):
                 if ( entries[i] == "." ):
                     entries[i] = "NULL"
+                else:
+                    entries[i] = "'"+ entries[i] +"'"
 
             if ( len(entries) == 3 ):
                 query = ("INSERT INTO `vcf_analyzer`.`GL` (`IndID`, `AA`, `AB`, `BB`) " +
-                        "VALUES ( '{}', '{}', '{}', '{}' )").format(
+                        "VALUES ( {}, {}, {}, {} )").format(
                         indId, entries[0], entries[1], entries[2] )
             elif (len(entries) == 6 ):
                 query = ("INSERT INTO `vcf_analyzer`.`GL` (`IndID`, `AA`, `AB`, `BB`, `AC`, `BC`, `CC`) " +
-                        "VALUES ( '{}', '{}', '{}', '{}', '{}', '{}', '{}' )").format(
+                        "VALUES ( {}, {}, {}, {}, {}, {}, {} )").format(
                         indId, entries[0], entries[1], entries[2], entries[3], entries[4], entries[5] )
             else:
                 #invalid number of GL values
@@ -1104,7 +1106,7 @@ class DatabaseConnection():
         for i in range (len(values), 9):
             values.append("NULL")
             
-        query = "INSERT INTO `vcf_analyzer`.`GLE` VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')".format(
+        query = "INSERT INTO `vcf_analyzer`.`GLE` VALUES ({},{},{},{},{},{},{},{},{},{})".format(
                     indId, values[0], values[1], values[2], values[3],
                     values[4], values[5], values[6], values[7], values[8] )
         try:

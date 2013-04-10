@@ -185,6 +185,18 @@ class DatabaseConnector {
 		}
 	}
 
+	public ArrayList<FilterParameter> getFilterEntries(int FilId) throws SQLException
+	{
+		//TODO replace stub
+		return null;
+	}
+	
+	public ArrayList<FilterParameter> getFilterIndividuals(int FilId) throws SQLException
+	{
+		//TODO replace stub
+		return null;
+	}
+	
 	public ResultSet getVcfEntries(long vcfId) throws SQLException {
 		String sql = "";
 		try {
@@ -198,7 +210,7 @@ class DatabaseConnector {
 			throw new SQLException("Invalid Query " + sql);
 		}
 	}
-
+	
 	public ArrayList<String> getInfoTableNames() throws SQLException {
 		String sql = "";
 		ArrayList<String> tables = new ArrayList<String>();
@@ -291,18 +303,26 @@ class DatabaseConnector {
 		}
 	}
 
-	public void CloseConnection() throws SQLException {
-		if (this.conn != null) {
-			this.conn.close();
-		}
-		if (this.stmt != null) {
-			this.stmt.close();
-		}
-
-		if (this.stmtList != null) {
-			for (Statement state : this.stmtList) {
-				state.close();
+	public void CloseConnection() {
+		
+		try
+		{
+			if (this.conn != null) {
+				this.conn.close();
 			}
+			if (this.stmt != null) {
+				this.stmt.close();
+			}
+	
+			if (this.stmtList != null) {
+				for (Statement state : this.stmtList) {
+					state.close();
+				}
+			}
+		}
+		catch( SQLException e)
+		{
+			//do nothing
 		}
 	}
 
