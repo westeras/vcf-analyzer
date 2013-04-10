@@ -36,13 +36,16 @@ public class UploadAnnotationCommand extends Command{
 		ArrayList<String[]> rowsToUpload=parser.parseFile();
 		
 		for (String[] row : rowsToUpload){
-			String chrom =row[0];
+			String chromosome =row[0];
 			String startPosition=row[1];
 			String endPosition=row[2];
 			String geneName=row[3];
 			String geneDirection=row[4];
-			connection.uploadAnnotation(this.name,chrom, Integer.valueOf(startPosition),Integer.valueOf(endPosition), geneName, geneDirection);
-			
+			String sql = String
+					.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
+							chromosome, startPosition, endPosition, geneName,
+							geneDirection, this.name);
+			connection.upload(sql);
 		}			
 	} catch (ClassNotFoundException exception) {
 		// TODO Auto-generated catch-block stub.

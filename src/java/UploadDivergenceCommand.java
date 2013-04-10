@@ -42,7 +42,10 @@ public class UploadDivergenceCommand extends Command{
 				String chromosome=row[0];
 				String position=row[1];
 				String divValue=row[2];
-				connection.uploadDivergence(this.name,chromosome, Integer.valueOf(position),Integer.valueOf(divValue));
+				String sql = String
+						.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
+								this.name, chromosome, position, divValue);
+				connection.upload(sql);
 			}			
 		} catch (ClassNotFoundException exception) {
 			// TODO Auto-generated catch-block stub.
