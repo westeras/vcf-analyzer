@@ -1,5 +1,6 @@
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 // ########### What does this guy do?
@@ -29,17 +30,25 @@ public class FilterCreator {
 	private void parseCommand(int index) throws SQLException {
 		String currentCommand = this.commandList[index];
 		ArrayList<String> infoNames = dbConnector.getInfoTableNames();
+		ArrayList<String> genoNames = dbConnector.getGenotypeTableNames();
+		ArrayList<String> indNames = Arrays.asList("ind", "IND", "Ind", "individual", "in");
+		ArrayList<String> entryNames = Arrays.asList("entry", "ENT", "ent");
 		
 		for (String key : this.operatorList.keySet()) {
 			if (currentCommand.contains(key)) {
 				String[] arguments = currentCommand.split(key);
-				
 				trimAllArguments(arguments);
-				
 				String[] operands = arguments[1].split(" ");
-				if (infoNames.contains(arguments[0])) {
-					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), arguments[0], operands);
+				
+				if (infoNames.contains(arguments[2]) && indNames.contains(arguments[0])) {
+					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), arguments[1], operands)
+				} else if (genoNames.contains(arguments[2]) && entryNames.contains(arguments[0])) {
+					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), arguments[1], operands);
+				} else {
+					System.out.println("Invalid info name or genotype name");
 				}
+			} else {
+				System.out.println("Invalid operator!");
 			}
 		}
 	}
