@@ -159,6 +159,7 @@ class DatabaseConnector {
 
 			return filterEntryID;
 		} catch (SQLException se) {
+			System.out.println(sql);
 			throw new SQLException(se.getMessage());
 		}
 	}
