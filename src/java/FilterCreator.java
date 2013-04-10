@@ -41,7 +41,7 @@ public class FilterCreator {
 				String[] operands = arguments[1].split(" ");
 				
 				if (infoNames.contains(arguments[2]) && indNames.contains(arguments[0])) {
-					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), arguments[1], operands)
+					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), arguments[1], operands);
 				} else if (genoNames.contains(arguments[2]) && entryNames.contains(arguments[0])) {
 					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), arguments[1], operands);
 				} else {
