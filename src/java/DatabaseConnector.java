@@ -214,6 +214,7 @@ class DatabaseConnector {
 		String sql = "";
 		ArrayList<String> tables = new ArrayList<String>();
 		try {
+			sql = "SELECT `GenoName` FROM `vcf_analyzer`.`GenotypeTable` ORDER BY `GenoName` ASC";
 			ResultSet rs = this.stmt.executeQuery(sql);
 			while (rs.next()) {
 				String genoName = rs.getString("GenoName");
