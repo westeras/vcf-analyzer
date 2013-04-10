@@ -125,8 +125,32 @@ class DatabaseConnector {
         }
 	}
 	
-	public int createIndividualEntry(int filterID, int operator, String infoName, String[] operands) throws SQLException {
+	public int createIndividualEntry(int filterID, int operator, String genoName, String[] operands) throws SQLException {
 		String sql = null;
+		try {
+			if (operands.length == 1) {
+				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, NULL);", 
+						filterID, genoName, operator, operands[0]);
+			} else if (operands.length == 2) {
+				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', NULL);", 
+						filterID, genoName, operator, operands[0], operands[1]);
+			} else if (operands.length == 0) {
+				System.out.println("No operands given");
+				return 0;
+			} else {
+				System.out.println("Too many operands given");
+				return 0;
+			}
+			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			
+			ResultSet rs = this.stmt.getGeneratedKeys();
+			rs.next();
+			int filterEntryID = rs.getInt(1);
+			
+			return filterEntryID;
+		} catch(SQLException se) {
+            throw new SQLException(se.getMessage());
+        }
 	}
 
 	public int getFilterID(String filterName) throws IllegalArgumentException,
