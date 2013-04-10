@@ -446,9 +446,7 @@ class Reader(object):
             sampdat = [None] * nfields
 
             for i, vals in enumerate(sample.split(':')):
-                #TODO individ here
                 # short circuit the most common
-                #MINE
                 if ( IndividualFunctions[i] == self.db.createIndividualDefault ):
                     IndividualFunctions[i]( CustomGeno[customCount], indId, vals )
                     customCount += 1
@@ -974,25 +972,25 @@ class DatabaseConnection():
 
         for i in range(n):
             if (gtStrList[i] == '/'):
-                outList.append('0')
+                outList.append("'0'")
             elif (gtStrList[i] == '|'):
-                outList.append('1')
+                outList.append("'1'")
             elif (gtStrList[i] == '.'):
                 outList.append("NULL")
             else:
-                outList.append( gtStrList[i] )
+                outList.append( "'" + gtStrList[i] + "'")
         
         ########### This is a place where doing the static query builder along with Python arrays could reduce this
         if (n == 1):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', NULL, NULL, NULL, NULL)".format(indID, outList[0])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, NULL, NULL, NULL, NULL)".format(indID, outList[0])
         elif (n == 2):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', '{}', NULL, NULL, NULL)".format(indID, outList[0], outList[1])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, NULL, NULL, NULL)".format(indID, outList[0], outList[1])
         elif (n == 3):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', '{}', '{}', NULL, NULL)".format(indID, outList[0], outList[1], outList[2])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, NULL, NULL)".format(indID, outList[0], outList[1], outList[2])
         elif (n == 4):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', '{}', '{}', '{}', NULL)".format(indID, outList[0], outList[1], outList[2], outList[3])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, {}, NULL)".format(indID, outList[0], outList[1], outList[2], outList[3])
         elif (n == 5):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(indID, outList[0], outList[1], outList[2], outList[3], outList[4])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, {}, {})".format(indID, outList[0], outList[1], outList[2], outList[3], outList[4])
         
         try:
             self.cursor.execute(query)
