@@ -317,30 +317,7 @@ class DatabaseConnector {
 			this.stmt = this.conn.createStatement();
 	}
 
-	/**
-	 * 
-	 * TODO consider refactoring to one general upload method
-	 * 
-	 * @param name
-	 * 
-	 * @param chromosome
-	 * @param position
-	 * @param divValue
-	 * @return TODO
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	protected int uploadDivergence(String name, String chromosome,
-			int position, int divValue) throws ClassNotFoundException,
-			SQLException {
-		if (!hasOpenStatementAndConnection())
-			reopenConnectionAndStatement();
-		String sql = String
-				.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
-						name, chromosome, position, divValue);
-		int rs = this.stmt.executeUpdate(sql);
-		return rs;
-	}
+	
 
 	/**
 	 * TODO: Finish Testing
@@ -363,24 +340,11 @@ class DatabaseConnector {
 		return Integer.parseInt(rs.getString("DivID"));
 	}
 
-	/**
-	 * TODO consider refactoring to one general upload method
-	 * 
-	 * @param annoName
-	 * @return TODO
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	protected int uploadAnnotation(String annoName, String chromosome,
-			int startPosition, int endPosition, String geneName,
-			String geneDirection) throws ClassNotFoundException, SQLException {
+	protected int upload(String sqlCommand) throws ClassNotFoundException,
+			SQLException {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
-		String sql = String
-				.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
-						chromosome, startPosition, endPosition, geneName,
-						geneDirection, annoName);
-		int rs = this.stmt.executeUpdate(sql);
+		int rs = this.stmt.executeUpdate(sqlCommand);
 		return rs;
 	}
 
