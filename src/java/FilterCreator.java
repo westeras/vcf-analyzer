@@ -40,18 +40,18 @@ public class FilterCreator {
 				trimAllArguments(arguments);
 				String[] operands = arguments[1].split(" ");
 				String[] identifiers = arguments[0].split(" ");
-				String[] limit = {"0"};
+				String limit = "0";
 				
 				String genoName = identifiers[1];
 				
 				if (arguments[0].contains("limit")) {
-					limit = identifiers[1].split("=");
-					System.out.println("Limit: " + limit.toString());
+					String[] limits = identifiers[1].split("=");
+					limit = limits[1];
+					
+					System.out.println("Ident: " + identifiers[1]);
+					System.out.println("Limit: " + limit);
 					genoName = identifiers[2];
 				}
-				
-				System.out.println("GenoName: " + genoName);
-				System.out.println("identifiers[0]: " + identifiers[0]);
 				
 				if (genoNames.contains(genoName) && indNames.contains(identifiers[0])) {
 					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), genoName, operands, limit);
