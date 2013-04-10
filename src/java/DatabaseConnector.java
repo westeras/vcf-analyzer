@@ -26,12 +26,8 @@ class DatabaseConnector {
 		try {
 			this.conn = null;
 			this.stmt = null;
-<<<<<<< HEAD
-	
-			// ########### What is this supposed to do?
-=======
 
->>>>>>> Refactoring/Adding AFS capability
+			// ########### What is this supposed to do?
 			Class.forName(JDBC_DRIVER);
 
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -84,61 +80,6 @@ class DatabaseConnector {
 			throw new SQLException("Invalid Query: " + sql);
 		}
 	}
-<<<<<<< HEAD
-	
-	public int createFilter(String filterName) throws SQLException, ClassNotFoundException {
-	    	String sql = null;
-	    	try {	    		
-	    		sql = String.format("INSERT into `Filter` VALUES (NULL, '%s', '0');", filterName);
-	    		this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-	    		
-	    		ResultSet rs = this.stmt.getGeneratedKeys();
-	    		rs.next();
-	    		return rs.getInt(1);
-	    		
-	    	} catch(SQLException se) {
-	            throw new SQLException(se.getMessage());
-	        }
-    	}
-    
-	public int createFilterEntry(int filterID, int operator, String infoName, String[] operands) throws SQLException {
-		String sql = null;
-		try {
-			if (operands.length == 1) {
-				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', NULL);", 
-						filterID, infoName, operator, operands[0]);
-			} else if (operands.length == 2) {
-				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', '%s');", 
-						filterID, infoName, operator, operands[0], operands[1]);
-			} else if (operands.length == 0) {
-				System.out.println("No operands given");
-				return 0;
-			} else {
-				System.out.println("Too many operands given");
-				return 0;
-			}
-			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			
-			ResultSet rs = this.stmt.getGeneratedKeys();
-			rs.next();
-			int filterEntryID = rs.getInt(1);
-			
-			return filterEntryID;
-		} catch(SQLException se) {
-            throw new SQLException(se.getMessage());
-        }
-	}
-	
-	public int createIndividualEntry(int filterID, int operator, String genoName, String[] operands) throws SQLException {
-		String sql = null;
-		try {
-			if (operands.length == 1) {
-				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, NULL);", 
-						filterID, genoName, operator, operands[0]);
-			} else if (operands.length == 2) {
-				sql = String.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', NULL);", 
-						filterID, genoName, operator, operands[0], operands[1]);
-=======
 
 	public int createFilter(String filterName) throws SQLException,
 			ClassNotFoundException {
@@ -163,22 +104,14 @@ class DatabaseConnector {
 		String sql = null;
 		try {
 			if (operands.length == 1) {
-				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '"
-						+ filterID
-						+ "', '"
-						+ infoName
-						+ "', '"
-						+ operator
-						+ "', '" + operands[0] + "');";
+				sql = String
+						.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', NULL);",
+								filterID, infoName, operator, operands[0]);
 			} else if (operands.length == 2) {
-				sql = "INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '"
-						+ filterID
-						+ "', '"
-						+ infoName
-						+ "', '"
-						+ operator
-						+ "', '" + operands[0] + "', '" + operands[1] + "');";
->>>>>>> Refactoring/Adding AFS capability
+				sql = String
+						.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', '%s');",
+								filterID, infoName, operator, operands[0],
+								operands[1]);
 			} else if (operands.length == 0) {
 				System.out.println("No operands given");
 				return 0;
@@ -186,27 +119,48 @@ class DatabaseConnector {
 				System.out.println("Too many operands given");
 				return 0;
 			}
-<<<<<<< HEAD
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			
+
 			ResultSet rs = this.stmt.getGeneratedKeys();
 			rs.next();
 			int filterEntryID = rs.getInt(1);
-			
-			return filterEntryID;
-		} catch(SQLException se) {
-            throw new SQLException(se.getMessage());
-        }
-=======
-			ResultSet rs = stmt.executeQuery(sql);
-
-			int filterEntryID = rs.getInt(0);
 
 			return filterEntryID;
 		} catch (SQLException se) {
-			throw new SQLException("Invalid Query: " + sql);
+			throw new SQLException(se.getMessage());
 		}
->>>>>>> Refactoring/Adding AFS capability
+	}
+
+	public int createIndividualEntry(int filterID, int operator,
+			String genoName, String[] operands) throws SQLException {
+		String sql = null;
+		try {
+			if (operands.length == 1) {
+				sql = String
+						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, NULL);",
+								filterID, genoName, operator, operands[0]);
+			} else if (operands.length == 2) {
+				sql = String
+						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', NULL);",
+								filterID, genoName, operator, operands[0],
+								operands[1]);
+			} else if (operands.length == 0) {
+				System.out.println("No operands given");
+				return 0;
+			} else {
+				System.out.println("Too many operands given");
+				return 0;
+			}
+			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+			ResultSet rs = this.stmt.getGeneratedKeys();
+			rs.next();
+			int filterEntryID = rs.getInt(1);
+
+			return filterEntryID;
+		} catch (SQLException se) {
+			throw new SQLException(se.getMessage());
+		}
 	}
 
 	public int getFilterID(String filterName) throws IllegalArgumentException,
@@ -262,7 +216,7 @@ class DatabaseConnector {
 			throw new SQLException(se.getMessage());
 		}
 	}
-	
+
 	public ArrayList<String> getGenotypeTableNames() throws SQLException {
 		String sql = "";
 		ArrayList<String> tables = new ArrayList<String>();
@@ -271,7 +225,7 @@ class DatabaseConnector {
 			ResultSet rs = this.stmt.executeQuery(sql);
 			while (rs.next()) {
 				String genoName = rs.getString("GenoName");
-				if (! EntryFixedInfo.contains(genoName) ) {
+				if (!EntryFixedInfo.contains(genoName)) {
 					tables.add(genoName);
 				}
 			}
@@ -388,56 +342,68 @@ class DatabaseConnector {
 		return rs;
 	}
 
-//	/**
-//	 * TODO consider refactoring to one general upload method
-//	 * 
-//	 * @param annoName
-//	 * @return TODO
-//	 * @throws ClassNotFoundException
-//	 * @throws SQLException
-//	 */
-//	protected int uploadAnnotation(String annoName, String chromosome,
-//			int startPosition, int endPosition, String geneName,
-//			String geneDirection) throws ClassNotFoundException, SQLException {
-//		if (!hasOpenStatementAndConnection())
-//			reopenConnectionAndStatement();
-//		String sql = String
-//				.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
-//						chromosome, startPosition, endPosition, geneName,
-//						geneDirection, annoName);
-//		int rs = this.stmt.executeUpdate(sql);
-//		return rs;
-//	}
-
-	protected int upload(String sqlCommand) throws ClassNotFoundException,
-			SQLException {
+	/**
+	 * TODO: Finish Testing
+	 * 
+	 * @param tableName
+	 *            , String idName
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	private int getHighestId(String tableName, String idName)
+			throws ClassNotFoundException, SQLException {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
-		int rs = this.stmt.executeUpdate(sqlCommand);
+		String sql = String.format(
+				"SELECT %s FROM %s ORDER BY %s desc LIMIT 0,1;", idName,
+				tableName, idName);
+		ResultSet rs = this.stmt.executeQuery(sql);
+		return Integer.parseInt(rs.getString("DivID"));
+	}
+
+	/**
+	 * TODO consider refactoring to one general upload method
+	 * 
+	 * @param annoName
+	 * @return TODO
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	protected int uploadAnnotation(String annoName, String chromosome,
+			int startPosition, int endPosition, String geneName,
+			String geneDirection) throws ClassNotFoundException, SQLException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		String sql = String
+				.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, `EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
+						chromosome, startPosition, endPosition, geneName,
+						geneDirection, annoName);
+		int rs = this.stmt.executeUpdate(sql);
 		return rs;
 	}
 
-<<<<<<< HEAD
-	public void insertEntryPass( int filterId, long entryId, char pass) throws SQLException, ClassNotFoundException {
+	public void insertEntryPass(int filterId, long entryId, char pass)
+			throws SQLException, ClassNotFoundException {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
-		
+
 		String sql = String
 				.format("INSERT into `vcf_analyzer`.`FilterEntryPass` (`FilId`, `EntryId`, `Pass`) VALUES ('%d','%d','%d');",
 						filterId, entryId, pass);
 		this.stmt.executeUpdate(sql);
 	}
 
-	public void insertIndividualPass( int filterId, long entryId, char pass) throws SQLException, ClassNotFoundException {
+	public void insertIndividualPass(int filterId, long entryId, char pass)
+			throws SQLException, ClassNotFoundException {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
-		
+
 		String sql = String
 				.format("INSERT into `vcf_analyzer`.`FilterIndividualPass` (`FilId`, `IndID`, `Pass`) VALUES ('%d','%d','%d');",
 						filterId, entryId, pass);
 		this.stmt.executeUpdate(sql);
 	}
 
-=======
->>>>>>> Refactoring/Adding AFS capability
 }
