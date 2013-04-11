@@ -174,6 +174,7 @@ see :doc:`FILTERS` for full description.
 '''
 from vcf.Reader import Reader
 from vcf.filters import Base as Filter
-from vcf.parser import RESERVED_INFO, RESERVED_FORMAT
+from vcf.parser import RESERVED_INFO
+from vcf.Reader import RESERVED_FORMAT
 
 VERSION = '0.5.0'
