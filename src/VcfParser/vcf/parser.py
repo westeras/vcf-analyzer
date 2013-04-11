@@ -292,66 +292,14 @@ class Reader(object):
                 for x in iterable]
 
     def _parse_info(self, info_str, entryDbId):
-        '''Parse the INFO field of a VCF entry into a dictionary of Python
-        types.
-
-        '''
-        
         if info_str == '.':
             return {}
 
         entries = info_str.split(';')
-        #retdict = OrderedDict()
-        #infoFields = "";
 
         for entry in entries:
-            entry = entry.split('=')
-            #infoFields += entry[0]
-            #infoFields += ";"
-            '''
-            ID = entry[0]
-            #TODO: add DB upload and long if else for options
-            try:
-                entry_type = self.infos[ID].type
-            except KeyError:
-                try:
-                    entry_type = RESERVED_INFO[ID]
-                except KeyError:
-                    if entry[1:]:
-                        entry_type = 'String'
-                    else:
-                        entry_type = 'Flag'
-            '''    
+            entry = entry.split('=') 
             self.db.insertInfo(entryDbId, entry)
-            '''
-            if entry_type == 'Integer':
-                vals = entry[1].split(',')
-                val = self._map(int, vals)
-            elif entry_type == 'Float':
-                vals = entry[1].split(',')
-                val = self._map(float, vals)
-            elif entry_type == 'Flag':
-                val = True
-            elif entry_type == 'String':
-                try:
-                    val = entry[1]
-                except IndexError:
-                    val = True
-
-            try:
-                if val != True and self.infos[ID].num == 1 and entry_type != 'String':
-                    val = val[0]
-            except KeyError:
-                pass
-
-            retdict[ID] = val
-
-        return retdict
-        '''
-        #CONSIDER: dicuss
-        #if ( len(infoFields) > 0 )
-        #    self.db.updateEntryInfo( entryDbId, infoFields[:-1] )
-        
 
     def _parse_sample_format(self, samp_fmt):
         """ Parse the format of the calls in this _Record """
@@ -383,8 +331,7 @@ class Reader(object):
         individGeno = samp_fmt.split(":")
         IndividualFunctions = []
         CustomGeno = []
-        #Supported   
-        
+		
         for genotype in individGeno:
             if ( genotype == "AD" ):
                 IndividualFunctions.append(self.db.createAD)
@@ -606,103 +553,6 @@ class Reader(object):
         return self
 
 
-class Writer(object):
-    """ VCF Writer """
-
-    fixed_fields = "#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT".split()
-
-    # Reverse keys and values in header field count dictionary
-    counts = dict((v,k) for k,v in field_counts.iteritems())
-
-    def __init__(self, stream, template, lineterminator="\r\n"):
-        self.writer = csv.writer(stream, delimiter="\t", lineterminator=lineterminator)
-        self.template = template
-        self.stream = stream
-
-        two = '##{key}=<ID={0},Description="{1}">\n'
-        four = '##{key}=<ID={0},Number={num},Type={2},Description="{3}">\n'
-        _num = self._fix_field_count
-        for (key, vals) in template.metadata.iteritems():
-            if key in SINGULAR_METADATA:
-                vals = [vals]
-            for val in vals:
-                stream.write('##{0}={1}\n'.format(key, val))
-        for line in template.infos.itervalues():
-            stream.write(four.format(key="INFO", *line, num=_num(line.num)))
-        for line in template.formats.itervalues():
-            stream.write(four.format(key="FORMAT", *line, num=_num(line.num)))
-        for line in template.filters.itervalues():
-            stream.write(two.format(key="FILTER", *line))
-        for line in template.alts.itervalues():
-            stream.write(two.format(key="ALT", *line))
-
-        self._write_header()
-
-    def _write_header(self):
-        # write INFO, etc
-        self.writer.writerow(self.fixed_fields + self.template.samples)
-
-    def write_record(self, record):
-        """ write a record to the file """
-        ffs = self._map(str, [record.CHROM, record.POS, record.ID, record.REF]) \
-              + [self._format_alt(record.ALT), record.QUAL or '.', self._format_filter(record.FILTER),
-                 self._format_info(record.INFO), record.FORMAT]
-
-        samples = [self._format_sample(record.FORMAT, sample)
-            for sample in record.samples]
-        self.writer.writerow(ffs + samples)
-
-    def flush(self):
-        """Flush the writer"""
-        try:
-            self.stream.flush()
-        except AttributeError:
-            pass
-
-    def close(self):
-        """Close the writer"""
-        try:
-            self.stream.close()
-        except AttributeError:
-            pass
-
-    def _fix_field_count(self, num_str):
-        """Restore header number to original state"""
-        if num_str not in self.counts:
-            return num_str
-        else:
-            return self.counts[num_str]
-
-    def _format_alt(self, alt):
-        return ','.join(self._map(str, alt))
-
-    def _format_filter(self, flt):
-        return self._stringify(flt, none='PASS', delim=';')
-
-    def _format_info(self, info):
-        if not info:
-            return '.'
-        return ';'.join([self._stringify_pair(x,y) for x, y in info.iteritems()])
-
-    def _format_sample(self, fmt, sample):
-        if sample.data.GT is None:
-            return "./."
-        return ':'.join([self._stringify(x) for x in sample.data])
-
-    def _stringify(self, x, none='.', delim=','):
-        if type(x) == type([]):
-            return delim.join(self._map(str, x, none))
-        return str(x) if x is not None else none
-
-    def _stringify_pair(self, x, y, none='.', delim=','):
-        if isinstance(y, bool):
-            return str(x) if y else ""
-        return "%s=%s" % (str(x), self._stringify(y, none=none, delim=delim))
-
-    def _map(self, func, iterable, none='.'):
-        #``map``, but make None values none.
-        return [func(x) if x is not None else none
-                for x in iterable]
 
 # backwards compatibility
 VCFReader = Reader
