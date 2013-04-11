@@ -3,7 +3,6 @@ import re
 import csv
 import gzip
 import sys
-import itertools
 import codecs
 import mysql.connector
 import datetime
