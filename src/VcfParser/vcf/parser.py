@@ -556,4 +556,4 @@ class Reader(object):
 
 # backwards compatibility
 VCFReader = Reader
-VCFWriter = Writer
+#VCFWriter = Writer
