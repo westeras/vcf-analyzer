@@ -168,6 +168,3 @@ class _vcf_metadata_parser(object):
         else:
             match = self.meta_pattern.match(meta_string)
             return match.group('key'), match.group('val')
-
-# backwards compatibility
-VCFReader = Reader
