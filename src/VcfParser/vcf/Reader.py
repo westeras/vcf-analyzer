@@ -3,6 +3,7 @@ import re
 
 from vcf.DatabaseConnection import DatabaseConnection
 from vcf.parser import _vcf_metadata_parser
+from model import _Substitution, _Breakend, _SingleBreakend, _SV
 
 try:
     from collections import OrderedDict
