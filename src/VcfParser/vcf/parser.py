@@ -44,15 +44,6 @@ RESERVED_INFO = {
     'CICNADJ':'Integer'
 }
 
-RESERVED_FORMAT = {
-    'GT': 'String', 'DP': 'Integer', 'FT': 'String', 'GL': 'Float',
-    'GQ': 'Float', 'HQ': 'Float',
-
-    # VCF 4.1 Additions
-    'CN':'Integer','CNQ':'Float','CNL':'Float','NQ':'Integer','HAP':'Integer',
-    'AHAP':'Integer'
-}
-
 # Spec is a bit weak on which metadata lines are singular, like fileformat
 # and which can have repeats, like contig
 SINGULAR_METADATA = ['fileformat', 'fileDate', 'reference']

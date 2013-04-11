@@ -10,6 +10,15 @@ try:
     from collections import OrderedDict
 except ImportError:
     from ordereddict import OrderedDict
+	
+RESERVED_FORMAT = {
+    'GT': 'String', 'DP': 'Integer', 'FT': 'String', 'GL': 'Float',
+    'GQ': 'Float', 'HQ': 'Float',
+
+    # VCF 4.1 Additions
+    'CN':'Integer','CNQ':'Float','CNL':'Float','NQ':'Integer','HAP':'Integer',
+    'AHAP':'Integer'
+}
 
 class Reader(object):
     """ Reader for a VCF v 4.0 file, an iterator returning ``_Record objects`` """
