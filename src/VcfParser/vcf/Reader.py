@@ -1,4 +1,5 @@
 import collections
+import re
 
 from vcf.DatabaseConnection import DatabaseConnection
 from vcf.parser import _vcf_metadata_parser
