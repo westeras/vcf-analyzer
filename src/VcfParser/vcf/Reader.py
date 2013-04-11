@@ -1,6 +1,7 @@
 import collections
 
-from DatabaseConnection import DatabaseConnection
+from vcf.DatabaseConnection import DatabaseConnection
+from vcf.parser import _vcf_metadata_parser
 
 try:
     from collections import OrderedDict
