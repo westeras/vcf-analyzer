@@ -1,3 +1,6 @@
+import mysql.connector
+import datetime
+
 class DatabaseConnection():
 
     def __init__(self):
