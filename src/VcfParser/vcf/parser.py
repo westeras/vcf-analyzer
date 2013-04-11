@@ -25,6 +25,7 @@ except ImportError:
 
 from model import _Call, _Record, make_calldata_tuple
 from model import _Substitution, _Breakend, _SingleBreakend, _SV
+from DatabaseConnection import DatabaseConnection
 
 
 # Metadata parsers/constants
