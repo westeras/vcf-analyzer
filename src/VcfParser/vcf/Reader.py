@@ -11,6 +11,11 @@ try:
 except ImportError:
     from ordereddict import OrderedDict
 	
+try:
+    import cparse
+except ImportError:
+    cparse = None
+	
 RESERVED_FORMAT = {
     'GT': 'String', 'DP': 'Integer', 'FT': 'String', 'GL': 'Float',
     'GQ': 'Float', 'HQ': 'Float',

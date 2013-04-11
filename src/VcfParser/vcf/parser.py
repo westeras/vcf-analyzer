@@ -18,10 +18,7 @@ try:
 except ImportError:
     pysam = None
 
-try:
-    import cparse
-except ImportError:
-    cparse = None
+
 
 from model import _Call, _Record, make_calldata_tuple
 from model import _Substitution, _Breakend, _SingleBreakend, _SV
