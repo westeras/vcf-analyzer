@@ -2,6 +2,11 @@ import collections
 
 from DatabaseConnection import DatabaseConnection
 
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+
 class Reader(object):
     """ Reader for a VCF v 4.0 file, an iterator returning ``_Record objects`` """
 
