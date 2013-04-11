@@ -1,3 +1,5 @@
+from DatabaseConnection import DatabaseConnection
+
 class Reader(object):
     """ Reader for a VCF v 4.0 file, an iterator returning ``_Record objects`` """
 
