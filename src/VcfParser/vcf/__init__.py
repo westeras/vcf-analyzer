@@ -173,7 +173,6 @@ see :doc:`FILTERS` for full description.
 
 '''
 from vcf.Reader import Reader
-from vcf.parser import VCFReader
 from vcf.filters import Base as Filter
 from vcf.parser import RESERVED_INFO, RESERVED_FORMAT
 
