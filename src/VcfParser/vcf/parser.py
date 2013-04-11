@@ -4,23 +4,7 @@ import csv
 import gzip
 import sys
 import codecs
-import mysql.connector
-import datetime
 
-try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict
-
-try:
-    import pysam
-except ImportError:
-    pysam = None
-
-
-
-from model import _Call, _Record, make_calldata_tuple
-from model import _Substitution, _Breakend, _SingleBreakend, _SV
 from DatabaseConnection import DatabaseConnection
 
 
