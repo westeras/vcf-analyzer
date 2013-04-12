@@ -198,7 +198,7 @@ public abstract class FilterApplier extends Command
 				    }
 					
 				}
-				//move cursor to the first fro later uses
+				//move cursor to the first for later uses
 				entryInfoData.first();
 				
 				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
