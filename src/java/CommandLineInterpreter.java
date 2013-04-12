@@ -19,7 +19,7 @@ public class CommandLineInterpreter
 	public static String useGnuParser(final String[] commandLineArguments){  
 		final CommandLineParser cmdLineGnuParser = new GnuParser();  
   
-		final Options gnuOptions = constructGnuOptions();  
+		final Options gnuOptions = new CommandLineConstructors().getCommands();  
 		CommandLine commandLine;  
 		
 		String result = "";
@@ -33,6 +33,10 @@ public class CommandLineInterpreter
 			
 			if (commandLine.hasOption("upano")){
 				result = uploadCommand(commandLineArguments, commandLine, "upano");
+			}
+			
+			if (commandLine.hasOption("asf")){
+				
 			}
 			
 			if (commandLine.hasOption("sum")){
@@ -73,25 +77,29 @@ public class CommandLineInterpreter
 	 */
 	
 	public static String uploadCommand(final String[] commandLineArguments, CommandLine commandLine, String type){
-		String[] args = commandLine.getOptionValues("updiv");
-		UploadDivergenceCommand command;
+		String[] args;
+		Command command = null;
+		
+		if(type == "updiv"){
+			args = commandLine.getOptionValues("updiv");
+		}else if(type == "upano"){
+			args  = commandLine.getOptionValues("upano");
+		}else{
+			args = null;
+		}
 		
 		String result = "";
 		
 		if(args == null){
 			result = "Please input arguments";
 		}else if(args.length == 1){
-			command = new UploadDivergenceCommand(
-					commandLine.getOptionValues(type)[0], 
-					null,
-					"");
+			if(type=="updiv")command = new UploadDivergenceCommand(commandLine.getOptionValues(type)[0], null,"");
+			if(type=="upano")command = new UploadAnnotationCommand(commandLine.getOptionValues(type)[0], null,"");
 			
 			result = command.execute();
 		}else if(args.length == 2){
-			command = new UploadDivergenceCommand(
-					commandLine.getOptionValues(type)[0], 
-					null,
-					commandLine.getOptionValues(type)[1]);
+			if(type=="updiv")command = new UploadDivergenceCommand(commandLine.getOptionValues(type)[0], null,commandLine.getOptionValues(type)[1]);
+			if(type=="upano")command = new UploadAnnotationCommand(commandLine.getOptionValues(type)[0], null,commandLine.getOptionValues(type)[1]);
 			
 			result = command.execute();
 		}else{
@@ -101,69 +109,7 @@ public class CommandLineInterpreter
 		return result;
 	}
   
-	/**
-	 * Constructs the actual commands.
-	 * @return
-	 */
-	
-   public static Options constructGnuOptions(){ 
-      final Options gnuOptions = new Options();  
-      gnuOptions.addOption("hello", "helloWorld", false, "Test function")
-                .addOption(constructUpDiv())
-                .addOption(constructSumOption())
-                .addOption(constructUpAno())
-                .addOption("help", false, "Tells the user what functions there are.");
-      return gnuOptions;  
-   } 
-   
-   /**
-    * Constructs the sum command.
-    * @return
-    */
-   public static Option constructSumOption(){
-	   @SuppressWarnings("static-access")
-	   Option sum = OptionBuilder
-			   .withArgName("addends")
-			   .hasArgs()
-			   .withDescription("Returns the sum of the inputted integers")
-			   .create("sum");
-	   return sum;
-   }
-   
-   /**
-    * Constructs the upload divergence command.
-    */
-   
-   public static Option constructUpDiv(){
-	   @SuppressWarnings("static-access")
-	   Option updiv = OptionBuilder
-	   			.withArgName("File Location")
-	   			.hasArg()
-	   			.withArgName("Name")
-	   			.hasOptionalArg()
-	   			.withDescription("Uploads a Divergence file")
-	   			.create("updiv");
-	   
-	   return updiv;
-   }
-   
-   /**
-    * Constructs the upload annotation command.
-    */
-   
-   public static Option constructUpAno(){
-	   @SuppressWarnings("static-access")
-	   Option updiv = OptionBuilder
-	   			.withArgName("File Location")
-	   			.hasArg()
-	   			.withArgName("Name")
-	   			.hasOptionalArg()
-	   			.withDescription("Uploads a Annotation file")
-	   			.create("upano");
-	   
-	   return updiv;
-   }
-  
+
    /**
     * Prints out the commands the user input.
     */
