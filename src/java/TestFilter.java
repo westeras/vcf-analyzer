@@ -13,11 +13,19 @@ public class TestFilter {
 
 	public static void main(String[] args) throws IOException {
 		FilterApplier command = new FilterWriteApplier("", "2013-04-10_13:54", "FilterTest.txt" );
-		command.execute();
+		System.out.println( command.execute() );
+		fileCompare("FilterTest.txt", "FilterPass.txt");
 		
+		//second Test
+		command = new FilterWriteApplier("2013-04-10_13:54", "SomeFilter", "FilterTest2.txt" );
+		System.out.println( command.execute() );
+		fileCompare("FilterTest2.txt", "FilterPass2.txt");
+	}
+
+	private static void fileCompare(String fileTestName, String filePassName) throws FileNotFoundException, IOException {
 		//compare files
-		BufferedReader testBuffer = new BufferedReader(new FileReader("FilterTest.txt"));
-		BufferedReader goalBuffer = new BufferedReader(new FileReader("FilterPass.txt"));
+		BufferedReader testBuffer = new BufferedReader(new FileReader(fileTestName));
+		BufferedReader goalBuffer = new BufferedReader(new FileReader(filePassName));
 		
 		String goal = goalBuffer.readLine();
 		String toTest = testBuffer.readLine();
@@ -42,11 +50,6 @@ public class TestFilter {
 		
 		testBuffer.close();
 		goalBuffer.close();
-		
-		
-		//second Test
-		command = new FilterWriteApplier("2013-04-10_13:54", "SomeFilter", "FilterTest2.txt" );
-		System.out.println( command.execute() );
 	}
 
 }

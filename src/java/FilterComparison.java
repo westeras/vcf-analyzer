@@ -35,6 +35,8 @@ public class FilterComparison {
 												String comparator,
 												String comparator2 )
 		{
+			if (testValue ==null || comparator == null)
+				return false;
 			return (Integer.parseInt(testValue) == Integer.parseInt(comparator));
 		}
 		
@@ -43,6 +45,8 @@ public class FilterComparison {
 												String comparator,
 												String comparator2 )
 		{
+			if (testValue ==null || comparator == null)
+				return false;
 			float test = Float.parseFloat(testValue);
 			float comp = Float.parseFloat(comparator);
 			return (Float.compare(test, comp) == 0);
@@ -53,9 +57,386 @@ public class FilterComparison {
 												String comparator,
 												String comparator2 )
 		{
+			if (testValue ==null || comparator == null)
+				return false;
 			return testValue.equals(comparator);
 		}
 		
+	}
+	
+	class NotEqualsComparison extends Comparison
+	{
+		
+		public NotEqualsComparison()
+		{
+			identifier = 11;
+			names = Arrays.asList("!=", "not equal to", "not equals");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (Integer.parseInt(testValue) != Integer.parseInt(comparator));
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			float test = Float.parseFloat(testValue);
+			float comp = Float.parseFloat(comparator);
+			return (Float.compare(test, comp) != 0);
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return !testValue.equals(comparator);
+		}
+		
+	}	
+
+	class LessThanComparison extends Comparison
+	{
+		
+		public LessThanComparison()
+		{
+			identifier = 0;
+			names = Arrays.asList("<", "less than");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (Integer.parseInt(testValue) < Integer.parseInt(comparator));
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			float test = Float.parseFloat(testValue);
+			float comp = Float.parseFloat(comparator);
+			return (Float.compare(test, comp) < 0);
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (testValue.compareTo(comparator) <0);
+		}
+		
+	}
+	
+	class GreaterThanComparison extends Comparison
+	{
+		
+		public GreaterThanComparison()
+		{
+			identifier = 1;
+			names = Arrays.asList(">", "greater than");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (Integer.parseInt(testValue) > Integer.parseInt(comparator));
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			float test = Float.parseFloat(testValue);
+			float comp = Float.parseFloat(comparator);
+			return (Float.compare(test, comp) > 0);
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (testValue.compareTo(comparator) > 0);
+		}
+		
+	}	
+	
+	class LessThanEqualComparison extends Comparison
+	{
+		
+		public LessThanEqualComparison()
+		{
+			identifier = 2;
+			names = Arrays.asList("<=");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (Integer.parseInt(testValue) <= Integer.parseInt(comparator));
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			float test = Float.parseFloat(testValue);
+			float comp = Float.parseFloat(comparator);
+			return (Float.compare(test, comp) <= 0);
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (testValue.compareTo(comparator) <= 0);
+		}
+		
+	}	
+	
+	class GreaterThanEqualComparison extends Comparison
+	{
+		
+		public GreaterThanEqualComparison()
+		{
+			identifier = 3;
+			names = Arrays.asList(">=");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (Integer.parseInt(testValue) >= Integer.parseInt(comparator));
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			float test = Float.parseFloat(testValue);
+			float comp = Float.parseFloat(comparator);
+			return (Float.compare(test, comp) >= 0);
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null)
+				return false;
+			return (testValue.compareTo(comparator) >= 0);
+		}
+		
+	}		
+	
+	class BetweenComparison extends Comparison
+	{
+		
+		public BetweenComparison()
+		{
+			identifier = 5;
+			names = Arrays.asList("between");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null || comparator2 == null)
+				return false;
+			int value = Integer.parseInt(testValue);
+			return (value >= Integer.parseInt(comparator) ) 
+					&& (value <= Integer.parseInt(comparator2) );
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null || comparator2 == null)
+				return false;
+			float test = Float.parseFloat(testValue);
+			float comp = Float.parseFloat(comparator);
+			float comp2 = Float.parseFloat(comparator);
+			return (Float.compare(test, comp) >= 0) && (Float.compare(test, comp2) <= 0);
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null || comparator2 == null)
+				return false;
+			return (testValue.compareTo(comparator) >= 0) && (testValue.compareTo(comparator) <= 0);
+		}
+		
+	}	
+
+	class BetweenExculsiveComparison extends Comparison
+	{
+		
+		public BetweenExculsiveComparison()
+		{
+			identifier = 6;
+			names = Arrays.asList("between exclusive");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null || comparator2 == null)
+				return false;
+			int value = Integer.parseInt(testValue);
+			return (value > Integer.parseInt(comparator) ) 
+					&& (value < Integer.parseInt(comparator2) );
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null || comparator2 == null)
+				return false;
+			float test = Float.parseFloat(testValue);
+			float comp = Float.parseFloat(comparator);
+			float comp2 = Float.parseFloat(comparator);
+			return (Float.compare(test, comp) > 0) && (Float.compare(test, comp2) < 0);
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			if (testValue ==null || comparator == null || comparator2 == null)
+				return false;
+			return (testValue.compareTo(comparator) > 0) && (testValue.compareTo(comparator) < 0);
+		}
+		
+	}		
+	
+	class ExistsComparison extends Comparison
+	{
+		
+		public ExistsComparison()
+		{
+			identifier = 7;
+			names = Arrays.asList("exists");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			return testValue !=null;
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			return testValue !=null;
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			return testValue !=null;
+		}
+	}
+	
+	class NotExistsComparison extends Comparison
+	{
+		
+		public NotExistsComparison()
+		{
+			identifier = 8;
+			names = Arrays.asList("not exists");
+		}
+		
+		@Override
+		public boolean compareInteger( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			return testValue ==null;
+		}
+		
+		@Override
+		public boolean compareFloat( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			return testValue ==null;
+		}
+		
+		@Override
+		public boolean compareString( String testValue, 
+												String comparator,
+												String comparator2 )
+		{
+			return testValue ==null;
+		}
 	}
 	
 	private ArrayList<Comparison> allComparisons;
@@ -64,7 +445,15 @@ public class FilterComparison {
 	{
 		this.allComparisons = new ArrayList<Comparison>();
 		this.allComparisons.add( new EqualsComparison() );
-		//TODO add all comparisons
+		this.allComparisons.add( new NotEqualsComparison() );
+		this.allComparisons.add( new LessThanComparison() );
+		this.allComparisons.add( new GreaterThanComparison() );
+		this.allComparisons.add( new LessThanEqualComparison() );
+		this.allComparisons.add( new GreaterThanEqualComparison() );
+		this.allComparisons.add( new BetweenComparison() );
+		this.allComparisons.add( new BetweenExculsiveComparison() );
+		this.allComparisons.add( new ExistsComparison() );
+		this.allComparisons.add( new NotExistsComparison() );		
 	}
 
 	public boolean testFilterComparison( int type, FilterParameter filter, String testValue)
