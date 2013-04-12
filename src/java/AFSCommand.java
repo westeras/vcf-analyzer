@@ -98,7 +98,9 @@ public class AFSCommand extends Command {
 		if (allele1 == null) {
 			return;
 		}
-		System.out.println("allele 1 " + allele1);
+		for (int i =0;i <allele1.length();i++){
+			System.out.println((int) allele1.charAt(i));
+		}
 		if (allele1 == "1") {
 			System.out.println("found allele 1");
 			this.spectra[0]++;
