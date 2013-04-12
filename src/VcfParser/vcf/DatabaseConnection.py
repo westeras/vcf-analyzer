@@ -377,8 +377,9 @@ class DatabaseConnection():
                 returnValues[i] = "NULL"
             else:
                 returnValues[i] = "'" + returnValues[i] + "'"
+		
 		return returnValues
-        
+
     def createAD(self, indId, adStr):
         if (adStr == "."):
             return #not sure what to do about this case
