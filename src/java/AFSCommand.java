@@ -43,6 +43,7 @@ public class AFSCommand extends Command{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println(this.spectra.toString());
 		return this.spectra.toString();
 		
 	}
@@ -82,7 +83,7 @@ public class AFSCommand extends Command{
 	}
 	
 	private void updateSpectra(String allele1, String allele2, String allele3) {
-		System.out.printf("allele 1 = %s, allele2 = %s, allele3 = %s", allele1, allele2, allele3);
+		System.out.printf("allele 1 = %s, allele2 = %s, allele3 = %s\n", allele1, allele2, allele3);
 		if (allele1==null){
 			return;
 		}
