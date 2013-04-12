@@ -369,17 +369,22 @@ class DatabaseConnection():
                     indId, values[0], values[1], values[2], values[3])
         
         self.commitQuery(query)
+		
+    def editValuesForDB(self, values):
+		returnValues = values
+		for i in range (len(returnValues)):
+            if (returnValues[i] == "."):
+                returnValues[i] = "NULL"
+            else:
+                returnValues[i] = "'" + returnValues[i] + "'"
+		return returnValues
         
     def createAD(self, indId, adStr):
         if (adStr == "."):
             return #not sure what to do about this case
     
         values = adStr.split(",")
-        for i in range (len(values)):
-            if (values[i] == "."):
-                values[i] = "NULL"
-            else:
-                values[i] = "'" + values[i] + "'"
+        values = self.editValuesForDB(values)
         for i in range (len(values), 3):
             values.append("NULL")
             
