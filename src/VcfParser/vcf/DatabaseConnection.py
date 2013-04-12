@@ -17,13 +17,16 @@ class DatabaseConnection():
 		try:
 			self.execAndCommit(query)
 		except:
-			self.cnx.rollback()
-			print query
-			return -1
+			self.exceptionHandle(query)
             
     def execAndCommit(self, query):
         self.cursor.execute(query)
         self.cnx.commit()
+		
+	def exceptionHandle(self, query):
+		self.cnx.rollback()
+		print query
+		return -1
     
     ########### Kind of a long method
     def handleInfo(self, infoName, infoData):
@@ -63,8 +66,7 @@ class DatabaseConnection():
                 self.cnx.commit()
                 
             except:
-                self.cnx.rollback()
-                return -1
+                self.exceptionHandle(query)
 
     def insertInfo(self, entryDbId, entry):
         
@@ -115,8 +117,7 @@ class DatabaseConnection():
                 self.cnx.commit()
                 
             except:
-                self.cnx.rollback()
-                return -1
+                self.exceptionHandle(query)
                 
     
     ########### Many many parameters being passed in 
@@ -132,8 +133,7 @@ class DatabaseConnection():
             self.cursor.execute(query)
             return self.cursor.fetchone()[0]
         except:
-            self.cnx.rollback()
-            return -1
+            self.exceptionHandle(query)
 
     def createVcfIndividuals(self, vcfId, names ):
     
@@ -151,8 +151,7 @@ class DatabaseConnection():
             self.cnx.commit()
             return indNo
         except:
-            self.cnx.rollback()
-            return -1
+            self.exceptionHandle(query)
             
     def createIndividualEntry(self, entryId, indNo ):
         query = ("INSERT INTO `vcf_analyzer`.`IndividualEntry` ( `IndID`, `EntryId`, `IndNoVcf`) " +
@@ -166,8 +165,7 @@ class DatabaseConnection():
             self.cursor.execute(query2)
             return self.cursor.fetchone()[0]
         except:
-            self.cnx.rollback()
-            return -1
+            self.exceptionHandle(query)
             
     def createVcf( self, name ):
         
@@ -178,8 +176,7 @@ class DatabaseConnection():
             self.cursor.execute(query)
             first = self.cursor.fetchone()
         except:
-            self.cnx.rollback()
-            return -1   
+            self.exceptionHandle(query)   
             
         lastName = None
         if ( first!= None and len(first) > 0 ):
@@ -202,8 +199,7 @@ class DatabaseConnection():
             self.cursor.execute(query)
             return self.cursor.fetchone()[0]
         except:
-            self.cnx.rollback()
-            return -1
+            self.exceptionHandle(query)
             
     def createDP( self, indId, dpStr ):
     
@@ -441,8 +437,7 @@ class DatabaseConnection():
             self.cursor.execute(query)
             
         except:
-            self.cnx.rollback()
-            return -1
+            self.exceptionHandle(query)
         return 0
 
     def createVcfHeader(self, vcfId, header):
