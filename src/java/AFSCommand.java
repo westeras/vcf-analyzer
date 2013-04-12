@@ -98,10 +98,10 @@ public class AFSCommand extends Command {
 		if (allele1 == null) {
 			return;
 		}
-		for (int i =0;i <allele1.length();i++){
-			System.out.println((int) allele1.charAt(i));
-		}
-		if (allele1 == "1") {
+//		for (int i =0;i <allele1.length();i++){
+//			System.out.println((int) allele1.charAt(i));
+//		}
+		if (allele1.charAt(0) == '1') {
 			System.out.println("found allele 1");
 			this.spectra[0]++;
 		}
@@ -109,7 +109,7 @@ public class AFSCommand extends Command {
 			return;
 		}
 		System.out.println("allele 2 " + allele2);
-		if (allele2 == "1") {
+		if (allele2.charAt(0) == '1') {
 			System.out.println("found allele 2");
 			this.spectra[1]++;
 		}
@@ -117,7 +117,7 @@ public class AFSCommand extends Command {
 			return;
 		}
 		System.out.println("allele 3 " + allele3);
-		if (allele3 == "1") {
+		if (allele3.charAt(0) == '1') {
 			System.out.println("found allele 3");
 			this.spectra[2]++;
 		}
