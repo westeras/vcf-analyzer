@@ -48,17 +48,10 @@ public class UploadAnnotationCommand extends Command{
 							geneDirection, this.name);
 			connection.upload(sql);
 		}			
-	} catch (ClassNotFoundException exception) {
+	} catch (Exception exception) {
 		// TODO Auto-generated catch-block stub.
 		exception.printStackTrace();
-	} catch (SQLException exception) {
-		// TODO Auto-generated catch-block stub.
-		exception.printStackTrace();
-	} catch (FileNotFoundException exception) {
-		// TODO Auto-generated catch-block stub.
-		exception.printStackTrace();
-	}
-	 System.out.println(resultStmnt);
+	} System.out.println(resultStmnt);
 	 return resultStmnt;
 	
 		
