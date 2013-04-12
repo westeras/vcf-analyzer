@@ -197,6 +197,23 @@ class DatabaseConnector {
 	
 	public ArrayList<FilterParameter> getFilterIndividuals(int FilId) throws SQLException
 	{
+		ArrayList<FilterParameter> filterIndividuals = new ArrayList<FilterParameter>();
+		sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterIndividual` WHERE `FilId`='%s'", FilId);
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				String tableName = "";
+				int comparison = rs.getInt("Comparison");
+				String comparator = rs.getString("Comparator");
+				String comparator2 = rs.getString("Comparator2");
+				int failureAllow = rs.getInt("FailureAllow");
+				
+				FilterParameter temp = new FilterParameter(comparison, comparator, comparator2, failureAllow);
+				filterIndividuals.add(temp);
+			}
+		} catch (SQLException se) {
+			throw new SQLException(se.getMessage());
+		}
 		//TODO replace stub
 		return null;
 	}
