@@ -82,13 +82,23 @@ public class AFSCommand extends Command{
 	}
 	
 	private void updateSpectra(String allele1, String allele2, String allele3) {
-		if (allele1=="1"){
+		System.out.printf("allele 1 = %s, allele2 = %s, allele3 = %s", allele1, allele2, allele3);
+		if (allele1==null){
+			return;
+		}
+		else if (allele1=="1"){
 			this.spectra[0]++;
 		}
-		if (allele2=="1"){
+		if (allele2==null){
+			return;
+		}
+		else if (allele2=="1"){
 			this.spectra[1]++;
 		}
-		if (allele3=="1"){
+		if (allele3==null){
+			return;
+		}
+		else if (allele3=="1"){
 			this.spectra[2]++;
 		}
 	}
