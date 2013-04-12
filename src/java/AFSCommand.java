@@ -64,7 +64,7 @@ public class AFSCommand extends Command{
 	}
 	
 	private ResultSet getIndividuals(String indId) throws ClassNotFoundException, SQLException {
-		String sql= "Select `IndID` from `GT` where `VcfId`= '"+indId+"'";
+		String sql= "Select * from `GT` where `IndID`= '"+indId+"'";
 		return this.conn.executeQuery(sql);
 	}
 	
