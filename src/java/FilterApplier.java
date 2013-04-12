@@ -199,7 +199,7 @@ public abstract class FilterApplier extends Command
 					
 				}
 				//move cursor to the first for later uses
-				entryInfoData.first();
+				entryInfoData.previous();
 				
 				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
 				if (!pass)

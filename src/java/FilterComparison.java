@@ -35,7 +35,6 @@ public class FilterComparison {
 												String comparator,
 												String comparator2 )
 		{
-			System.out.println(testValue + ":" + comparator);
 			return (Integer.parseInt(testValue) == Integer.parseInt(comparator));
 		}
 		
