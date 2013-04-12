@@ -35,7 +35,8 @@ public class FilterComparison {
 												String comparator,
 												String comparator2 )
 		{
-			return Integer.parseInt(testValue) == Integer.parseInt(comparator);
+			System.out.println(testValue + ":" + comparator);
+			return (Integer.parseInt(testValue) == Integer.parseInt(comparator));
 		}
 		
 		@Override
@@ -70,10 +71,8 @@ public class FilterComparison {
 	public boolean testFilterComparison( int type, FilterParameter filter, String testValue)
 	{
 		Comparison operation = null;
-		System.out.println("Comparison: "+filter.comparison);
 		for (Comparison test: this.allComparisons )
 		{
-			System.out.println(test.identifier);
 			if (test.identifier == filter.comparison)
 			{
 				operation = test;
