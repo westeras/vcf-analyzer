@@ -198,8 +198,9 @@ class DatabaseConnector {
 	public ArrayList<FilterParameter> getFilterIndividuals(int FilId) throws SQLException
 	{
 		ArrayList<FilterParameter> filterIndividuals = new ArrayList<FilterParameter>();
-		sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterIndividual` WHERE `FilId`='%s'", FilId);
+		String sql = "";
 		try {
+			sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterIndividual` WHERE `FilId`='%s'", FilId);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				String tableName = "";
@@ -214,7 +215,6 @@ class DatabaseConnector {
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
 		}
-		//TODO replace stub
 		return null;
 	}
 	
