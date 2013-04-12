@@ -45,7 +45,7 @@ public class TestFilter {
 		
 		
 		//second Test
-		command = new FilterWriteApplier("SomeFilter", "2013-04-10_13:54", "FilterTest2.txt" );
+		command = new FilterWriteApplier("2013-04-10_13:54", "SomeFilter", "FilterTest2.txt" );
 		System.out.println( command.execute() );
 	}
 
