@@ -453,11 +453,9 @@ class DatabaseConnection():
         
         header = header.replace("'", "`")
         
-        query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ('{}', '{}')".format(
-                    vcfId, header)
-
+        query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ('{}', '{}')".format(vcfId, header)
         commitQuery(query)
-    
+
 #See the following link for VCF information
 #http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
         
