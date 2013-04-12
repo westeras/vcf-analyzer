@@ -72,7 +72,7 @@ public class AFSCommand extends Command{
 	private ArrayList<String> convertToArrayList(ResultSet r) throws SQLException{
 		ArrayList<String> result= new ArrayList<String>();
 		while(r.next()){
-			result.add(r.getString(0));
+			result.add(r.getString(1));
 		}
 		r.close();
 		return result;
