@@ -215,7 +215,7 @@ class DatabaseConnector {
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
 		}
-		return null;
+		return filterIndividuals;
 	}
 	
 	public int getInfoDataType( String infoName ) throws SQLException
