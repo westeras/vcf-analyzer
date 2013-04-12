@@ -58,7 +58,7 @@ public class AFSCommand extends Command{
 	}
 
 	private ArrayList<String> getIndividualIDs(String entryId) throws SQLException, ClassNotFoundException {
-		String sql= "Select `IndID` from `IndividualEntry` where `VcfId`= '"+entryId+"'";
+		String sql= "Select `IndID` from `IndividualEntry` where `EntryId`= '"+entryId+"'";
 		ResultSet individualIds=this.conn.executeQuery(sql);
 		return convertToArrayList(individualIds);
 	}
