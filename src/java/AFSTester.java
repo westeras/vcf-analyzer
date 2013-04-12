@@ -25,7 +25,7 @@ public class AFSTester {
 		command.execute();
 		AFSCommand command2=new AFSCommand("testName-1","");
 		command2.execute();
-		AFSCommand command3=new AFSCommand("2013-03-23_15:24","");
+		AFSCommand command3=new AFSCommand("2013-03-23_15:28","");
 		command3.execute();
 		
 
