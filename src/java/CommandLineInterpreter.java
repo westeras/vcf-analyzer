@@ -27,20 +27,12 @@ public class CommandLineInterpreter
 		try{  
 			commandLine = cmdLineGnuParser.parse(gnuOptions, commandLineArguments);
 			
-			// ########### You may need to remember to remove this at some point
-			if (commandLine.hasOption("hello")){  
-				System.out.println("Hello world!");  
-			}
-			
 			if (commandLine.hasOption("updiv")){
-				
 				result = uploadCommand(commandLineArguments, commandLine, "updiv");
 			}
 			
 			if (commandLine.hasOption("upano")){
-				
 				result = uploadCommand(commandLineArguments, commandLine, "upano");
-				
 			}
 			
 			if (commandLine.hasOption("sum")){
