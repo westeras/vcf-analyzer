@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -117,5 +118,17 @@ public class AFSCommand extends Command {
 	@Override
 	public void pipeOutput() {
 		// TODO Auto-generated method stub.
+	}
+
+	@Override
+	public ArrayList<String[]> parseFile() throws FileNotFoundException {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
+	@Override
+	public String getSQLStatement(ArrayList<String[]> rowsToUpload) {
+		// TODO Auto-generated method stub.
+		return null;
 	}
 }
