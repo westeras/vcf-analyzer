@@ -219,11 +219,7 @@ class DatabaseConnection():
             return
         else:
             entries = glStr.split(',')
-            for i in range(len(entries)):
-                if ( entries[i] == "." ):
-                    entries[i] = "NULL"
-                else:
-                    entries[i] = "'"+ entries[i] +"'"
+            entries = self.editValuesForDB(entries)
 
             if ( len(entries) == 3 ):
                 query = ("INSERT INTO `vcf_analyzer`.`GL` (`IndID`, `AA`, `AB`, `BB`) " +
@@ -338,11 +334,7 @@ class DatabaseConnection():
             return #not sure what to do about this case
         
         values = gleStr.split(",")
-        for i in range (len(values)):
-            if (values[i] == "."):
-                values[i] = "NULL"
-            else:
-                values[i] = "'" + values[i] + "'"
+        values = self.editValuesForDB(values)
         for i in range (len(values), 9):
             values.append("NULL")
             
@@ -357,11 +349,7 @@ class DatabaseConnection():
         if (ecStr == "."):
             return #not sure what to do about this case
         values = ecStr.split(",")
-        for i in range (len(values)):
-            if (values[i] == "."):
-                values[i] = "NULL"
-            else:
-                values[i] = "'" + values[i] + "'"
+        values = self.editValuesForDB(values)
         for i in range (len(values), 4):
             values.append("NULL")
             
@@ -399,11 +387,7 @@ class DatabaseConnection():
         if (gpStr == "."):
             return #not sure what to do about this case
         values = gpStr.split(",")
-        for i in range (len(values)):
-            if (values[i] == "."):
-                values[i] = "NULL"
-            else:
-                values[i] = "'" + values[i] + "'"
+        values = self.editValuesForDB(values)
         for i in range (len(values), 6):
             values.append("NULL")
             
