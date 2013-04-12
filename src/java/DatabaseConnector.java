@@ -188,7 +188,7 @@ class DatabaseConnector {
 		ArrayList<FilterParameter> filterEntries = new ArrayList<FilterParameter>();
 		if (FilId != -1)
 		{
-			FilterParameter parameter = new FilterParameter("AC", 4, "0", "0", 0);
+			FilterParameter parameter = new FilterParameter("AC", 4, "7", "0", 0);
 			filterEntries.add(parameter);
 		}
 		//TODO replace stub
