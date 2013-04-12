@@ -218,7 +218,7 @@ class DatabaseConnection():
                 "VALUES ( '{}', '{}' )").format(
                 indId, dpStr )
         
-        commitQuery(query)
+        self.commitQuery(query)
             
     def createGL( self, indId, glStr ):
     
@@ -245,7 +245,7 @@ class DatabaseConnection():
                 #invalid number of GL values
                 return -1
             
-		commitQuery(query)
+		self.commitQuery(query)
 
     def createGT(self, indID, gtStr):
     
@@ -277,7 +277,7 @@ class DatabaseConnection():
         elif (n == 5):
             query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, {}, {})".format(indID, outList[0], outList[1], outList[2], outList[3], outList[4])
         
-        commitQuery(query)
+        self.commitQuery(query)
         
         return
         
@@ -287,7 +287,7 @@ class DatabaseConnection():
     
         query = "INSERT INTO `vcf_analyzer`.`FT` VALUES ('{}', '{}')".format(indID, ftStr)
         
-        commitQuery(query)
+        self.commitQuery(query)
             
     def createPL(self, indId, plStr):
         if (plStr == "."):
@@ -304,7 +304,7 @@ class DatabaseConnection():
             elif (len(values) == 4):
                 query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{}', '{}', '{}', '{}', '{}')".format(indId, values[0], values[1], values[2], values[3])
             
-            commitQuery(query)
+            self.commitQuery(query)
         
     def createGQ(self, indID, gqStr):
         if (gqStr == "."):
@@ -312,7 +312,7 @@ class DatabaseConnection():
     
         query = "INSERT INTO `vcf_analyzer`.`GQ` VALUES ('{}', '{}')".format(indID, gqStr)
         
-        commitQuery(query)
+        self.commitQuery(query)
     
     def createHQ(self, indID, hqStr):
         
@@ -322,7 +322,7 @@ class DatabaseConnection():
             haplos = hqStr.split(',')
             query = "INSERT INTO `vcf_analyzer`.`HQ` VALUES ('{}', '{}', '{}')".format(indID, haplos[0], haplos[1])
 
-            commitQuery(query)
+            self.commitQuery(query)
         
     def createPS(self, indID, psStr):
     
@@ -330,7 +330,7 @@ class DatabaseConnection():
             return #not sure what to do about this case
         query = "INSERT INTO `vcf_analyzer`.`PS` VALUES ('{}', '{}')".format(indID, psStr)
         
-        commitQuery(query)
+        self.commitQuery(query)
             
     def createPQ(self, indID, pqStr):
     
@@ -338,7 +338,7 @@ class DatabaseConnection():
             return #not sure what to do about this case
         query = "INSERT INTO `vcf_analyzer`.`PQ` VALUES ('{}', '{}')".format(indID, pqStr)
         
-        commitQuery(query)
+        self.commitQuery(query)
             
     def createGLE(self, indId, gleStr):
         #NOTE no good example found; assuming comma separated
@@ -358,7 +358,7 @@ class DatabaseConnection():
                     indId, values[0], values[1], values[2], values[3],
                     values[4], values[5], values[6], values[7], values[8] )
 
-        commitQuery(query)
+        self.commitQuery(query)
         
     def createEC(self, indId, ecStr):
     
@@ -376,7 +376,7 @@ class DatabaseConnection():
         query = "INSERT INTO `vcf_analyzer`.`EC` VALUES ({}, {}, {}, {}, {} )".format(
                     indId, values[0], values[1], values[2], values[3])
         
-        commitQuery(query)
+        self.commitQuery(query)
         
     def createAD(self, indId, adStr):
         if (adStr == "."):
@@ -394,7 +394,7 @@ class DatabaseConnection():
         query = "INSERT INTO `vcf_analyzer`.`AD` VALUES ({}, {}, {}, {} )".format(
                     indId, values[0], values[1], values[2])
         
-        commitQuery(query)
+        self.commitQuery(query)
             
     def createGP(self, indId, gpStr):
     
@@ -412,7 +412,7 @@ class DatabaseConnection():
         query = "INSERT INTO `vcf_analyzer`.`GP` VALUES ({}, {}, {}, {}, {}, {}, {} )".format(
                     indId, values[0], values[1], values[2], values[3], values[4], values[5])
 
-        commitQuery(query)
+        self.commitQuery(query)
             
     def createIndividualDefault(self, tableName, indId, valStr):
     
