@@ -18,6 +18,7 @@ class DatabaseConnection():
 			self.execAndCommit(query)
 		except:
 			self.cnx.rollback()
+			print query
 			return -1
             
     def execAndCommit(self, query):
