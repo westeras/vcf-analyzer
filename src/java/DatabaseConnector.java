@@ -195,6 +195,46 @@ class DatabaseConnector {
 		return null;
 	}
 	
+	public int getInfoDataType( String infoName ) throws SQLException
+	{
+		String sql = "";
+		try {
+			sql = "SELECT * FROM `vcf_analyzer`.`InfoTable` WHERE `InfoName` = '"
+					+ infoName + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if ( rs.next() )
+			{
+				int type = Integer.parseInt(rs.getString("Type"));
+				rs.close();
+				return type;
+			}
+			throw new SQLException("Invalid INFO name " + infoName);
+
+		} catch (SQLException se) {
+			throw new SQLException("Invalid Query " + sql);
+		}
+	}
+	
+	public int getGenoTypeDataType( String genoName ) throws SQLException
+	{
+		String sql = "";
+		try {
+			sql = "SELECT * FROM `vcf_analyzer`.`GenotypeTable` WHERE `GenoName` = '"
+					+ genoName + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if ( rs.next() )
+			{
+				int type = Integer.parseInt(rs.getString("Type"));
+				rs.close();
+				return type;
+			}
+			throw new SQLException("Invalid genotype name " + genoName);
+
+		} catch (SQLException se) {
+			throw new SQLException("Invalid Query " + sql);
+		}
+	}	
+	
 	public ResultSet getVcfEntries(long vcfId) throws SQLException {
 		String sql = "";
 		try {

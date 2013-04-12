@@ -16,6 +16,7 @@ public abstract class FilterApplier extends Command
 	protected DatabaseConnector nestedConnection2;
 	private ArrayList<FilterParameter> entryParameters;
 	private ArrayList<FilterParameter> individualParameters;
+	private FilterComparison comparisonHandler;
 	
 	public FilterApplier(String vcfName, String filterName)
 	{
@@ -74,13 +75,11 @@ public abstract class FilterApplier extends Command
 	private void loadFilter() throws Exception
 	{
 		int filterId = this.connection.getFilterID(this.filterName);
-		this.connection.getFilterEntries(filterId);
+		this.entryParameters = this.connection.getFilterEntries(filterId);
 		
-		this.connection.getFilterIndividuals(filterId);
+		this.individualParameters = this.connection.getFilterIndividuals(filterId);		
 		
-		//entryParameters = connection.;
-		//individualParameters;
-		
+		this.comparisonHandler = new FilterComparison();
 	}
 	
 	private String applyFilter()
@@ -106,17 +105,23 @@ public abstract class FilterApplier extends Command
 				ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
 				for (int j=0; j< tableNames.size(); j++)
 				{
-					ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, tableNames.get(j));
+					String infoName = tableNames.get(j);
+					ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, infoName);
+					
+					//Test Info data
+					passing = filterOnInfoTable(infoName, entryInfoData);
+					if ( !passing )
+					{
+						break;
+					}
+					
 					if (entryInfoData!=null)
 					{
-						//writes each info datum; eg 
-						processUntestedEntryInfo( tableNames.get(j), entryInfoData );
+						//writes each info datum; 
+						processUntestedEntryInfo( infoName, entryInfoData );
 					}
 				}
 
-				
-				//TODO test entry
-				
 				if (passing)
 				{
 					processPassingEntry(entries);
@@ -159,6 +164,43 @@ public abstract class FilterApplier extends Command
 			closeFiltering();
 			return exception.getMessage();
 		}
+	}
+
+
+	private boolean filterOnInfoTable(String infoName, ResultSet entryInfoData) throws Exception {
+
+		for( FilterParameter param : this.entryParameters )
+		{
+			if (param.tableName.equals(infoName))
+			{
+				int type = this.nestedConnection2.getInfoDataType( infoName );
+				String testValue = null;
+				if (entryInfoData.next())
+				{
+				    ResultSetMetaData rsMetaData = entryInfoData.getMetaData();
+				    int numberOfColumns = rsMetaData.getColumnCount();
+			    	
+				    if (numberOfColumns > 1)
+				    {
+				    	testValue = entryInfoData.getString(2);
+				    }
+				    else
+				    {
+				    	testValue = "";
+				    }
+					
+				}
+				//move cursor to the first fro later uses
+				entryInfoData.first();
+				
+				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
+				if (!pass)
+				{
+					return pass;
+				}
+			}
+		}
+		return true;
 	}
 
 	//@Override
