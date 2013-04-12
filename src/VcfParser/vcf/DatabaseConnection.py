@@ -14,19 +14,19 @@ class DatabaseConnection():
         self.cnx.close()
         
     def commitQuery(self, query):
-		try:
-			self.execAndCommit(query)
-		except:
-			self.exceptionHandle(query)
+        try:
+            self.execAndCommit(query)
+        except:
+            self.exceptionHandle(query)
             
     def execAndCommit(self, query):
         self.cursor.execute(query)
         self.cnx.commit()
-		
-	def exceptionHandle(self, query):
-		self.cnx.rollback()
-		print query
-		return -1
+
+    def exceptionHandle(self, query):
+        self.cnx.rollback()
+        print query
+        return -1
     
     ########### Kind of a long method
     def handleInfo(self, infoName, infoData):
@@ -237,7 +237,7 @@ class DatabaseConnection():
                 #invalid number of GL values
                 return -1
             
-		self.commitQuery(query)
+        self.commitQuery(query)
 
     def createGT(self, indID, gtStr):
     
@@ -369,16 +369,16 @@ class DatabaseConnection():
                     indId, values[0], values[1], values[2], values[3])
         
         self.commitQuery(query)
-		
+        
     def editValuesForDB(self, values):
-		returnValues = values
-		for i in range (len(returnValues)):
+        returnValues = values
+        for i in range (len(returnValues)):
             if (returnValues[i] == "."):
                 returnValues[i] = "NULL"
             else:
                 returnValues[i] = "'" + returnValues[i] + "'"
-		
-		return returnValues
+
+        return returnValues
 
     def createAD(self, indId, adStr):
         if (adStr == "."):
