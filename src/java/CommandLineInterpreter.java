@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 import org.apache.commons.cli.CommandLine;  
 import org.apache.commons.cli.CommandLineParser;  
 import org.apache.commons.cli.GnuParser;  
@@ -14,9 +16,11 @@ public class CommandLineInterpreter
 	 * If you want to add a command, add it here as an if statement and
 	 * in the constructGnuOptions function for the program to recognize it.
 	 * @param commandLineArguments
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 
-	public static String useGnuParser(final String[] commandLineArguments){  
+	public static String useGnuParser(final String[] commandLineArguments) throws ClassNotFoundException, SQLException{  
 		final CommandLineParser cmdLineGnuParser = new GnuParser();  
   
 		final Options gnuOptions = new CommandLineConstructors().getCommands();  
@@ -36,7 +40,9 @@ public class CommandLineInterpreter
 			}
 			
 			if (commandLine.hasOption("asf")){
-				
+				String[] args = commandLine.getOptionValues("asf");
+				Command command = new AFSCommand(args[0], "");
+				result = command.execute();
 			}
 			
 			if (commandLine.hasOption("sum")){
@@ -80,26 +86,21 @@ public class CommandLineInterpreter
 		String[] args;
 		Command command = null;
 		
-		if(type == "updiv"){
-			args = commandLine.getOptionValues("updiv");
-		}else if(type == "upano"){
-			args  = commandLine.getOptionValues("upano");
-		}else{
-			args = null;
-		}
+			args = commandLine.getOptionValues(type);
+
 		
 		String result = "";
 		
 		if(args == null){
 			result = "Please input arguments";
 		}else if(args.length == 1){
-			if(type=="updiv")command = new UploadDivergenceCommand(commandLine.getOptionValues(type)[0], null,"");
-			if(type=="upano")command = new UploadAnnotationCommand(commandLine.getOptionValues(type)[0], null,"");
+			if(type=="updiv")command = new UploadDivergenceCommand(args[0], null,"");
+			if(type=="upano")command = new UploadAnnotationCommand(args[0], null,"");
 			
 			result = command.execute();
 		}else if(args.length == 2){
-			if(type=="updiv")command = new UploadDivergenceCommand(commandLine.getOptionValues(type)[0], null,commandLine.getOptionValues(type)[1]);
-			if(type=="upano")command = new UploadAnnotationCommand(commandLine.getOptionValues(type)[0], null,commandLine.getOptionValues(type)[1]);
+			if(type=="updiv")command = new UploadDivergenceCommand(args[0], null,args[1]);
+			if(type=="upano")command = new UploadAnnotationCommand(args[0], null,args[1]);
 			
 			result = command.execute();
 		}else{
@@ -130,9 +131,11 @@ public class CommandLineInterpreter
    /**
     * This is the method that should be called by outside methods and classes
     * to run all commands.
+ * @throws SQLException 
+ * @throws ClassNotFoundException 
     */
    
-   public static String interpreter(String[] commandLineArguments){
+   public static String interpreter(String[] commandLineArguments) throws ClassNotFoundException, SQLException{
 	    if (commandLineArguments.length < 1)  
 	      {  
 	         System.out.println("Please input help"); 
@@ -146,8 +149,10 @@ public class CommandLineInterpreter
     * Main executable method used to demonstrate Apache Commons CLI. 
     *  
     * @param commandLineArguments Commmand-line arguments. 
+ * @throws SQLException 
+ * @throws ClassNotFoundException 
     */  
-   public static void main(final String[] commandLineInput){  
+   public static void main(final String[] commandLineInput) throws ClassNotFoundException, SQLException{  
 	   System.out.println("Test Parser");
 	   System.out.println("Developed for the Gene-E project\n");
 	   
