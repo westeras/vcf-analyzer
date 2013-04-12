@@ -13,7 +13,7 @@ class DatabaseConnection():
         self.cursor.close()
         self.cnx.close()
         
-    def commitQuery(query)
+    def commitQuery(query):
 		try:
 			self.cursor.execute(query)
 			self.cnx.commit()
