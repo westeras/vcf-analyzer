@@ -23,8 +23,6 @@ public class FilterComparison {
 	
 	class EqualsComparison extends Comparison
 	{
-		public int identifier = 4;
-		public List<String> names = Arrays.asList("=", "equal to", "equals");
 		
 		public EqualsComparison()
 		{
