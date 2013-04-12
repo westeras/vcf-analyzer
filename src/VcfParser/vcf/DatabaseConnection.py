@@ -15,11 +15,14 @@ class DatabaseConnection():
         
     def commitQuery(self, query):
 		try:
-			self.cursor.execute(query)
-			self.cnx.commit()
+			self.execAndCommit(query)
 		except:
 			self.cnx.rollback()
 			return -1
+            
+    def execAndCommit(self, query):
+        self.cursor.execute(query)
+        self.cnx.commit()
     
     ########### Kind of a long method
     def handleInfo(self, infoName, infoData):
