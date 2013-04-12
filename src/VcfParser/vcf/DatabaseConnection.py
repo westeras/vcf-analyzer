@@ -12,6 +12,14 @@ class DatabaseConnection():
     def dbClose(self):
         self.cursor.close()
         self.cnx.close()
+        
+    def commitQuery(query)
+		try:
+			self.cursor.execute(query)
+			self.cnx.commit()
+		except:
+			self.cnx.rollback()
+			return -1
     
     ########### Kind of a long method
     def handleInfo(self, infoName, infoData):
@@ -129,20 +137,6 @@ class DatabaseConnection():
             self.cnx.rollback()
             return -1
 
-    ''' CONSIDER: discuss as group
-    def updateEntryInfo( self, entryId, infoString )
-        query = ("UPDATE `vcf_analyzer`.`VcfEntry` SET `InfoFields` = '{}' WHERE `EntryId` = '{}'".format(
-                 infoString, entryId )
-        
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-            return 0
-        except:
-            self.cnx.rollback()
-            return -1
-    '''
-            
     def createVcfIndividuals(self, vcfId, names ):
     
         queries = []
@@ -223,12 +217,8 @@ class DatabaseConnection():
         query = ("INSERT INTO `vcf_analyzer`.`DP` (`IndID`, `ReadDepth`) " +
                 "VALUES ( '{}', '{}' )").format(
                 indId, dpStr )
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            self.cnx.rollback()
-            return -1
+        
+        commitQuery(query)
             
     def createGL( self, indId, glStr ):
     
@@ -255,13 +245,8 @@ class DatabaseConnection():
                 #invalid number of GL values
                 return -1
             
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            self.cnx.rollback()
-            return -1
-            
+		commitQuery(query)
+
     def createGT(self, indID, gtStr):
     
         if (gtStr == "."):
@@ -292,12 +277,7 @@ class DatabaseConnection():
         elif (n == 5):
             query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, {}, {})".format(indID, outList[0], outList[1], outList[2], outList[3], outList[4])
         
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            self.cnx.rollback()
-            return -1
+        commitQuery(query)
         
         return
         
@@ -307,12 +287,7 @@ class DatabaseConnection():
     
         query = "INSERT INTO `vcf_analyzer`.`FT` VALUES ('{}', '{}')".format(indID, ftStr)
         
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            self.cnx.rollback()
-            return -1
+        commitQuery(query)
             
     def createPL(self, indId, plStr):
         if (plStr == "."):
@@ -329,12 +304,7 @@ class DatabaseConnection():
             elif (len(values) == 4):
                 query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{}', '{}', '{}', '{}', '{}')".format(indId, values[0], values[1], values[2], values[3])
             
-            try:
-                self.cursor.execute(query)
-                self.cnx.commit()
-            except:
-                self.cnx.rollback()
-                return -1
+            commitQuery(query)
         
     def createGQ(self, indID, gqStr):
         if (gqStr == "."):
@@ -342,12 +312,7 @@ class DatabaseConnection():
     
         query = "INSERT INTO `vcf_analyzer`.`GQ` VALUES ('{}', '{}')".format(indID, gqStr)
         
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            self.cnx.rollback()
-            return -1
+        commitQuery(query)
     
     def createHQ(self, indID, hqStr):
         
@@ -357,12 +322,7 @@ class DatabaseConnection():
             haplos = hqStr.split(',')
             query = "INSERT INTO `vcf_analyzer`.`HQ` VALUES ('{}', '{}', '{}')".format(indID, haplos[0], haplos[1])
 
-            try:
-                self.cursor.execute(query)
-                self.cnx.commit()
-            except:
-                self.cnx.rollback()
-                return -1
+            commitQuery(query)
         
     def createPS(self, indID, psStr):
     
@@ -370,12 +330,7 @@ class DatabaseConnection():
             return #not sure what to do about this case
         query = "INSERT INTO `vcf_analyzer`.`PS` VALUES ('{}', '{}')".format(indID, psStr)
         
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            self.cnx.rollback()
-            return -1
+        commitQuery(query)
             
     def createPQ(self, indID, pqStr):
     
@@ -383,12 +338,7 @@ class DatabaseConnection():
             return #not sure what to do about this case
         query = "INSERT INTO `vcf_analyzer`.`PQ` VALUES ('{}', '{}')".format(indID, pqStr)
         
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            self.cnx.rollback()
-            return -1
+        commitQuery(query)
             
     def createGLE(self, indId, gleStr):
         #NOTE no good example found; assuming comma separated
@@ -407,13 +357,8 @@ class DatabaseConnection():
         query = "INSERT INTO `vcf_analyzer`.`GLE` VALUES ({},{},{},{},{},{},{},{},{},{})".format(
                     indId, values[0], values[1], values[2], values[3],
                     values[4], values[5], values[6], values[7], values[8] )
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-            return 0
-        except:
-            self.cnx.rollback()
-            return -1
+
+        commitQuery(query)
         
     def createEC(self, indId, ecStr):
     
@@ -430,13 +375,8 @@ class DatabaseConnection():
             
         query = "INSERT INTO `vcf_analyzer`.`EC` VALUES ({}, {}, {}, {}, {} )".format(
                     indId, values[0], values[1], values[2], values[3])
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-            return 0
-        except:
-            self.cnx.rollback()
-            return -1
+        
+        commitQuery(query)
         
     def createAD(self, indId, adStr):
         if (adStr == "."):
@@ -454,13 +394,7 @@ class DatabaseConnection():
         query = "INSERT INTO `vcf_analyzer`.`AD` VALUES ({}, {}, {}, {} )".format(
                     indId, values[0], values[1], values[2])
         
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-            return 0
-        except:
-            self.cnx.rollback()
-            return -1
+        commitQuery(query)
             
     def createGP(self, indId, gpStr):
     
@@ -477,13 +411,8 @@ class DatabaseConnection():
             
         query = "INSERT INTO `vcf_analyzer`.`GP` VALUES ({}, {}, {}, {}, {}, {}, {} )".format(
                     indId, values[0], values[1], values[2], values[3], values[4], values[5])
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-            return 0
-        except:
-            self.cnx.rollback()
-            return -1
+
+        commitQuery(query)
             
     def createIndividualDefault(self, tableName, indId, valStr):
     
@@ -526,13 +455,8 @@ class DatabaseConnection():
         
         query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ('{}', '{}')".format(
                     vcfId, header)
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-            return 0
-        except:
-            self.cnx.rollback()
-            return -1
+
+        commitQuery(query)
     
 #See the following link for VCF information
 #http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41
