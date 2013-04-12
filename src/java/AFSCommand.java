@@ -42,7 +42,7 @@ public class AFSCommand extends Command{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.printf("%d %d %d", this.spectra[0], this.spectra[1], this.spectra[2]);
+		System.out.printf("%d %d %d\n", this.spectra[0], this.spectra[1], this.spectra[2]);
 		return this.spectra.toString();
 		
 	}
