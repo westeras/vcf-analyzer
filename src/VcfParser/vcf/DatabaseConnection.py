@@ -72,12 +72,7 @@ class DatabaseConnection():
         else:
             query = "INSERT INTO `vcf_analyzer`.`{}` VALUES ('{}')".format(entry[0], entryDbId)
         
-        try:
-            self.cursor.execute(query)
-            self.cnx.commit()
-        except:
-            print "Fatal Error"
-            return -1
+        self.commitQuery(query)
 
     def handleFormat(self, formatName, formatData):
     
@@ -130,8 +125,7 @@ class DatabaseConnection():
                 vcfId, chrom, pos, id, ref, alt, qual, filter, format )
         
         try:
-            self.cursor.execute(query)
-            self.cnx.commit()
+            self.execAndCommit(query)
         
             query = ("SELECT max(EntryId) FROM VcfEntry ")
             self.cursor.execute(query)
@@ -165,8 +159,7 @@ class DatabaseConnection():
                 entryId, indNo )
         
         try:
-            self.cursor.execute(query)
-            self.cnx.commit()
+            self.execAndCommit(query)
         
             query2 = ("SELECT max(IndID) FROM IndividualEntry ")
             self.cursor.execute(query2)
@@ -202,8 +195,7 @@ class DatabaseConnection():
                 name[:75] )
 
         try:
-            self.cursor.execute(query)
-            self.cnx.commit()
+            self.execAndCommit(query)
         
             query = ("SELECT max(VcfId) FROM Vcf")
             self.cursor.execute(query)
