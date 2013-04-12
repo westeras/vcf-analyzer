@@ -100,7 +100,7 @@ public class AFSCommand extends Command {
 		}
 		System.out.println("allele 1 " + allele1);
 		if (allele1 == "1") {
-
+			System.out.println("found allele 1");
 			this.spectra[0]++;
 		}
 		if (allele2 == null) {
@@ -108,6 +108,7 @@ public class AFSCommand extends Command {
 		}
 		System.out.println("allele 2 " + allele2);
 		if (allele2 == "1") {
+			System.out.println("found allele 2");
 			this.spectra[1]++;
 		}
 		if (allele3 == null) {
@@ -115,6 +116,7 @@ public class AFSCommand extends Command {
 		}
 		System.out.println("allele 3 " + allele3);
 		if (allele3 == "1") {
+			System.out.println("found allele 3");
 			this.spectra[2]++;
 		}
 	}
