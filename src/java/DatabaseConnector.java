@@ -185,8 +185,14 @@ class DatabaseConnector {
 
 	public ArrayList<FilterParameter> getFilterEntries(int FilId) throws SQLException
 	{
+		ArrayList<FilterParameter> filterEntries = new ArrayList<FilterParameter>();
+		if (FilId != -1)
+		{
+			FilterParameter parameter = new FilterParameter("AC", 4, "0", "0", 0);
+			filterEntries.add(parameter);
+		}
 		//TODO replace stub
-		return null;
+		return filterEntries;
 	}
 	
 	public ArrayList<FilterParameter> getFilterIndividuals(int FilId) throws SQLException

@@ -74,7 +74,10 @@ public abstract class FilterApplier extends Command
 
 	private void loadFilter() throws Exception
 	{
-		int filterId = this.connection.getFilterID(this.filterName);
+		int filterId = -1;
+		if (this.filterName.length() > 0)
+			this.connection.getFilterID(this.filterName);
+			
 		this.entryParameters = this.connection.getFilterEntries(filterId);
 		
 		this.individualParameters = this.connection.getFilterIndividuals(filterId);		
@@ -98,6 +101,7 @@ public abstract class FilterApplier extends Command
 			// into separate methods
 			while (entries.next() )
 			{
+				passing = true;
 				long entryId = entries.getLong("EntryId");
 
 				processUntestedEntry( entries );

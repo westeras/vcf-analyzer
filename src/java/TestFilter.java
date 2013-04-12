@@ -42,7 +42,11 @@ public class TestFilter {
 		
 		testBuffer.close();
 		goalBuffer.close();
-
+		
+		
+		//second Test
+		command = new FilterWriteApplier("SomeFilter", "2013-04-10_13:54", "FilterTest2.txt" );
+		command.execute();
 	}
 
 }
