@@ -26,6 +26,12 @@ public class FilterComparison {
 		public int identifier = 4;
 		public List<String> names = Arrays.asList("=", "equal to", "equals");
 		
+		public EqualsComparison()
+		{
+			identifier = 4;
+			names = Arrays.asList("=", "equal to", "equals");
+		}
+		
 		@Override
 		public boolean compareInteger( String testValue, 
 												String comparator,
