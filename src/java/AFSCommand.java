@@ -31,7 +31,10 @@ public class AFSCommand extends Command{
 					ArrayList<String> individualIDs= getIndividualIDs(entryIDs.get(j));
 					for (int k =0; k < individualIDs.size();k++){
 						ResultSet individuals=getIndividuals(individualIDs.get(k));
+						System.out.println("k= "+k);
+						
 						while (individuals.next()){
+							System.out.println("individual ");
 							updateSpectra(individuals.getString("Allele1"),individuals.getString("Allele2"), individuals.getString("Allele3"));
 						}
 					}
