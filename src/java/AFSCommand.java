@@ -26,11 +26,11 @@ public class AFSCommand extends Command {
 			ArrayList<String> vcfIDs = getVcfIDs();
 			for (int i = 0; i < vcfIDs.size(); i++) {
 				ArrayList<String> entryIDs = getEntryIDs(vcfIDs.get(i));
-				System.out.println("for vcfID " + vcfIDs.get(i));
+				
 				for (int j = 0; j < entryIDs.size(); j++) {
 					ArrayList<String> individualIDs = getIndividualIDs(entryIDs
 							.get(j));
-					System.out.println("for entryID " + entryIDs.get(j));
+					
 					for (int k = 0; k < individualIDs.size(); k++) {
 						ResultSet individuals = getIndividuals(individualIDs
 								.get(k));
