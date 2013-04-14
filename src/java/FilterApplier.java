@@ -100,9 +100,9 @@ public abstract class FilterApplier extends Command
 			
 			while (entries.next() )
 			{
+				long entryId = entries.getLong("EntryId");
 				processUntestedEntry( entries );
 				passing = testEntry(entries);
-				long entryId = entries.getLong("EntryId");
 
 				if (passing)
 				{
