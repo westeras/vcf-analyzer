@@ -86,7 +86,7 @@ public class TestFilter {
 		//fileCompare("FilterTest4.txt", "FilterPass4.txt");	
 		
 		filterName = "testFilterApplier4";
-		String[] operands4 = {"entry Dels=0"};
+		String[] operands4 = {"entry Dels=0", "entry MQ between 78.8 79"};
 		testCreator = new FilterCreator(filterName, operands4);
 		testCreator.uploadEntries();
 		
@@ -94,7 +94,7 @@ public class TestFilter {
 		System.out.println( command.execute() );
 		
 		filterName = "testFilterApplier5";
-		String[] operands5 = {"entry Dels=0","entry AF=0"};
+		String[] operands5 = {"entry Dels=0","entry exists BaseQRankSum"};
 		testCreator = new FilterCreator(filterName, operands5);
 		testCreator.uploadEntries();
 		
