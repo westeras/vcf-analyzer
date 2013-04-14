@@ -94,7 +94,7 @@ public class TestFilter {
 		System.out.println( command.execute() );
 		
 		filterName = "testFilterApplier5";
-		String[] operands5 = {"entry Dels=0","entry exists BaseQRankSum"};
+		String[] operands5 = {"entry Dels=0","entry BaseQRankSum exists"};
 		testCreator = new FilterCreator(filterName, operands5);
 		testCreator.uploadEntries();
 		
