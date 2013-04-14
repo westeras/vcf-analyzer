@@ -42,11 +42,12 @@ public class TestFilter {
 		
 		String sql = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier'";
 		String sql2 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier2'";
-		String sql2 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier3'";
+		String sql3 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier3'";
 		
 		try {
 			stmt.executeUpdate(sql);
 			stmt.executeUpdate(sql2);
+			stmt.executeUpdate(sql3);
 
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
