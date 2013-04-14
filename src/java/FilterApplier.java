@@ -77,9 +77,7 @@ public abstract class FilterApplier extends Command
 		int filterId = -1;
 		if (this.filterName.length() > 0)
 		{
-			//TODO replace with real filter
-			//this.connection.getFilterID(this.filterName);
-			filterId = 1;
+			filterId = this.connection.getFilterID(this.filterName);
 		}
 			
 		this.entryParameters = this.connection.getFilterEntries(filterId);
