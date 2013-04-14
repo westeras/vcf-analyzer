@@ -189,6 +189,7 @@ class DatabaseConnector {
 		String sql = "";
 		try {
 			sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterEntry` WHERE `FilId`='%d'", FilId);
+			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				String tableName = rs.getString("InfoName");
@@ -200,6 +201,7 @@ class DatabaseConnector {
 				FilterParameter temp = new FilterParameter(tableName, comparison, comparator, comparator2, 0,0);
 				filterEntries.add(temp);
 			}
+			System.out.println("Entry params" + filterEntries.size());
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
 		}
