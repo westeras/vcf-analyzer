@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
  * 
  * @author schepedw. Created Mar 14, 2013.
  */
-public class UploadDivergenceCommand extends Command {
+public class UploadDivergenceCommand extends UploadCommand {
 	private File fileLocation;
 	private String options;
 	private String name;

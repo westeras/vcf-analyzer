@@ -258,9 +258,42 @@ public abstract class FilterApplier extends Command
 		return true;
 	}	
 
-	private boolean filterOnGenotype(String infoName, ResultSet entryInfoData) throws Exception {
+	private boolean filterOnGenotype(String genoName, ResultSet entryInfoData) throws Exception {
 		
-		return false;
+		/*
+		for( FilterParameter param : this.entryParameters )
+		{
+			if (param.tableName.equals(infoName))
+			{
+				int type = this.nestedConnection2.getInfoDataType( infoName );
+				String testValue = null;
+				if (entryInfoData.next())
+				{
+				    ResultSetMetaData rsMetaData = entryInfoData.getMetaData();
+				    int numberOfColumns = rsMetaData.getColumnCount();
+			    	
+				    if (numberOfColumns > 1)
+				    {
+				    	testValue = entryInfoData.getString(2);
+				    }
+				    else
+				    {
+				    	testValue = "";
+				    }
+					//move cursor to the first for later uses
+					entryInfoData.previous();
+				}
+
+				
+				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
+				if (!pass)
+				{
+					return pass;
+				}
+			}
+		}
+		*/
+		return true;
 	}
 	
 	//@Override

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class UploadAnnotationCommand extends Command {
+public class UploadAnnotationCommand extends UploadCommand {
 	private File fileLocation;
 	private String options;
 	private String name;
