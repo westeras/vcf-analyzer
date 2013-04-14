@@ -248,12 +248,8 @@ public abstract class FilterApplier extends Command
 			{
 				int type = this.nestedConnection2.getInfoDataType( param.tableName );
 				String testValue = null;
-				if (entryData.next())
-				{
-					testValue = entryData.getString(param.tableName);				    
-					//move cursor to the first for later uses
-					entryData.previous();
-				}
+				//no need to check next()
+				testValue = entryData.getString(param.tableName);				    
 				
 				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
 				if (!pass)
