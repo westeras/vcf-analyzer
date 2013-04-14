@@ -456,6 +456,21 @@ public class FilterComparison {
 		this.allComparisons.add( new NotExistsComparison() );		
 	}
 
+	public HashMap<String, Integer> getOperatorList() 
+	{
+		HashMap<String, Integer> operatorList = new HashMap<String, Integer>();
+		
+		for ( Comparison operation: this.allComparisons )
+		{
+			for( String name : operation.names )
+			{
+				operatorList.put(name, operation.identifier);
+			}
+		}
+		return operatorList;
+		
+	}
+	
 	public boolean testFilterComparison( int type, FilterParameter filter, String testValue)
 	{
 		Comparison operation = null;

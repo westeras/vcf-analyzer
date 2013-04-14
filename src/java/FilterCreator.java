@@ -16,7 +16,8 @@ public class FilterCreator {
 	public FilterCreator(String filterName, String[] commandList) throws ClassNotFoundException, SQLException {
 		this.commandList = commandList;
 		dbConnector = new DatabaseConnector();
-		this.operatorList = FilterCreator.fillOperatorList();
+		FilterComparison operations = new FilterComparison();
+		this.operatorList = operations.getOperatorList();
 		
 		this.filterID = dbConnector.createFilter(filterName);
 	}
@@ -65,28 +66,6 @@ public class FilterCreator {
 		for (int i = 0; i < arguments.length; i++) { 
 			arguments[i] = arguments[i].trim(); 
 		}
-	}
-	
-	public static HashMap<String, Integer> fillOperatorList() {
-		HashMap<String, Integer> operatorList = new HashMap<String, Integer>();
-		operatorList.put("<", 0);
-		operatorList.put("less than", 0);
-		operatorList.put(">", 1);
-		operatorList.put("greater than", 1);
-		operatorList.put("<=", 2);
-		operatorList.put(">=", 3);
-		operatorList.put("=", 4);
-		operatorList.put("equal to", 4);
-		operatorList.put("equals", 4);
-		operatorList.put("between", 5);
-		operatorList.put("between exclusive", 6);
-		operatorList.put("exists", 7);
-		operatorList.put("not exists", 8);
-		operatorList.put("null", 9);
-		operatorList.put("between", 10);
-		
-		return operatorList;
-	}
-	
+	}	
 	
 }

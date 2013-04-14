@@ -100,67 +100,21 @@ public abstract class FilterApplier extends Command
 			
 			ResultSet entries = this.connection.getVcfEntries( vcfId );
 			
-			// ########### Things get a little complex here. I think I can see some
-			// discrete steps (I may be wrong). If so, then these can be extracted 
-			// into separate methods
 			while (entries.next() )
 			{
-				passing = true;
-				long entryId = entries.getLong("EntryId");
-
 				processUntestedEntry( entries );
-				
-				ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
-				for (int j=0; j< tableNames.size(); j++)
-				{
-					String infoName = tableNames.get(j);
-					ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, infoName);
-					
-					//Test Info data
-					passing = filterOnInfoTable(infoName, entryInfoData);
-					if ( !passing )
-					{
-						break;
-					}
-					
-					if (entryInfoData!=null)
-					{
-						//writes each info datum; 
-						processUntestedEntryInfo( infoName, entryInfoData );
-					}
-				}
+				passing = testEntry(entries);
+				long entryId = entries.getLong("EntryId");
 
 				if (passing)
 				{
 					processPassingEntry(entries);
 					
-					//individual level
-					String indFormat = entries.getString("Format");
-					ArrayList<String> genotypes = new ArrayList<String>( 
-							Arrays.asList( indFormat.split(":") ));
-					
-					ResultSet individuals = this.nestedConnection.getIndividuals( entryId );
-					while (individuals.next() )
+					passing = testIndividual(entries, entryId);
+					if (passing)
 					{
-						processUntestedIndividual();
-						
-						long indId = individuals.getLong("IndID");
-						for (int k=0; k< genotypes.size(); k++)
-						{
-							ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
-							
-							processUntestedIndividualData( genotypes.get(k), genotypeData);
-							genotypeData.close();
-						}
-						
-						if (passing)
-						{
-							processPassingIndividual();
-						}
+						finializeEntry();
 					}
-					
-					individuals.close();
-					finializeEntry();
 				}
 
 			}
@@ -172,6 +126,73 @@ public abstract class FilterApplier extends Command
 			closeFiltering();
 			return exception.getMessage();
 		}
+	}
+
+	private boolean testIndividual( ResultSet entries, long entryId)
+			throws SQLException, Exception {
+		
+		boolean passing = true;
+		//individual level
+		String indFormat = entries.getString("Format");
+		ArrayList<String> genotypes = new ArrayList<String>( 
+				Arrays.asList( indFormat.split(":") ));
+		
+		ResultSet individuals = this.nestedConnection.getIndividuals( entryId );
+		while (individuals.next() )
+		{
+			processUntestedIndividual();
+			
+			long indId = individuals.getLong("IndID");
+			for (int k=0; k< genotypes.size(); k++)
+			{
+				ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
+				
+				//test genotype level
+				processUntestedIndividualData( genotypes.get(k), genotypeData);
+				genotypeData.close();
+			}
+			
+			if (passing)
+			{
+				processPassingIndividual();
+			}
+		}
+		
+		individuals.close();
+		return passing;
+	}
+
+	private boolean testEntry(ResultSet entries)
+			throws SQLException, Exception {
+		
+		boolean passing = true;
+		long entryId = entries.getLong("EntryId");
+		passing = filterOnEntryData(entries);
+		if (!passing)
+		{
+			return passing;
+		}
+		
+		ArrayList<String> tableNames = this.nestedConnection.getInfoTableNames();
+		for (int j=0; j< tableNames.size(); j++)
+		{
+			String infoName = tableNames.get(j);
+			ResultSet entryInfoData = this.nestedConnection.getInfoDatum(entryId, infoName);
+			
+			//Test Info data
+			passing = filterOnInfoTable(infoName, entryInfoData);
+			if ( !passing )
+			{
+				break;
+			}
+			
+			if (entryInfoData!=null)
+			{
+				//writes each info datum; 
+				processUntestedEntryInfo( infoName, entryInfoData );
+			}
+		}
+		return passing;
 	}
 
 
@@ -196,10 +217,10 @@ public abstract class FilterApplier extends Command
 				    {
 				    	testValue = "";
 				    }
-					
+					//move cursor to the first for later uses
+					entryInfoData.previous();
 				}
-				//move cursor to the first for later uses
-				entryInfoData.previous();
+
 				
 				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
 				if (!pass)
@@ -210,7 +231,38 @@ public abstract class FilterApplier extends Command
 		}
 		return true;
 	}
+	
+	private boolean filterOnEntryData(ResultSet entryData) throws Exception {
 
+		for( FilterParameter param : this.entryParameters )
+		{
+			//test if filter is on fixed entry data
+			if ( DatabaseConnector.EntryFixedInfo.contains( param.tableName) )
+			{
+				int type = this.nestedConnection2.getInfoDataType( param.tableName );
+				String testValue = null;
+				if (entryData.next())
+				{
+					testValue = entryData.getString(param.tableName);				    
+					//move cursor to the first for later uses
+					entryData.previous();
+				}
+				
+				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
+				if (!pass)
+				{
+					return pass;
+				}
+			}
+		}
+		return true;
+	}	
+
+	private boolean filterOnGenotype(String infoName, ResultSet entryInfoData) throws Exception {
+		
+		return false;
+	}
+	
 	//@Override
 	public void pipeOutput() {
 	// TODO Auto-generated method stub.

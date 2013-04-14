@@ -14,7 +14,7 @@ class DatabaseConnector {
 	static final String USER = "vcf_user";
 	static final String PASS = "vcf";
 
-	private static final ArrayList<String> EntryFixedInfo = new ArrayList<String>(
+	public static final ArrayList<String> EntryFixedInfo = new ArrayList<String>(
 			Arrays.asList("CHROM", "FILTER", "ID", "POS", "REF", "QUAL", "ALT"));
 
 	private Connection conn;
@@ -186,12 +186,23 @@ class DatabaseConnector {
 	public ArrayList<FilterParameter> getFilterEntries(int FilId) throws SQLException
 	{
 		ArrayList<FilterParameter> filterEntries = new ArrayList<FilterParameter>();
-		if (FilId != -1)
-		{
-			FilterParameter parameter = new FilterParameter("AC", 4, "7", "0", 0);
-			filterEntries.add(parameter);
+		String sql = "";
+		try {
+			sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterEntry` WHERE `FilId`='%d'", FilId);
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				String tableName = rs.getString("InfoName");
+				int comparison = rs.getInt("Comparison");
+				String comparator = rs.getString("Comparator");
+				String comparator2 = rs.getString("Comparator2");
+				int failureAllow = rs.getInt("FailureAllow");
+				
+				FilterParameter temp = new FilterParameter(tableName, comparison, comparator, comparator2, 0,0);
+				filterEntries.add(temp);
+			}
+		} catch (SQLException se) {
+			throw new SQLException(se.getMessage());
 		}
-		//TODO replace stub
 		return filterEntries;
 	}
 	
@@ -200,16 +211,18 @@ class DatabaseConnector {
 		ArrayList<FilterParameter> filterIndividuals = new ArrayList<FilterParameter>();
 		String sql = "";
 		try {
-			sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterIndividual` WHERE `FilId`='%s'", FilId);
+			sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterIndividual` WHERE `FilId`='%d'", FilId);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-				String tableName = "";
+				String tableName = rs.getString("GenoName");
 				int comparison = rs.getInt("Comparison");
 				String comparator = rs.getString("Comparator");
 				String comparator2 = rs.getString("Comparator2");
 				int failureAllow = rs.getInt("FailureAllow");
+				int passExactly = rs.getInt("PassExactly");
 				
-				FilterParameter temp = new FilterParameter(comparison, comparator, comparator2, failureAllow);
+				FilterParameter temp = new FilterParameter(tableName, comparison, comparator,
+															comparator2, failureAllow, passExactly);
 				filterIndividuals.add(temp);
 			}
 		} catch (SQLException se) {
