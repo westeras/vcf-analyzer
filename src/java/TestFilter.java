@@ -73,7 +73,7 @@ public class TestFilter {
 		fileCompare("FilterTest3.txt", "FilterPass3.txt");
 		
 		filterName = "testFilterApplier3";
-		String[] operands3 = {"entry REF=T", "entry MQ between 78.8 79.0"};
+		String[] operands3 = {"entry REF=T", "entry MQ!=0", "entry Dels=0"};//"entry MQ between 78.8 79.0"};
 		testCreator = new FilterCreator(filterName, operands3);
 		testCreator.uploadEntries();
 		
