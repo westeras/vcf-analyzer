@@ -145,10 +145,17 @@ public abstract class FilterApplier extends Command
 			long indId = individuals.getLong("IndID");
 			for (int k=0; k< genotypes.size(); k++)
 			{
-				ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genotypes.get(k) );
+				String genoName = genotypes.get(k);
+				ResultSet genotypeData = this.nestedConnection2.getIndividualDatum( indId, genoName );
 				
 				//test genotype level
-				processUntestedIndividualData( genotypes.get(k), genotypeData);
+				passing = filterOnGenotype( genoName, genotypeData);
+				if ( !passing )
+				{
+					break;
+				}
+				
+				processUntestedIndividualData( genoName, genotypeData);
 				genotypeData.close();
 			}
 			
