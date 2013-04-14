@@ -263,9 +263,9 @@ public abstract class FilterApplier extends Command
 		/*
 		for( FilterParameter param : this.entryParameters )
 		{
-			if (param.tableName.equals(infoName))
+			if (param.tableName.equals(genoName))
 			{
-				int type = this.nestedConnection2.getInfoDataType( infoName );
+				int type = this.nestedConnection2.getInfoDataType( genoName );
 				String testValue = null;
 				if (entryInfoData.next())
 				{

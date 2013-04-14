@@ -131,7 +131,7 @@ class DatabaseConnector {
 		}
 	}
 
-	public int createIndividualEntry(int filterID, int operator,
+	public int createFilterIndividual(int filterID, int operator,
 			String genoName, String[] operands, String limit) throws SQLException {
 		String sql = null;
 		try {
@@ -304,6 +304,23 @@ class DatabaseConnector {
 		}
 	}
 
+	public ArrayList<String> getAllEntryTableNames() throws SQLException {
+		String sql = "";
+		ArrayList<String> tables = new ArrayList<String>();
+		try {
+			sql = "SELECT `InfoName` FROM `vcf_analyzer`.`InfoTable` ORDER BY `InfoName` ASC";
+			ResultSet rs = this.stmt.executeQuery(sql);
+			while (rs.next()) {
+				String infoName = rs.getString("InfoName");
+				tables.add(infoName);
+			}
+			rs.close();
+			return tables;
+		} catch (SQLException se) {
+			throw new SQLException(se.getMessage());
+		}
+	}	
+	
 	public ArrayList<String> getGenotypeTableNames() throws SQLException {
 		String sql = "";
 		ArrayList<String> tables = new ArrayList<String>();

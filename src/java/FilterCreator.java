@@ -30,7 +30,7 @@ public class FilterCreator {
 	
 	private void parseCommand(int index) throws SQLException {
 		String currentCommand = this.commandList[index];
-		ArrayList<String> infoNames = dbConnector.getInfoTableNames();
+		ArrayList<String> infoNames = dbConnector.getAllEntryTableNames();
 		ArrayList<String> genoNames = dbConnector.getGenotypeTableNames();
 		ArrayList<String> indNames = new ArrayList<String>(Arrays.asList("ind", "IND", "Ind", "individual", "in"));
 		ArrayList<String> entryNames = new ArrayList<String>(Arrays.asList("entry", "ENT", "ent"));
@@ -52,7 +52,7 @@ public class FilterCreator {
 				}
 				
 				if (genoNames.contains(genoName) && indNames.contains(identifiers[0])) {
-					dbConnector.createIndividualEntry(this.filterID, this.operatorList.get(key), genoName, operands, limit);
+					dbConnector.createFilterIndividual(this.filterID, this.operatorList.get(key), genoName, operands, limit);
 				} else if (infoNames.contains(identifiers[1]) && entryNames.contains(identifiers[0])) {
 					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), identifiers[1], operands);
 				} else {
