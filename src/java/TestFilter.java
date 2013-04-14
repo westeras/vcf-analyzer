@@ -42,6 +42,7 @@ public class TestFilter {
 		
 		String sql = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier'";
 		String sql2 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier2'";
+		String sql2 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier3'";
 		
 		try {
 			stmt.executeUpdate(sql);
@@ -68,6 +69,16 @@ public class TestFilter {
 		
 		command = new FilterWriteApplier("testFilter", "testFilterApplier2", "FilterTest3.txt" );
 		System.out.println( command.execute() );
+		fileCompare("FilterTest3.txt", "FilterPass3.txt");
+		
+		filterName = "testFilterApplier3";
+		String[] operands3 = {"entry REF=T", "entry MQ between 78.8 79.0"};
+		testCreator = new FilterCreator(filterName, operands2);
+		testCreator.uploadEntries();
+		
+		command = new FilterWriteApplier("testFilter", "testFilterApplier3", "FilterTest4.txt" );
+		System.out.println( command.execute() );
+		//fileCompare("FilterTest4.txt", "FilterPass4.txt");		
 		
 	}
 
