@@ -196,7 +196,6 @@ class DatabaseConnector {
 				int comparison = rs.getInt("Comparison");
 				String comparator = rs.getString("Comparator");
 				String comparator2 = rs.getString("Comparator2");
-				int failureAllow = rs.getInt("FailureAllow");
 				
 				FilterParameter temp = new FilterParameter(tableName, comparison, comparator, comparator2, 0,0);
 				filterEntries.add(temp);
