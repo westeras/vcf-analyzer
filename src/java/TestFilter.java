@@ -43,11 +43,15 @@ public class TestFilter {
 		String sql = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier'";
 		String sql2 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier2'";
 		String sql3 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier3'";
+		String sql4 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier4'";
+		String sql5 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier5'";
 		
 		try {
 			stmt.executeUpdate(sql);
 			stmt.executeUpdate(sql2);
 			stmt.executeUpdate(sql3);
+			stmt.executeUpdate(sql4);
+			stmt.executeUpdate(sql5);
 
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
@@ -79,7 +83,23 @@ public class TestFilter {
 		
 		command = new FilterWriteApplier("testFilter", "testFilterApplier3", "FilterTest4.txt" );
 		System.out.println( command.execute() );
-		//fileCompare("FilterTest4.txt", "FilterPass4.txt");		
+		//fileCompare("FilterTest4.txt", "FilterPass4.txt");	
+		
+		filterName = "testFilterApplier4";
+		String[] operands4 = {"entry Dels=0"};
+		testCreator = new FilterCreator(filterName, operands4);
+		testCreator.uploadEntries();
+		
+		command = new FilterWriteApplier("testFilter", "testFilterApplier4", "FilterTest5.txt" );
+		System.out.println( command.execute() );
+		
+		filterName = "testFilterApplier5";
+		String[] operands5 = {"entry Dels=0","entry AF=0"};
+		testCreator = new FilterCreator(filterName, operands5);
+		testCreator.uploadEntries();
+		
+		command = new FilterWriteApplier("testFilter", "testFilterApplier5", "FilterTest6.txt" );
+		System.out.println( command.execute() );
 		
 	}
 
