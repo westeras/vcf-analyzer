@@ -122,6 +122,8 @@ public abstract class FilterApplier extends Command
 			
 		} catch (Exception exception) {
 			closeFiltering();
+			//TODO remove
+			exception.printStackTrace();
 			return exception.getMessage();
 		}
 	}
