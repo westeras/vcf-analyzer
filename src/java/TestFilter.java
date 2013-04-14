@@ -74,7 +74,7 @@ public class TestFilter {
 		
 		filterName = "testFilterApplier3";
 		String[] operands3 = {"entry REF=T", "entry MQ between 78.8 79.0"};
-		testCreator = new FilterCreator(filterName, operands2);
+		testCreator = new FilterCreator(filterName, operands3);
 		testCreator.uploadEntries();
 		
 		command = new FilterWriteApplier("testFilter", "testFilterApplier3", "FilterTest4.txt" );
