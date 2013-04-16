@@ -13,7 +13,7 @@ public class AFSCommand extends Command {
 	private String VCFName;
 	private DatabaseConnector conn;
 	private int weirdThingsInEntry;
-	private int maxSize;
+	
 
 	public AFSCommand(String VCFName, String options)
 			throws ClassNotFoundException, SQLException {
@@ -35,21 +35,21 @@ public class AFSCommand extends Command {
 					this.weirdThingsInEntry=0;
 					ArrayList<String> individualIDs = getIndividualIDs(entryIDs
 							.get(j));
-					
+					int maxSize=0;
 					for (int k = 0; k < individualIDs.size(); k++) {
 						ResultSet individuals = getIndividuals(individualIDs
 								.get(k));
-						this.maxSize=0;
+						maxSize=0;
 						while (individuals.next()) {
 							updateSpectra(individuals.getString("Allele1"),
 									individuals.getString("Allele2"),
 									individuals.getString("Allele3"));
-							this.maxSize++;
+							maxSize++;
 						}
 						
 					}
-					if (this.maxSize>spectra.size()){
-						spectra.ensureCapacity(this.maxSize);
+					if (maxSize*3>spectra.size()){
+						spectra.ensureCapacity(maxSize);
 					}
 					spectra.add(this.weirdThingsInEntry, spectra.get(this.weirdThingsInEntry)+1);
 				}
