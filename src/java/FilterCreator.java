@@ -52,6 +52,9 @@ public class FilterCreator {
 				if (indNames.contains(indicator) && genoNames.contains(infoName)) {
 					if (key.contains("exists")) {
 						this.dbConnector.createFilterIndividual(this.filterID, this.operatorList.get(key), infoName, null); 
+					} else {
+						String[] operands = arguments[1].split(" ");
+						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), infoName, operands);
 					}
 				} else if (entryNames.contains(indicator) && infoNames.contains(infoName)) {
 					if (key.contains("exists")) {

@@ -105,6 +105,7 @@ class DatabaseConnector {
 		String dbOperator = "NULL";
 		String firstOperand = "NULL";
 		String secondOperand = "NULL";
+		
 		try {
 			if (operands == null) {
 				//do nothing
@@ -138,22 +139,27 @@ class DatabaseConnector {
 	public int createFilterIndividual(int filterID, int operator,
 			String genoName, String[] operands) throws SQLException {
 		String sql = null;
+		String dbOperator = "NULL";
+		String firstOperand = "NULL";
+		String secondOperand = "NULL";
+		
 		try {
-			if (operands.length == 1) {
-				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, NULL);",
-								filterID, genoName, operator, operands[0]);
+			if (operands == null) {
+				// do nothing
+			} else if (operands.length == 1) {
+				dbOperator = "'" + operator + "'";
+				firstOperand = "'" + operands[0] + "'";
 			} else if (operands.length == 2) {
-				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', NULL);",
-								filterID, genoName, operator, operands[0], operands[1]);
-			} else if (operands.length == 0) {
-				System.out.println("No operands given");
-				return 0;
+				dbOperator = "'" + operator + "'";
+				firstOperand = "'" + operands[0] + "'";
+				secondOperand = "'" + operands[0] + "'";
 			} else {
 				System.out.println("Too many operands given");
 				return 0;
 			}
+			
+			sql = String.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', %s, %s, %s);", 
+						filterID, genoName, dbOperator, firstOperand, secondOperand);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			ResultSet rs = this.stmt.getGeneratedKeys();
