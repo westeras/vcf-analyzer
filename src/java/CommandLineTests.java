@@ -2,13 +2,15 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
+
 import org.junit.Test;
 
 
 public class CommandLineTests {
 
 	@Test
-	public void testUploadDivergenceWorks() throws IOException {
+	public void testUploadDivergenceWorks() throws IOException, ClassNotFoundException, SQLException {
 		String[] commands = new String[3];
 		commands[0] = "-updiv";
 		commands[1] = "src/divergence.txt";
@@ -17,7 +19,7 @@ public class CommandLineTests {
 	}
 
 	@Test
-	public void testUploadAnnotationWorks() throws IOException {
+	public void testUploadAnnotationWorks() throws IOException, ClassNotFoundException, SQLException {
 		String[] commands = new String[2];
 		commands[0] = "-upano";
 		commands[1] = "src/annotation.txt";
@@ -26,7 +28,7 @@ public class CommandLineTests {
 	}
 	
 	@Test
-	public void testUploadDivergenceWorksDate() throws IOException {
+	public void testUploadDivergenceWorksDate() throws IOException, ClassNotFoundException, SQLException {
 		String[] commands = new String[2];
 		commands[0] = "-updiv";
 		commands[1] = "src/divergence.txt";
@@ -34,7 +36,7 @@ public class CommandLineTests {
 	}
 	
 	@Test
-	public void testUploadAnnotationWorksDate() throws IOException {
+	public void testUploadAnnotationWorksDate() throws IOException, ClassNotFoundException, SQLException {
 		String[] commands = new String[2];
 		commands[0] = "-upano";
 		commands[1] = "src/annotation.txt";

@@ -1,5 +1,6 @@
 import vcf
 import subprocess
+import argparse
 
 def uploadVcfWithoutName(location):
     vcf_reader = vcf.Reader(open(location))
@@ -15,6 +16,7 @@ def uploadVcfWithName(location, name):
     while (not fileEnded):
         fileEnded = vcf_reader.next()
 
+defaultClassPath = "../java:.:/usr/share/java/commons-cli-1.1.jar:/home/hdf/hdf-java/lib/junit.jar:/usr/share/java/mysql.jar:/usr/share/java/jython-2.5.1.jar:/usr/share/java/antlr3-3.2.jar:/usr/share/java/asm3-3.3.2.jar:/home/hdf/hdf-java/lib/jhdf5.jar:/home/hdf/hdf-java/lib/jhdf5obj.jar:/home/hdf/hdf-java/lib/jhdfobj.jar:/usr/share/java/junit-3.8.2.jar:/usr/share/java/junit.jar"
 breaker = 0
 while(breaker == 0):
     print('Please input a command')
@@ -40,6 +42,8 @@ while(breaker == 0):
             if len(command) == 3:
                 uploadVcfWithName(command[1], command[2])
         else:
-            subprocess.call(['cd', '../java/'], shell=True)
+            subprocessInput = "java -cp " + defaultClassPath + " \"CommandLineInterpreter -sum 4 5\""
+            print(subprocessInput)
+            subprocess.call(subprocessInput, shell=True)
 #            subprocess.call(['java', 'CommandLineInterpreter -sum 3 4 5' + inputString], shell=True)
 #            subprocess.call(['cd', '../VcfParser' + inputString], shell=True)

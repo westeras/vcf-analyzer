@@ -41,7 +41,25 @@ public class CommandLineInterpreter
 			
 			if (commandLine.hasOption("asf")){
 				String[] args = commandLine.getOptionValues("asf");
-				Command command = new AFSCommand(args[0], "");
+				Command command = null;
+				if(args.length == 1) command = new AFSCommand(args[0], "");
+				if(args.length == 2) command = new AFSCommand(args[0], args[1]);
+				result = command.execute();
+			}
+			
+			if (commandLine.hasOption("filterWrite")){
+				String[] args = commandLine.getOptionValues("filterWrite");
+				Command command = null;
+				if(args.length == 2) command = new FilterWriteApplier(args[0], args[1], "");
+				if(args.length == 3) command = new FilterWriteApplier(args[0], args[1], args[2]);
+				result = command.execute();
+			}
+			
+			if (commandLine.hasOption("filterStore")){
+				String[] args = commandLine.getOptionValues("filterStore");
+				Command command = null;
+				if(args.length == 2) command = new FilterStoreApplier(args[0], args[1], "");
+				if(args.length == 3) command = new FilterStoreApplier(args[0], args[1], args[2]);
 				result = command.execute();
 			}
 			
@@ -86,9 +104,8 @@ public class CommandLineInterpreter
 		String[] args;
 		Command command = null;
 		
-			args = commandLine.getOptionValues(type);
+		args = commandLine.getOptionValues(type);
 
-		
 		String result = "";
 		
 		if(args == null){
