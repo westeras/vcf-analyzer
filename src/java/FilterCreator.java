@@ -41,13 +41,19 @@ public class FilterCreator {
 				String[] arguments = currentCommand.split(key);
 				trimAllArguments(arguments);
 				String indicator = arguments[0].split(" ")[0];
+				String infoName = "";
 				
-				if (indNames.contains(indicator)) {
+				if (key.contains("exists")) {
+					infoName = arguments[1];
+				} else {
+					infoName = arguments[0].split(" ")[1];
+				}
+				
+				if (indNames.contains(indicator) && genoNames.contains(infoName)) {
 					if (key.contains("exists")) {
-						String infoName = arguments[1];
-						this.dbConnector.createFilterIndividual(this.filterID, this.operatorList.get(key), infoName, null);
+						this.dbConnector.createFilterIndividual(this.filterID, this.operatorList.get(key), infoName, null); 
 					}
-				} else if (entryNames.contains(indicator)) {
+				} else if (entryNames.contains(indicator) && infoNames.contains(infoName)) {
 					if (key.contains("exists")) {
 						String genoName = arguments[1];
 						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), genoName, null);
