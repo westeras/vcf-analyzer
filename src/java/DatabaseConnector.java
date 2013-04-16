@@ -121,7 +121,7 @@ class DatabaseConnector {
 			}
 			
 			sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', %s, %s, %s", 
-					filterID, infoName, dbOperator, firstOperator, secondOperator);
+					filterID, infoName, dbOperator, firstOperand, secondOperand);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			ResultSet rs = this.stmt.getGeneratedKeys();
