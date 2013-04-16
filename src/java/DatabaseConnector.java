@@ -102,17 +102,17 @@ class DatabaseConnector {
 	public int createFilterEntry(int filterID, int operator, String infoName,
 			String[] operands) throws SQLException {
 		String sql = null;
-		String operator = "NULL";
+		String dbOperator = "NULL";
 		String firstOperand = "NULL";
 		String secondOperand = "NULL";
 		try {
 			if (operands == null) {
 				//do nothing
 			} else if (operands.length == 1) {
-				operator = "'" + Integer.toString(operator) + "'";
+				dbOperator = "'" + Integer.toString(operator) + "'";
 				firstOperand = "'" + Integer.toString(operands[0]) + "'";
 			} else if (operands.length == 2) {
-				operator = "'" + Integer.toString(operator) + "'";
+				dbOperator = "'" + Integer.toString(operator) + "'";
 				firstOperand = "'" + Integer.toString(operands[0]) + "'";
 				secondOperand = "'" + Integer.toString(operands[1]) + "'";
 			} else {
@@ -121,7 +121,7 @@ class DatabaseConnector {
 			}
 			
 			sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', %s, %s, %s", 
-					filterID, infoName, operator, firstOperator, secondOperator);
+					filterID, infoName, dbOperator, firstOperator, secondOperator);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			ResultSet rs = this.stmt.getGeneratedKeys();
