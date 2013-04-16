@@ -52,7 +52,7 @@ public class FilterCreator {
 						String genoName = arguments[1];
 						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), genoName, null);
 					} else {
-						String genoName = arguments[0].split(" ");
+						String genoName = arguments[0].split(" ")[1];
 						String[] operands = arguments[1].split(" ");
 						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), genoName, operands);
 					}
