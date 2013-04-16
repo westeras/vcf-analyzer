@@ -34,29 +34,28 @@ public class FilterCreator {
 		ArrayList<String> genoNames = dbConnector.getGenotypeTableNames();
 		ArrayList<String> indNames = new ArrayList<String>(Arrays.asList("ind", "IND", "Ind", "individual", "in"));
 		ArrayList<String> entryNames = new ArrayList<String>(Arrays.asList("entry", "ENT", "ent"));
+		ArrayList<String> optionNames = new ArrayList<String>(Arrays.asList("option", "opt", "options"));
 		
 		for (String key : this.operatorList.keySet()) {
-			if (currentCommand.contains(key)) {
+			if (currentCommand.contains(key) && !containsAnyOthers(key, currentCommand)) {
 				String[] arguments = currentCommand.split(key);
 				trimAllArguments(arguments);
-				String[] operands = arguments[1].split(" ");
-				String[] identifiers = arguments[0].split(" ");
-				String limit = "0";
+				String indicator = arguments[0].split(" ")[0];
 				
-				String genoName = identifiers[1];
-				
-				if (arguments[0].contains("limit")) {
-					String[] limits = identifiers[1].split(":");
-					limit = limits[1];
-					genoName = identifiers[2];
-				}
-				
-				if (genoNames.contains(genoName) && indNames.contains(identifiers[0])) {
-					dbConnector.createFilterIndividual(this.filterID, this.operatorList.get(key), genoName, operands, limit);
-				} else if (infoNames.contains(identifiers[1]) && entryNames.contains(identifiers[0])) {
-					dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), identifiers[1], operands);
-				} else {
-					System.out.println("Invalid info name or genotype name: " + identifiers[1]);
+				if (indNames.contains(indicator)) {
+					if (key.contains("exists")) {
+						String infoName = arguments[1];
+						this.dbConnector.createFilterIndividual(this.filterID, this.operatorList.get(key), infoName, null);
+					}
+				} else if (entryNames.contains(indicator)) {
+					if (key.contains("exists")) {
+						String genoName = arguments[1];
+						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), genoName, null);
+					} else {
+						String genoName = arguments[0].split(" ");
+						String[] operands = arguments[1].split(" ");
+						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), genoName, operands);
+					}
 				}
 			}
 		}
@@ -66,6 +65,15 @@ public class FilterCreator {
 		for (int i = 0; i < arguments.length; i++) { 
 			arguments[i] = arguments[i].trim(); 
 		}
-	}	
+	}
 	
+	private boolean containsAnyOthers(String key, String currentCommand) {
+		for (String checkKey : this.operatorList.keySet()) {
+			if (checkKey != key && currentCommand.contains(checkKey)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

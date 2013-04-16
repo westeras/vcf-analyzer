@@ -42,5 +42,4 @@ public class FilterCreatorTest {
 		FilterCreator testCreator = new FilterCreator(filterName, operands);
 		testCreator.uploadEntries();
 	}
-
 }

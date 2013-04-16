@@ -102,23 +102,26 @@ class DatabaseConnector {
 	public int createFilterEntry(int filterID, int operator, String infoName,
 			String[] operands) throws SQLException {
 		String sql = null;
+		String operator = "NULL";
+		String firstOperand = "NULL";
+		String secondOperand = "NULL";
 		try {
-			if (operands.length == 1) {
-				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', NULL);",
-								filterID, infoName, operator, operands[0]);
+			if (operands == null) {
+				//do nothing
+			} else if (operands.length == 1) {
+				operator = "'" + Integer.toString(operator) + "'";
+				firstOperand = "'" + Integer.toString(operands[0]) + "'";
 			} else if (operands.length == 2) {
-				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', '%s', '%s', '%s');",
-								filterID, infoName, operator, operands[0],
-								operands[1]);
-			} else if (operands.length == 0) {
-				System.out.println("No operands given");
-				return 0;
+				operator = "'" + Integer.toString(operator) + "'";
+				firstOperand = "'" + Integer.toString(operands[0]) + "'";
+				secondOperand = "'" + Integer.toString(operands[1]) + "'";
 			} else {
 				System.out.println("Too many operands given");
 				return 0;
 			}
+			
+			sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', %s, %s, %s", 
+					filterID, infoName, operator, firstOperator, secondOperator);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			ResultSet rs = this.stmt.getGeneratedKeys();
@@ -132,17 +135,17 @@ class DatabaseConnector {
 	}
 
 	public int createFilterIndividual(int filterID, int operator,
-			String genoName, String[] operands, String limit) throws SQLException {
+			String genoName, String[] operands) throws SQLException {
 		String sql = null;
 		try {
 			if (operands.length == 1) {
 				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, '%s');",
-								filterID, genoName, operator, operands[0], limit);
+						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', NULL, NULL);",
+								filterID, genoName, operator, operands[0]);
 			} else if (operands.length == 2) {
 				sql = String
-						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');",
-								filterID, genoName, operator, operands[0], operands[1], limit);
+						.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', '%s', '%s', NULL);",
+								filterID, genoName, operator, operands[0], operands[1]);
 			} else if (operands.length == 0) {
 				System.out.println("No operands given");
 				return 0;
