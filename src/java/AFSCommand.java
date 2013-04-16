@@ -98,19 +98,19 @@ public class AFSCommand extends Command {
 
 		if (allele1 == null) {
 			return;
-		} else if (allele1.charAt(0) == '1') {
+		} else if (allele1.equals("1")) {
 			this.spectra[0]++;
 		}
 		if (allele2 == null) {
 			return;
 		}
-		else if (allele2.charAt(0) == '1') {
+		else if (allele2.equals("1")) {
 			this.spectra[1]++;
 		}
 		if (allele3 == null) {
 			return;
 		}
-		else if (allele3.charAt(0) == '1') {
+		else if (allele3.equals("1")) {
 			this.spectra[2]++;
 		}
 	}
@@ -120,15 +120,5 @@ public class AFSCommand extends Command {
 		// TODO Auto-generated method stub.
 	}
 
-	@Override
-	public ArrayList<String[]> parseFile() throws FileNotFoundException {
-		// TODO Auto-generated method stub.
-		return null;
-	}
 
-	@Override
-	public String getSQLStatement(ArrayList<String[]> rowsToUpload) {
-		// TODO Auto-generated method stub.
-		return null;
-	}
 }

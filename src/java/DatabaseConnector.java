@@ -105,10 +105,10 @@ class DatabaseConnector {
 		String dbOperator = "NULL";
 		String firstOperand = "NULL";
 		String secondOperand = "NULL";
-		
+
 		try {
 			if (operands == null) {
-				//do nothing
+				// do nothing
 			} else if (operands.length == 1) {
 				dbOperator = "'" + operator + "'";
 				firstOperand = "'" + operands[0] + "'";
@@ -120,9 +120,11 @@ class DatabaseConnector {
 				System.out.println("Too many operands given");
 				return 0;
 			}
-			
-			sql = String.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', %s, %s, %s)", 
-					filterID, infoName, dbOperator, firstOperand, secondOperand);
+
+			sql = String
+					.format("INSERT INTO `vcf_analyzer`.`FilterEntry` VALUES (NULL, '%s', '%s', %s, %s, %s)",
+							filterID, infoName, dbOperator, firstOperand,
+							secondOperand);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			ResultSet rs = this.stmt.getGeneratedKeys();
@@ -142,7 +144,7 @@ class DatabaseConnector {
 		String dbOperator = "NULL";
 		String firstOperand = "NULL";
 		String secondOperand = "NULL";
-		
+
 		try {
 			if (operands == null) {
 				// do nothing
@@ -157,9 +159,11 @@ class DatabaseConnector {
 				System.out.println("Too many operands given");
 				return 0;
 			}
-			
-			sql = String.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', %s, %s, %s);", 
-						filterID, genoName, dbOperator, firstOperand, secondOperand);
+
+			sql = String
+					.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', %s, %s, %s);",
+							filterID, genoName, dbOperator, firstOperand,
+							secondOperand);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
 			ResultSet rs = this.stmt.getGeneratedKeys();
@@ -193,20 +197,23 @@ class DatabaseConnector {
 		}
 	}
 
-	public ArrayList<FilterParameter> getFilterEntries(int FilId) throws SQLException
-	{
+	public ArrayList<FilterParameter> getFilterEntries(int FilId)
+			throws SQLException {
 		ArrayList<FilterParameter> filterEntries = new ArrayList<FilterParameter>();
 		String sql = "";
 		try {
-			sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterEntry` WHERE `FilId`='%d'", FilId);
+			sql = String
+					.format("SELECT * FROM `vcf_analyzer`.`FilterEntry` WHERE `FilId`='%d'",
+							FilId);
 			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()) {
+			while (rs.next()) {
 				String tableName = rs.getString("InfoName");
 				int comparison = rs.getInt("Comparison");
 				String comparator = rs.getString("Comparator");
 				String comparator2 = rs.getString("Comparator2");
-				
-				FilterParameter temp = new FilterParameter(tableName, comparison, comparator, comparator2, 0,0);
+
+				FilterParameter temp = new FilterParameter(tableName,
+						comparison, comparator, comparator2, 0, 0);
 				filterEntries.add(temp);
 			}
 		} catch (SQLException se) {
@@ -214,24 +221,27 @@ class DatabaseConnector {
 		}
 		return filterEntries;
 	}
-	
-	public ArrayList<FilterParameter> getFilterIndividuals(int FilId) throws SQLException
-	{
+
+	public ArrayList<FilterParameter> getFilterIndividuals(int FilId)
+			throws SQLException {
 		ArrayList<FilterParameter> filterIndividuals = new ArrayList<FilterParameter>();
 		String sql = "";
 		try {
-			sql = String.format("SELECT * FROM `vcf_analyzer`.`FilterIndividual` WHERE `FilId`='%d'", FilId);
+			sql = String
+					.format("SELECT * FROM `vcf_analyzer`.`FilterIndividual` WHERE `FilId`='%d'",
+							FilId);
 			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()) {
+			while (rs.next()) {
 				String tableName = rs.getString("GenoName");
 				int comparison = rs.getInt("Comparison");
 				String comparator = rs.getString("Comparator");
 				String comparator2 = rs.getString("Comparator2");
 				int failureAllow = rs.getInt("FailureAllow");
 				int passExactly = rs.getInt("PassExactly");
-				
-				FilterParameter temp = new FilterParameter(tableName, comparison, comparator,
-															comparator2, failureAllow, passExactly);
+
+				FilterParameter temp = new FilterParameter(tableName,
+						comparison, comparator, comparator2, failureAllow,
+						passExactly);
 				filterIndividuals.add(temp);
 			}
 		} catch (SQLException se) {
@@ -239,16 +249,14 @@ class DatabaseConnector {
 		}
 		return filterIndividuals;
 	}
-	
-	public int getInfoDataType( String infoName ) throws SQLException
-	{
+
+	public int getInfoDataType(String infoName) throws SQLException {
 		String sql = "";
 		try {
 			sql = "SELECT * FROM `vcf_analyzer`.`InfoTable` WHERE `InfoName` = '"
 					+ infoName + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			if ( rs.next() )
-			{
+			if (rs.next()) {
 				int type = Integer.parseInt(rs.getString("Type"));
 				rs.close();
 				return type;
@@ -259,16 +267,14 @@ class DatabaseConnector {
 			throw new SQLException("Invalid Query " + sql);
 		}
 	}
-	
-	public int getGenoTypeDataType( String genoName ) throws SQLException
-	{
+
+	public int getGenoTypeDataType(String genoName) throws SQLException {
 		String sql = "";
 		try {
 			sql = "SELECT * FROM `vcf_analyzer`.`GenotypeTable` WHERE `GenoName` = '"
 					+ genoName + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			if ( rs.next() )
-			{
+			if (rs.next()) {
 				int type = Integer.parseInt(rs.getString("Type"));
 				rs.close();
 				return type;
@@ -278,8 +284,8 @@ class DatabaseConnector {
 		} catch (SQLException se) {
 			throw new SQLException("Invalid Query " + sql);
 		}
-	}	
-	
+	}
+
 	public ResultSet getVcfEntries(long vcfId) throws SQLException {
 		String sql = "";
 		try {
@@ -293,7 +299,7 @@ class DatabaseConnector {
 			throw new SQLException("Invalid Query " + sql);
 		}
 	}
-	
+
 	public ArrayList<String> getInfoTableNames() throws SQLException {
 		String sql = "";
 		ArrayList<String> tables = new ArrayList<String>();
@@ -328,8 +334,8 @@ class DatabaseConnector {
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
 		}
-	}	
-	
+	}
+
 	public ArrayList<String> getGenotypeTableNames() throws SQLException {
 		String sql = "";
 		ArrayList<String> tables = new ArrayList<String>();
@@ -404,25 +410,22 @@ class DatabaseConnector {
 	}
 
 	public void CloseConnection() {
-		
-		try
-		{
+
+		try {
 			if (this.conn != null) {
 				this.conn.close();
 			}
 			if (this.stmt != null) {
 				this.stmt.close();
 			}
-	
+
 			if (this.stmtList != null) {
 				for (Statement state : this.stmtList) {
 					state.close();
 				}
 			}
-		}
-		catch( SQLException e)
-		{
-			//do nothing
+		} catch (SQLException e) {
+			// do nothing
 		}
 	}
 
@@ -437,8 +440,6 @@ class DatabaseConnector {
 		if (this.stmt == null || this.stmt.isClosed())
 			this.stmt = this.conn.createStatement();
 	}
-
-	
 
 	/**
 	 * TODO: Finish Testing
@@ -490,11 +491,28 @@ class DatabaseConnector {
 						filterId, entryId, pass);
 		this.stmt.executeUpdate(sql);
 	}
-	
-	public ResultSet executeQuery(String sql) throws ClassNotFoundException, SQLException{
+
+	public ResultSet executeQuery(String sql) throws ClassNotFoundException,
+			SQLException {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
 		return this.stmt.executeQuery(sql);
 	}
-	
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 * 
+	 * @param sql
+	 * @return 
+	 * @return 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	public int executeUpdate(String sql) throws ClassNotFoundException, SQLException {
+		if (!hasOpenStatementAndConnection())
+			reopenConnectionAndStatement();
+		return this.stmt.executeUpdate(sql);
+
+	}
+
 }
