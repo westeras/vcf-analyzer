@@ -55,12 +55,10 @@ public class FilterCreator {
 					}
 				} else if (entryNames.contains(indicator) && infoNames.contains(infoName)) {
 					if (key.contains("exists")) {
-						String genoName = arguments[1];
-						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), genoName, null);
+						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), infoName, null);
 					} else {
-						String genoName = arguments[0].split(" ")[1];
 						String[] operands = arguments[1].split(" ");
-						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), genoName, operands);
+						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), infoName, operands);
 					}
 				}
 			}
