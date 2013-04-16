@@ -109,12 +109,12 @@ class DatabaseConnector {
 			if (operands == null) {
 				//do nothing
 			} else if (operands.length == 1) {
-				dbOperator = "'" + Integer.toString(operator) + "'";
-				firstOperand = "'" + Integer.toString(operands[0]) + "'";
+				dbOperator = "'" + operator + "'";
+				firstOperand = "'" + operands[0] + "'";
 			} else if (operands.length == 2) {
-				dbOperator = "'" + Integer.toString(operator) + "'";
-				firstOperand = "'" + Integer.toString(operands[0]) + "'";
-				secondOperand = "'" + Integer.toString(operands[1]) + "'";
+				dbOperator = "'" + operator + "'";
+				firstOperand = "'" + operands[0] + "'";
+				secondOperand = "'" + operands[1] + "'";
 			} else {
 				System.out.println("Too many operands given");
 				return 0;
