@@ -1,7 +1,11 @@
+import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TODO Put here a description of what this class does.
@@ -12,19 +16,18 @@ public class AFSCommand extends Command {
 	private String options;
 	private String VCFName;
 	private DatabaseConnector conn;
-	private int weirdThingsInEntry;
-	
+	private HashMap <Integer, Integer> spectra;
 
 	public AFSCommand(String VCFName, String options)
 			throws ClassNotFoundException, SQLException {
 		this.VCFName = VCFName;
 		this.options = options;
 		this.conn = new DatabaseConnector();
+		this.spectra=new HashMap<Integer, Integer>();
 	}
 
 	@Override
 	public String execute() {
-		ArrayList <Integer> spectra = new ArrayList<Integer>();
 		
 		try {
 			ArrayList<String> vcfIDs = getVcfIDs();
@@ -32,38 +35,44 @@ public class AFSCommand extends Command {
 			for (int i = 0; i < vcfIDs.size(); i++) {
 				ArrayList<String> entryIDs = getEntryIDs(vcfIDs.get(i));
 				for (int j = 0; j < entryIDs.size(); j++) {
-					this.weirdThingsInEntry=0;
+					int weirdThingsInEntry=0;
 					ArrayList<String> individualIDs = getIndividualIDs(entryIDs
 							.get(j));
 					int maxSize=0;
 					for (int k = 0; k < individualIDs.size(); k++) {
 						ResultSet individuals = getIndividuals(individualIDs
 								.get(k));
-						maxSize=0;
+						
 						while (individuals.next()) {
-							updateSpectra(individuals.getString("Allele1"),
+							weirdThingsInEntry=countWeirdThings(individuals.getString("Allele1"),
 									individuals.getString("Allele2"),
 									individuals.getString("Allele3"));
-							maxSize++;
+						
 						}
 						
 					}
-					if (maxSize*3>spectra.size()){
-						spectra.ensureCapacity(maxSize);
-					}
-					spectra.add(this.weirdThingsInEntry, spectra.get(this.weirdThingsInEntry)+1);
+					
+					updateSpectra(weirdThingsInEntry);
 				}
 			}
 		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
-		printSpectra(spectra);
-		return spectra.toString();
+		printSpectra();
+		return this.spectra.toString();
 
 	}
 
-
+	private void updateSpectra(int weirdThingsInEntry) {
+		if (!this.spectra.containsKey(weirdThingsInEntry)){
+			this.spectra.put(weirdThingsInEntry,1);
+		}
+		else {
+			int update= this.spectra.get(weirdThingsInEntry)+1;
+			this.spectra.put(weirdThingsInEntry,update);
+		}
+	}
 
 	private ArrayList<String> getVcfIDs() throws SQLException,
 			ClassNotFoundException {
@@ -106,33 +115,42 @@ public class AFSCommand extends Command {
 		return result;
 	}
 
-	private void updateSpectra(String allele1, String allele2, String allele3) {
-
+	private int countWeirdThings(String allele1, String allele2, String allele3) {
+		int count=0;
 		if (allele1 == null) {
-			return;
+			return count;
 		} else if (allele1.equals("1")) {
-			this.weirdThingsInEntry++;
+			count++;
 		}
 		if (allele2 == null) {
-			return;
+			return count;
 		}
 		else if (allele2.equals("1")) {
-			this.weirdThingsInEntry++;
+			count++;
 		}
 		if (allele3 == null) {
-			return;
+			return count;
 		}
 		else if (allele3.equals("1")) {
-			this.weirdThingsInEntry++;
+			count++;
 		}
+		return count;
 	}
 
-	private void printSpectra(ArrayList<Integer> spectra) {
-		for (int i=0; i <spectra.size(); i ++){
-			System.out.printf("%d\t",spectra.get(i));
+	private void printSpectra() {
+		@SuppressWarnings("unchecked")
+		List<Integer> keys=(List<Integer>) this.spectra.keySet();
+		Collections.sort(keys);
+		int endOfSpectra=keys.get(keys.size()-1);
+		for (int i=0; i <endOfSpectra; i ++){
+			if (!keys.contains(i)){
+				System.out.printf("%d\t",0);
+			}
+			else 
+				System.out.printf("%d\t",this.spectra.get(keys.get(i)));
 		}
 		System.out.printf("\n");
-		for (int i =0;i<spectra.size();i++){
+		for (int i =0;i<endOfSpectra;i++){
 			System.out.printf("%d\t", i );
 		}
 		System.out.printf("\n");
