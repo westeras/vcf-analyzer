@@ -51,7 +51,7 @@ public class AFSCommand extends Command {
 						}
 						
 					}
-					System.out.println("weird things in entry= "+weirdThingsInEntry);
+					
 					updateSpectra(weirdThingsInEntry);
 				}
 			}
@@ -66,12 +66,12 @@ public class AFSCommand extends Command {
 
 	private void updateSpectra(int weirdThingsInEntry) {
 		if (!this.spectra.containsKey(weirdThingsInEntry)){
-			System.out.println("adding <"+weirdThingsInEntry+",1> in map");
+			
 			this.spectra.put(weirdThingsInEntry,1);
 		}
 		else {
 			int update= this.spectra.get(weirdThingsInEntry)+1;
-			System.out.println("adding <"+weirdThingsInEntry+","+update+"> in map");
+			
 			this.spectra.put(weirdThingsInEntry,update);
 		}
 	}
@@ -119,25 +119,25 @@ public class AFSCommand extends Command {
 
 	private int countWeirdThings(String allele1, String allele2, String allele3) {
 		int count=0;
-		System.out.printf("allele1= %s, allele2= %s, allele3= %s\n",allele1,allele2,allele3);
+		
 		if (allele1 == null) {
 			return count;
 		} else if (allele1.equals("1")) {
-			System.out.println("found 1");
+			
 			count++;
 		}
 		if (allele2 == null) {
 			return count;
 		}
 		else if (allele2.equals("1")) {
-			System.out.println("found 2");
+			
 			count++;
 		}
 		if (allele3 == null) {
 			return count;
 		}
 		else if (allele3.equals("1")) {
-			System.out.println("found 3");
+			
 			count++;
 		}
 		return count;
@@ -145,7 +145,7 @@ public class AFSCommand extends Command {
 
 	private void printSpectra() {
 		int endOfSpectra=this.spectra.lastKey();
-		System.out.println("Largest entry in spectra is "+endOfSpectra);
+		
 		for (int i=0; i <=endOfSpectra; i ++){
 			if (!this.spectra.containsKey(i)){
 				System.out.printf("%d\t",0);
@@ -154,7 +154,7 @@ public class AFSCommand extends Command {
 				System.out.printf("%d\t",this.spectra.get(i));
 		}
 		System.out.printf("\n");
-		for (int i =0;i<endOfSpectra;i++){
+		for (int i =0;i<=endOfSpectra;i++){
 			System.out.printf("%d\t", i );
 		}
 		System.out.printf("\n");
