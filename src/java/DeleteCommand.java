@@ -16,6 +16,7 @@ public class DeleteCommand extends Command {
 		this.table = table;
 		this.delValue = delValue;
 		this.columnName=columnName;
+		System.out.println("delValue= "+ this.delValue +", columnName= "+this.columnName);
 		try {
 			this.conn = new DatabaseConnector();
 		} catch (Exception exception) {
