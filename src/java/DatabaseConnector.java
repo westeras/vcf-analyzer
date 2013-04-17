@@ -108,7 +108,7 @@ class DatabaseConnector {
 
 		try {
 			if (operands == null) {
-				// do nothing
+				dbOperator = "'" + operator + "'";
 			} else if (operands.length == 1) {
 				dbOperator = "'" + operator + "'";
 				firstOperand = "'" + operands[0] + "'";
