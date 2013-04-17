@@ -16,7 +16,7 @@ public class DeleteCommand extends Command {
 		this.table = table;
 		this.delValue = delValue;
 		this.columnName=columnName;
-		System.out.println("delValue= "+ this.delValue +", columnName= "+this.columnName);
+		
 		try {
 			this.conn = new DatabaseConnector();
 		} catch (Exception exception) {
@@ -28,7 +28,7 @@ public class DeleteCommand extends Command {
 	public String execute() {
 		String sql = "DELETE FROM `" + this.table + "` where `"
 				+ this.columnName + "`=" + this.delValue+";" ;
-		System.out.println("Delete sql statement= "+sql);
+		
 		try {
 			if (this.conn.executeUpdate(sql)==1) {
 				System.out.printf("Succesfully deleted %s from %s", this.delValue,
