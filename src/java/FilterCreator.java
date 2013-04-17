@@ -37,7 +37,7 @@ public class FilterCreator {
 		ArrayList<String> optionNames = new ArrayList<String>(Arrays.asList("option", "opt", "options"));
 		
 		for (String key : this.operatorList.keySet()) {
-			if (currentCommand.contains(key) && !containsAnyOthers(key, currentCommand)) {
+			if (currentCommand.contains(key) && !containedByOthers(key, currentCommand)) {
 				String[] arguments = currentCommand.split(key);
 				trimAllArguments(arguments);
 				String indicator = arguments[0].split(" ")[0];
@@ -75,9 +75,9 @@ public class FilterCreator {
 		}
 	}
 	
-	private boolean containsAnyOthers(String key, String currentCommand) {
+	private boolean containedByOthers(String key, String currentCommand) {
 		for (String checkKey : this.operatorList.keySet()) {
-			if (checkKey != key && currentCommand.contains(checkKey)) {
+			if (!checkKey.equals(key) && currentCommand.contains(checkKey)) {
 				return true;
 			}
 		}
