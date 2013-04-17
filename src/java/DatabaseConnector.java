@@ -183,6 +183,12 @@ class DatabaseConnector {
 		} else if (optionName.toLowerCase().equals("passexactly") || optionName.toLowerCase().equals("pe")) {
 			sql = String.format("UPDATE `vcf_analyzer`.`Filter` SET `PassExactly`='%s' WHERE `FilId`='%s'", argument, filterID);
 		}
+		
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+		} catch (SQLException se) {
+			throw new SQLException(se.getMessage());
+		}
 	}
 
 	public int getFilterID(String filterName) throws IllegalArgumentException,
