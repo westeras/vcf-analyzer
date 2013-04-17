@@ -179,9 +179,9 @@ class DatabaseConnector {
 	public int createOption(int filterID, String optionName, int argument) throws SQLException {
 		String sql = "";
 		if (optionName.toLowerCase().equals("failureallow") || optionName.toLowerCase().equals("fa")) {
-			sql = String.format("UPDATE `vcf_analyzer`.`Filter` SET `FailureAllow`='%s' WHERE `FilId`='%s'", 
+			sql = String.format("UPDATE `vcf_analyzer`.`Filter` SET `FailureAllow`='%s' WHERE `FilId`='%s'", argument, filterID);
 		} else if (optionName.toLowerCase().equals("passexactly") || optionName.toLowerCase().equals("pe")) {
-			
+			sql = String.format("UPDATE `vcf_analyzer`.`Filter` SET `PassExactly`='%s' WHERE `FilId`='%s'", argument, filterID);
 		}
 	}
 

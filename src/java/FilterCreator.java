@@ -62,7 +62,7 @@ public class FilterCreator {
 						System.out.println("The comparator'" + key + "' is not valid for an option.");
 						return;
 					} else {
-						this.dbConnector.createOption(this.filterID, infoName);
+						this.dbConnector.createOption(this.filterID, infoName, arguments[1]);
 					}
 				}
 			}
