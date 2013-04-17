@@ -3,9 +3,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * TODO Put here a description of what this class does.
@@ -16,14 +17,14 @@ public class AFSCommand extends Command {
 	private String options;
 	private String VCFName;
 	private DatabaseConnector conn;
-	private HashMap <Integer, Integer> spectra;
+	private TreeMap <Integer, Integer> spectra;
 
 	public AFSCommand(String VCFName, String options)
 			throws ClassNotFoundException, SQLException {
 		this.VCFName = VCFName;
 		this.options = options;
 		this.conn = new DatabaseConnector();
-		this.spectra=new HashMap<Integer, Integer>();
+		this.spectra=new TreeMap<Integer, Integer>();
 	}
 
 	@Override
@@ -138,14 +139,13 @@ public class AFSCommand extends Command {
 	}
 
 	private void printSpectra() {
-		Integer[] keys=(Integer[]) this.spectra.keySet().toArray();
-		int endOfSpectra=findMax(keys);
+		int endOfSpectra=this.spectra.lastKey();
 		for (int i=0; i <endOfSpectra; i ++){
 			if (!this.spectra.containsKey(i)){
 				System.out.printf("%d\t",0);
 			}
 			else 
-				System.out.printf("%d\t",this.spectra.get(keys[i]));
+				System.out.printf("%d\t",this.spectra.get(i));
 		}
 		System.out.printf("\n");
 		for (int i =0;i<endOfSpectra;i++){
