@@ -39,20 +39,19 @@ public class AFSCommand extends Command {
 					int weirdThingsInEntry=0;
 					ArrayList<String> individualIDs = getIndividualIDs(entryIDs
 							.get(j));
-					int maxSize=0;
 					for (int k = 0; k < individualIDs.size(); k++) {
 						ResultSet individuals = getIndividuals(individualIDs
 								.get(k));
 						
 						while (individuals.next()) {
-							weirdThingsInEntry=countWeirdThings(individuals.getString("Allele1"),
+							weirdThingsInEntry+=countWeirdThings(individuals.getString("Allele1"),
 									individuals.getString("Allele2"),
 									individuals.getString("Allele3"));
 						
 						}
 						
 					}
-					
+					System.out.println("weird things in entry= "+weirdThingsInEntry);
 					updateSpectra(weirdThingsInEntry);
 				}
 			}
@@ -120,21 +119,25 @@ public class AFSCommand extends Command {
 
 	private int countWeirdThings(String allele1, String allele2, String allele3) {
 		int count=0;
+		System.out.printf("allele1= %s, allele2= %s, allele3= %s",allele1,allele2,allele3);
 		if (allele1 == null) {
 			return count;
 		} else if (allele1.equals("1")) {
+			System.out.println("found 1");
 			count++;
 		}
 		if (allele2 == null) {
 			return count;
 		}
 		else if (allele2.equals("1")) {
+			System.out.println("found 2");
 			count++;
 		}
 		if (allele3 == null) {
 			return count;
 		}
 		else if (allele3.equals("1")) {
+			System.out.println("found 3");
 			count++;
 		}
 		return count;
