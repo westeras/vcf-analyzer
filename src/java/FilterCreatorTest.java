@@ -40,7 +40,8 @@ public class FilterCreatorTest {
 		//		"ent AF>10", "entry DS between 2 10", "ind PQ between 10 15", 
 		//		"entry bogus < 55", "ind AD greater than 55.55", "ind limit:8 DP=0", "ind limit:3 DP=0"};
 		String[] operands = {"entry AC = 4", "entry DS between 2 10", "entry bogus < 55", "ent AC not exists", "ent AC != 5",
-									"ind AD>1", "ind DP=0", "ind PQ between 10 15", "ind AD != 3", "ind PQ exists"};
+									"ind AD>1", "ind DP=0", "ind PQ between 10 15", "ind AD != 3", "ind PQ exists",
+									"option FailureAllow=5", "option pe equals 34"};
 		FilterCreator testCreator = new FilterCreator(filterName, operands);
 		testCreator.uploadEntries();
 	}
