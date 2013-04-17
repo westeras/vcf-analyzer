@@ -185,7 +185,7 @@ class DatabaseConnector {
 		}
 		
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeUpdate(sql);
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
 		}
