@@ -12,6 +12,8 @@ public abstract class FilterApplier extends Command
 	protected String vcfName;
 	protected String fileName;
 	protected int filterId = -1;
+	private int failureAllow;
+	private int passExactly;
 	protected DatabaseConnector connection;	
 	protected DatabaseConnector nestedConnection;
 	protected DatabaseConnector nestedConnection2;
@@ -90,6 +92,8 @@ public abstract class FilterApplier extends Command
 		this.entryParameters = this.connection.getFilterEntries(this.filterId);
 		
 		this.individualParameters = this.connection.getFilterIndividuals(this.filterId);		
+		
+		//get metadata
 		
 		this.comparisonHandler = new FilterComparison();
 	}
