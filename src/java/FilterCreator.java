@@ -44,7 +44,7 @@ public class FilterCreator {
 				String infoName = "";
 				
 				if (key.contains("exists")) {
-					infoName = arguments[1];
+					infoName = arguments[0].split(" ")[1];
 				} else {
 					infoName = arguments[0].split(" ")[1];
 				}
