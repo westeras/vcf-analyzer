@@ -67,10 +67,12 @@ public class AFSCommand extends Command {
 
 	private void updateSpectra(int weirdThingsInEntry) {
 		if (!this.spectra.containsKey(weirdThingsInEntry)){
+			System.out.println("adding <"+weirdThingsInEntry+",1> in map");
 			this.spectra.put(weirdThingsInEntry,1);
 		}
 		else {
 			int update= this.spectra.get(weirdThingsInEntry)+1;
+			System.out.println("adding <"+weirdThingsInEntry+","+update+"> in map");
 			this.spectra.put(weirdThingsInEntry,update);
 		}
 	}
@@ -140,6 +142,7 @@ public class AFSCommand extends Command {
 
 	private void printSpectra() {
 		int endOfSpectra=this.spectra.lastKey();
+		System.out.println("Largest entry in spectra is "+endOfSpectra);
 		for (int i=0; i <endOfSpectra; i ++){
 			if (!this.spectra.containsKey(i)){
 				System.out.printf("%d\t",0);
@@ -154,21 +157,7 @@ public class AFSCommand extends Command {
 		System.out.printf("\n");
 	}
 	
-	/**
-	 * TODO Put here a description of what this method does.
-	 *
-	 * @param keys
-	 * @return
-	 */
-	private int findMax(Integer[] keys) {
-		int max=0;
-		for (int i =0; i <keys.length;i++){
-			if (keys[i]>max){
-				max=keys[i];
-			}
-		}
-		return max;
-	}
+	
 
 	@Override
 	public void pipeOutput() {
