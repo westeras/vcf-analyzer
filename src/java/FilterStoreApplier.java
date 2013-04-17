@@ -46,7 +46,10 @@ public class FilterStoreApplier extends FilterApplier
 	
 	protected void processPassingIndividual() throws Exception
 	{
-		this.nestedConnection3.insertIndividualPass(this.filterId, this.currentIndId, 1);
+		if (this.filterId > 0)
+		{
+			this.nestedConnection3.insertIndividualPass(this.filterId, this.currentIndId, 1);
+		}
 	}
 	
 	protected void processFailingIndividual() throws Exception
@@ -59,19 +62,25 @@ public class FilterStoreApplier extends FilterApplier
 		//entry has fully passed on entry and ind levels
 		//1 indicates a complete pass
 		//2 indicates the entry passed but some individuals may not have
-		int passing = 1;
-		if ( this.individualParameters.size() > 0 )
+		if (this.filterId > 0)
 		{
-			passing = 2;
+			int passing = 1;
+			if ( this.individualParameters.size() > 0 )
+			{
+				passing = 2;
+			}
+			this.nestedConnection.insertEntryPass( this.filterId, this.currentEntryId, passing );
 		}
-		this.nestedConnection.insertEntryPass( this.filterId, this.currentEntryId, passing );
 		
 	}
 	
 	protected void finializeEntryFailing() throws Exception
 	{
 		//entry failed
-		this.nestedConnection.insertEntryPass( this.filterId, this.currentEntryId, 0);
+		if (this.filterId > 0)
+		{
+			this.nestedConnection.insertEntryPass( this.filterId, this.currentEntryId, 0);
+		}
 	}
 	
 	protected void closeFiltering()

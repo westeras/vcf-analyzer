@@ -11,7 +11,7 @@ public abstract class FilterApplier extends Command
 	protected String filterName;
 	protected String vcfName;
 	protected String fileName;
-	protected int filterId = -1;
+	protected int filterId;
 	private int failureAllow;
 	private int passExactly;
 	protected DatabaseConnector connection;	
