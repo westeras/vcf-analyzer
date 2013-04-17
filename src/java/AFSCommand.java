@@ -119,7 +119,7 @@ public class AFSCommand extends Command {
 
 	private int countWeirdThings(String allele1, String allele2, String allele3) {
 		int count=0;
-		System.out.printf("allele1= %s, allele2= %s, allele3= %s",allele1,allele2,allele3);
+		System.out.printf("allele1= %s, allele2= %s, allele3= %s\n",allele1,allele2,allele3);
 		if (allele1 == null) {
 			return count;
 		} else if (allele1.equals("1")) {
@@ -146,7 +146,7 @@ public class AFSCommand extends Command {
 	private void printSpectra() {
 		int endOfSpectra=this.spectra.lastKey();
 		System.out.println("Largest entry in spectra is "+endOfSpectra);
-		for (int i=0; i <endOfSpectra; i ++){
+		for (int i=0; i <=endOfSpectra; i ++){
 			if (!this.spectra.containsKey(i)){
 				System.out.printf("%d\t",0);
 			}
