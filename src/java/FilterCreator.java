@@ -77,7 +77,7 @@ public class FilterCreator {
 	
 	private boolean containedByOthers(String key, String currentCommand) {
 		for (String checkKey : this.operatorList.keySet()) {
-			if (!checkKey.equals(key) && currentCommand.contains(checkKey)) {
+			if (!checkKey.equals(key) && currentCommand.contains(checkKey) && checkKey.contains(key)) {
 				return true;
 			}
 		}
