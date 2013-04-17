@@ -1,4 +1,6 @@
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.apache.commons.cli.CommandLine;  
 import org.apache.commons.cli.CommandLineParser;  
@@ -10,6 +12,8 @@ import org.apache.commons.cli.ParseException;
   
 public class CommandLineInterpreter
 {  
+	private static Scanner input;
+
 	/**
      * Use GNU Parser
 	 * Interprets commands given and carries out the proper functions.
@@ -39,6 +43,7 @@ public class CommandLineInterpreter
 				result = uploadCommand(commandLineArguments, commandLine, "upano");
 			}
 			
+			//allows for three arguments, afs(vcfname, filename, filtername)
 			if (commandLine.hasOption("asf")){
 				String[] args = commandLine.getOptionValues("asf");
 				Command command = null;
@@ -47,10 +52,10 @@ public class CommandLineInterpreter
 				result = command.execute();
 			}
 			
+			//Allow for two optional arguments
 			if (commandLine.hasOption("filterWrite")){
 				String[] args = commandLine.getOptionValues("filterWrite");
 				Command command = null;
-				if(args.length == 2) command = new FilterWriteApplier(args[0], args[1], "");
 				if(args.length == 3) command = new FilterWriteApplier(args[0], args[1], args[2]);
 				result = command.execute();
 			}
@@ -58,9 +63,38 @@ public class CommandLineInterpreter
 			if (commandLine.hasOption("filterStore")){
 				String[] args = commandLine.getOptionValues("filterStore");
 				Command command = null;
-				if(args.length == 2) command = new FilterStoreApplier(args[0], args[1], "");
-				if(args.length == 3) command = new FilterStoreApplier(args[0], args[1], args[2]);
+				if(args.length == 2) command = new FilterStoreApplier(args[0], args[1]);
 				result = command.execute();
+			}
+			
+			if(commandLine.hasOption("createfilter")){
+				String[] args = commandLine.getOptionValues("createfilter");
+				FilterCreator filter = null;
+				if(args == null){
+					input = new Scanner(System.in);
+					ArrayList<String> additionalArguments = new ArrayList<String>();
+					System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
+					while(true){
+						System.out.print(">> ");
+						String line = input.nextLine().trim();
+						if(line.equals("done") || line.equals("")){
+							break;
+						}
+						System.out.println(line);
+						additionalArguments.add(line);
+					}
+					String[] arguments = (String[]) additionalArguments.toArray();
+					filter = new FilterCreator(args[0],arguments);
+				}else{
+					String[] additionalArguments = new String[args.length-1];
+					
+					for(int i = 0; i < additionalArguments.length; i++){
+						additionalArguments[i] = args[i+1];
+					}
+					
+					filter = new FilterCreator(args[0],additionalArguments);
+				}
+				filter.uploadEntries();
 			}
 			
 			if (commandLine.hasOption("sum")){

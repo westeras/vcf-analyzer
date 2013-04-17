@@ -23,7 +23,7 @@ public class InputHandler {
 			    System.out.println("Error: " + ex);
 			}
 			
-			if(commands[0].equals("quit")){
+			if(commands[0].equals("quit") || commands[0].equals("")){
 				break;
 			}else{
 				commands[0] = "-" + commands[0];

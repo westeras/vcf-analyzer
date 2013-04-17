@@ -28,6 +28,7 @@ public class CommandLineConstructors {
                 .addOption(constructAFS())
                 .addOption(constructFilterWrite())
                 .addOption(constructFilterStore())
+                .addOption(constructFilterCreate())
                 .addOption("help", false, "Tells the user what functions there are.");
       return gnuOptions;  
    } 
@@ -43,6 +44,22 @@ public class CommandLineConstructors {
 			   .hasArgs()
 			   .withDescription("Returns the sum of the inputted integers")
 			   .create("sum");
+	   return sum;
+   }
+   
+   /**
+    * Constructs the filter creator command.
+    * @return
+    */
+   private static Option constructFilterCreate(){
+	   @SuppressWarnings("static-access")
+	   Option sum = OptionBuilder
+			   .withArgName("filtername")
+			   .hasArg()
+			   .withArgName("arguments")
+			   .hasOptionalArgs()
+			   .withDescription("Creates a filter")
+			   .create("createfilter");
 	   return sum;
    }
    
