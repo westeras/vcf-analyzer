@@ -70,7 +70,7 @@ public class CommandLineInterpreter
 			if(commandLine.hasOption("createfilter")){
 				String[] args = commandLine.getOptionValues("createfilter");
 				FilterCreator filter = null;
-				if(args == null){
+				if(args.length == 1){
 					input = new Scanner(System.in);
 					ArrayList<String> additionalArguments = new ArrayList<String>();
 					System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
