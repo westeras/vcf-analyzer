@@ -25,7 +25,7 @@ public class View extends Command {
 	}
 	@Override
 	public String execute() {
-		String sql = "Select '"+this.columnName+"` from `" +this.table+"`";
+		String sql = "Select `"+this.columnName+"` from `" +this.table+"`";
 		ResultSet names;
 		try {
 			names=this.conn.executeQuery(sql);
