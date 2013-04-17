@@ -176,7 +176,7 @@ class DatabaseConnector {
 		}
 	}
 	
-	public int createOption(int filterID, String optionName, String argument) throws SQLException {
+	public void createOption(int filterID, String optionName, String argument) throws SQLException {
 		String sql = "";
 		if (optionName.toLowerCase().equals("failureallow") || optionName.toLowerCase().equals("fa")) {
 			sql = String.format("UPDATE `vcf_analyzer`.`Filter` SET `FailureAllow`='%s' WHERE `FilId`='%s'", argument, filterID);
