@@ -161,7 +161,7 @@ class DatabaseConnector {
 			}
 
 			sql = String
-					.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', '%s', %s, %s, %s);",
+					.format("INSERT INTO `vcf_analyzer`.`FilterIndividual` VALUES (NULL, '%s', '%s', %s, %s, %s);",
 							filterID, genoName, dbOperator, firstOperand,
 							secondOperand);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
