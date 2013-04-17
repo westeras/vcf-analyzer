@@ -41,14 +41,7 @@ public class FilterCreator {
 				String[] arguments = currentCommand.split(key);
 				trimAllArguments(arguments);
 				String indicator = arguments[0].split(" ")[0];
-				String infoName = "";
-				
-				if (key.contains("exists")) {
-					infoName = arguments[0].split(" ")[1];
-				} else {
-					infoName = arguments[0].split(" ")[1];
-				}
-				System.out.println("InfoName: " + infoName);
+				String infoName = arguments[0].split(" ")[1];
 				
 				if (indNames.contains(indicator) && genoNames.contains(infoName)) {
 					if (key.contains("exists")) {
@@ -63,6 +56,13 @@ public class FilterCreator {
 					} else {
 						String[] operands = arguments[1].split(" ");
 						this.dbConnector.createFilterEntry(this.filterID, this.operatorList.get(key), infoName, operands);
+					}
+				} else if (optionNames.contains(indicator)) {
+					if (!this.operatorList.get(key).equals(4)) {
+						System.out.println("The comparator'" + key + "' is not valid for an option.");
+						return;
+					} else {
+						this.dbConnector.createOption(this.filterID, infoName);
 					}
 				}
 			}

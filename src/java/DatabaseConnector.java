@@ -86,7 +86,7 @@ class DatabaseConnector {
 		String sql = null;
 		try {
 			sql = String.format(
-					"INSERT into `Filter` VALUES (NULL, '%s', '0', '0', '0');",
+					"INSERT into `Filter` VALUES (NULL, '%s', '0', '0');",
 					filterName);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -173,6 +173,15 @@ class DatabaseConnector {
 			return filterEntryID;
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
+		}
+	}
+	
+	public int createOption(int filterID, String optionName, int argument) throws SQLException {
+		String sql = "";
+		if (optionName.toLowerCase().equals("failureallow") || optionName.toLowerCase().equals("fa")) {
+			sql = String.format("UPDATE `vcf_analyzer`.`Filter` SET `FailureAllow`='%s' WHERE `FilId`='%s'", 
+		} else if (optionName.toLowerCase().equals("passexactly") || optionName.toLowerCase().equals("pe")) {
+			
 		}
 	}
 
