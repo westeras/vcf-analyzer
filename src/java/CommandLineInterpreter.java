@@ -86,9 +86,8 @@ public class CommandLineInterpreter
 		String[] args;
 		Command command = null;
 		
-			args = commandLine.getOptionValues(type);
+		args = commandLine.getOptionValues(type);
 
-		
 		String result = "";
 		
 		if(args == null){
