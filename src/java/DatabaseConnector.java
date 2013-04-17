@@ -187,7 +187,7 @@ class DatabaseConnector {
 		}
 		
 		try {
-			stmt.executeUpdate(sql);
+			this.stmt.executeUpdate(sql);
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
 		}
