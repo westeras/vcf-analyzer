@@ -40,6 +40,6 @@ while(breaker == 0):
             if len(command) == 3:
                 uploadVcfWithName(command[1], command[2])
         else:
-            subprocess.call(['cd', '../java/'], shell=True)
+            subprocess.call(['java', '../java/CommandLineInterpreter - sum 3 4'], shell=True)
 #            subprocess.call(['java', 'CommandLineInterpreter -sum 3 4 5' + inputString], shell=True)
 #            subprocess.call(['cd', '../VcfParser' + inputString], shell=True)
