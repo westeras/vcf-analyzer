@@ -86,7 +86,7 @@ class DatabaseConnector {
 		String sql = null;
 		try {
 			sql = String.format(
-					"INSERT into `Filter` VALUES (NULL, '%s', '0');",
+					"INSERT into `Filter` VALUES (NULL, '%s', '0', '0', '0');",
 					filterName);
 			this.stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 
