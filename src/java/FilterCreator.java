@@ -48,6 +48,7 @@ public class FilterCreator {
 				} else {
 					infoName = arguments[0].split(" ")[1];
 				}
+				System.out.println("InfoName: " + infoName);
 				
 				if (indNames.contains(indicator) && genoNames.contains(infoName)) {
 					if (key.contains("exists")) {
