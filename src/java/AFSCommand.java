@@ -138,16 +138,14 @@ public class AFSCommand extends Command {
 	}
 
 	private void printSpectra() {
-		@SuppressWarnings("unchecked")
-		List<Integer> keys=(List<Integer>) this.spectra.keySet();
-		Collections.sort(keys);
-		int endOfSpectra=keys.get(keys.size()-1);
+		Integer[] keys=(Integer[]) this.spectra.keySet().toArray();
+		int endOfSpectra=findMax(keys);
 		for (int i=0; i <endOfSpectra; i ++){
-			if (!keys.contains(i)){
+			if (!this.spectra.containsKey(i)){
 				System.out.printf("%d\t",0);
 			}
 			else 
-				System.out.printf("%d\t",this.spectra.get(keys.get(i)));
+				System.out.printf("%d\t",this.spectra.get(keys[i]));
 		}
 		System.out.printf("\n");
 		for (int i =0;i<endOfSpectra;i++){
@@ -156,6 +154,22 @@ public class AFSCommand extends Command {
 		System.out.printf("\n");
 	}
 	
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param keys
+	 * @return
+	 */
+	private int findMax(Integer[] keys) {
+		int max=0;
+		for (int i =0; i <keys.length;i++){
+			if (keys[i]>max){
+				max=keys[i];
+			}
+		}
+		return max;
+	}
+
 	@Override
 	public void pipeOutput() {
 		// TODO Auto-generated method stub.
