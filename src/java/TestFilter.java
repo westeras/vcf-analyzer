@@ -45,6 +45,8 @@ public class TestFilter {
 		String sql3 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier3'";
 		String sql4 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier4'";
 		String sql5 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier5'";
+		String sql6 = "DELETE FROM `vcf_analyzer`.`FilterEntryPass` WHERE 1";
+		String sql7 = "DELETE FROM `vcf_analyzer`.`FilterIndividualPass` WHERE 1";
 		
 		try {
 			stmt.executeUpdate(sql);
@@ -52,6 +54,8 @@ public class TestFilter {
 			stmt.executeUpdate(sql3);
 			stmt.executeUpdate(sql4);
 			stmt.executeUpdate(sql5);
+			stmt.executeUpdate(sql6);
+			stmt.executeUpdate(sql7);
 
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
@@ -66,6 +70,12 @@ public class TestFilter {
 		command = new FilterWriteApplier("2013-04-10_13:54", "testFilterApplier", "FilterTest2.txt" );
 		System.out.println( command.execute() );
 		fileCompare("FilterTest2.txt", "FilterPass2.txt");
+		
+		//store test
+		command = new FilterStoreApplier("2013-04-10_13:54", "" );
+		System.out.println( command.execute() );
+		command = new FilterStoreApplier("2013-04-10_13:54", filterName );
+		System.out.println( command.execute() );
 		
 		filterName = "testFilterApplier2";
 		String[] operands2 = {"entry REF=T"};//, "entry MQ between 78.8 79.0"};

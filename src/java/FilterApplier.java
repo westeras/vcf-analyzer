@@ -11,11 +11,13 @@ public abstract class FilterApplier extends Command
 	protected String filterName;
 	protected String vcfName;
 	protected String fileName;
+	protected int filterId = -1;
 	protected DatabaseConnector connection;	
 	protected DatabaseConnector nestedConnection;
 	protected DatabaseConnector nestedConnection2;
-	private ArrayList<FilterParameter> entryParameters;
-	private ArrayList<FilterParameter> individualParameters;
+	protected DatabaseConnector nestedConnection3;
+	protected ArrayList<FilterParameter> entryParameters;
+	protected ArrayList<FilterParameter> individualParameters;
 	private FilterComparison comparisonHandler;
 	
 	public FilterApplier(String vcfName, String filterName)
@@ -31,10 +33,12 @@ public abstract class FilterApplier extends Command
 	protected abstract void processUntestedEntryInfo( 
 			String tableName, ResultSet entryInfoData ) throws Exception;
 	protected abstract void processPassingEntry( ResultSet entries ) throws Exception;
-	protected abstract void processUntestedIndividual() throws Exception;
+	protected abstract void processUntestedIndividual(long indId) throws Exception;
 	protected abstract void processUntestedIndividualData( String genotypeName, ResultSet genotypeData ) throws Exception;
 	protected abstract void processPassingIndividual() throws Exception;
+	protected abstract void processFailingIndividual() throws Exception;
 	protected abstract void finializeEntry() throws Exception;
+	protected abstract void finializeEntryFailing() throws Exception;
 	protected abstract void closeFiltering();
 	
 	@Override
@@ -44,6 +48,7 @@ public abstract class FilterApplier extends Command
 			this.connection = new DatabaseConnector();
 			this.nestedConnection = new DatabaseConnector();
 			this.nestedConnection2 = new DatabaseConnector();
+			this.nestedConnection3 = new DatabaseConnector();
 		}
 		// ########### doing this Pokemon exception handling is usually a sign that maybe
 		// it isn't this class's responsibility to handle this exception. Should probably reconsider
@@ -60,12 +65,14 @@ public abstract class FilterApplier extends Command
 			connection.CloseConnection();
 			nestedConnection.CloseConnection();
 			nestedConnection2.CloseConnection();
+			nestedConnection3.CloseConnection();
 			}
 		catch (Exception e)
 			{
 			connection.CloseConnection();
 			nestedConnection.CloseConnection();
 			nestedConnection2.CloseConnection();
+			nestedConnection3.CloseConnection();
 			this.output = e.getMessage();
 			}
 		return this.output;
@@ -74,15 +81,15 @@ public abstract class FilterApplier extends Command
 
 	private void loadFilter() throws Exception
 	{
-		int filterId = -1;
+		this.filterId = -1;
 		if (this.filterName.length() > 0)
 		{
-			filterId = this.connection.getFilterID(this.filterName);
+			this.filterId = this.connection.getFilterID(this.filterName);
 		}
 			
-		this.entryParameters = this.connection.getFilterEntries(filterId);
+		this.entryParameters = this.connection.getFilterEntries(this.filterId);
 		
-		this.individualParameters = this.connection.getFilterIndividuals(filterId);		
+		this.individualParameters = this.connection.getFilterIndividuals(this.filterId);		
 		
 		this.comparisonHandler = new FilterComparison();
 	}
@@ -113,8 +120,15 @@ public abstract class FilterApplier extends Command
 					{
 						finializeEntry();
 					}
+					else
+					{
+						finializeEntryFailing();
+					}
 				}
-
+				else
+				{
+					finializeEntryFailing();
+				}
 			}
 			entries.close();
 			closeFiltering();
@@ -140,9 +154,9 @@ public abstract class FilterApplier extends Command
 		ResultSet individuals = this.nestedConnection.getIndividuals( entryId );
 		while (individuals.next() )
 		{
-			processUntestedIndividual();
-			
+	
 			long indId = individuals.getLong("IndID");
+			processUntestedIndividual(indId);
 			for (int k=0; k< genotypes.size(); k++)
 			{
 				String genoName = genotypes.get(k);
@@ -162,6 +176,10 @@ public abstract class FilterApplier extends Command
 			if (passing)
 			{
 				processPassingIndividual();
+			}
+			else
+			{
+				processFailingIndividual();
 			}
 		}
 		

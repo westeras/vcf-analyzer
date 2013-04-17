@@ -46,7 +46,7 @@ public class FilterWriteApplier extends FilterApplier
 		writer.writeEntryEnd(entries);
 	}
 	
-	protected void processUntestedIndividual() throws Exception
+	protected void processUntestedIndividual( long indId) throws Exception
 	{
 		writer.writeIndividualStart();
 	}
@@ -62,9 +62,19 @@ public class FilterWriteApplier extends FilterApplier
 		writer.writeIndividualEnd();
 	}
 	
+	protected void processFailingIndividual() throws Exception
+	{
+
+	}
+	
 	protected void finializeEntry() throws Exception
 	{
 		writer.writeEOL();
+	}
+	
+	protected void finializeEntryFailing() throws Exception
+	{
+		//do nothing
 	}
 	
 	protected void closeFiltering()

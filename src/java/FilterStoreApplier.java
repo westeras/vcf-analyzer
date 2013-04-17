@@ -2,7 +2,8 @@ import java.sql.*;
 
 public class FilterStoreApplier extends FilterApplier
 {
-	
+	private long currentEntryId;
+	private long currentIndId;
 
 	public FilterStoreApplier(String vcfName, String filterName) {
 		super(vcfName, filterName);
@@ -15,12 +16,12 @@ public class FilterStoreApplier extends FilterApplier
 	
 	protected void initializeVcf( long vcfId ) throws Exception
 	{
-	
+		//do nothing
 	}
 	
 	protected void processUntestedEntry( ResultSet entries ) throws Exception
 	{
-
+		this.currentEntryId = entries.getLong("EntryId");
 	}
 	
 	protected void processUntestedEntryInfo( String tableName, ResultSet entryInfoData ) throws Exception
@@ -33,9 +34,9 @@ public class FilterStoreApplier extends FilterApplier
 
 	}
 	
-	protected void processUntestedIndividual() throws Exception
+	protected void processUntestedIndividual( long indId) throws Exception
 	{
-
+		currentIndId = indId;
 	}
 	
 	protected void processUntestedIndividualData( String genotypeName, ResultSet genotypeData ) throws Exception
@@ -45,11 +46,32 @@ public class FilterStoreApplier extends FilterApplier
 	
 	protected void processPassingIndividual() throws Exception
 	{
-
+		this.nestedConnection3.insertIndividualPass(this.filterId, this.currentIndId, (char) 1);
+	}
+	
+	protected void processFailingIndividual() throws Exception
+	{
+		this.nestedConnection3.insertIndividualPass(this.filterId, this.currentIndId, (char) 0);
 	}
 	
 	protected void finializeEntry() throws Exception
 	{
+		//entry has fully passed on entry and ind levels
+		//1 indicates a complete pass
+		//2 indicates the entry passed but some individuals may not have
+		char passing = (char) 1;
+		if ( this.individualParameters.size() > 0 )
+		{
+			passing = (char) 2;
+		}
+		this.nestedConnection.insertEntryPass( this.filterId, this.currentEntryId, passing );
+		
+	}
+	
+	protected void finializeEntryFailing() throws Exception
+	{
+		//entry failed
+		this.nestedConnection.insertEntryPass( this.filterId, this.currentEntryId, (char) 0);
 	}
 	
 	protected void closeFiltering()
