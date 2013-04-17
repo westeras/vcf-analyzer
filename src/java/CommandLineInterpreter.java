@@ -83,7 +83,8 @@ public class CommandLineInterpreter
 						System.out.println(line);
 						additionalArguments.add(line);
 					}
-					String[] arguments = (String[]) additionalArguments.toArray();
+					String[] arguments = new String[additionalArguments.size()];
+					arguments = additionalArguments.toArray(arguments);
 					filter = new FilterCreator(args[0],arguments);
 				}else{
 					String[] additionalArguments = new String[args.length-1];
