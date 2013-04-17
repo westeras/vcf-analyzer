@@ -27,6 +27,7 @@ public class DeleteCommand extends Command {
 	public String execute() {
 		String sql = "DELETE FROM `" + this.table + "` where `"
 				+ this.columnName + "`=" + this.delValue+";" ;
+		System.out.println("Delete sql statement= "+sql);
 		try {
 			if (this.conn.executeUpdate(sql)==1) {
 				System.out.printf("Succesfully deleted %s from %s", this.delValue,
