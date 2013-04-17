@@ -26,6 +26,8 @@ public class CommandLineConstructors {
                 .addOption(constructSumOption())
                 .addOption(constructUpAno())
                 .addOption(constructAFS())
+                .addOption(constructFilterWrite())
+                .addOption(constructFilterStore())
                 .addOption("help", false, "Tells the user what functions there are.");
       return gnuOptions;  
    } 
@@ -51,6 +53,7 @@ public class CommandLineConstructors {
    private static Option constructUpDiv(){
 	   @SuppressWarnings("static-access")
 	   Option updiv = OptionBuilder
+	   			.withLongOpt("uploaddivergence")
 	   			.withArgName("File Location")
 	   			.hasArg()
 	   			.withArgName("Name")
@@ -68,6 +71,7 @@ public class CommandLineConstructors {
    private static Option constructUpAno(){
 	   @SuppressWarnings("static-access")
 	   Option upano = OptionBuilder
+	   			.withLongOpt("uploadannotation")
 	   			.withArgName("File Location")
 	   			.hasArg()
 	   			.withArgName("Name")
@@ -85,6 +89,7 @@ public class CommandLineConstructors {
    private static Option constructAFS(){
 	   @SuppressWarnings("static-access")
 	   Option afs = OptionBuilder
+			    .withLongOpt("allelefrequencyspectra")
 	   			.withArgName("VCF File")
 	   			.hasArg()
 	   			.withArgName("Filter")
@@ -96,4 +101,43 @@ public class CommandLineConstructors {
    }
   
 
+   /**
+    * Constructs the filter write applier command.
+    */
+   
+   private static Option constructFilterWrite(){
+	   @SuppressWarnings("static-access")
+	   Option filterWrite = OptionBuilder
+			    .withLongOpt("applyandwritefilter")
+	   			.withArgName("VCF Name")
+	   			.hasArg()
+	   			.withArgName("Filter Name")
+	   			.hasArg()
+	   			.withArgName("File Name")
+	   			.hasOptionalArg()
+	   			.withDescription("Applies a filter to a vcf file and writes it to a file.")
+	   			.create("filterwrite");
+	   
+	   return filterWrite;
+   }
+   
+   /**
+    * Constructs the filter store applier command.
+    */
+   
+   private static Option constructFilterStore(){
+	   @SuppressWarnings("static-access")
+	   Option filterStore = OptionBuilder
+			    .withLongOpt("filterstore")
+	   			.withArgName("VCF Name")
+	   			.hasArg()
+	   			.withArgName("Filter Name")
+	   			.hasArg()
+	   			.withArgName("File Name")
+	   			.hasOptionalArg()
+	   			.withDescription("Applies a filter to a vcf file and stores it to a file.")
+	   			.create("filterstore");
+	   
+	   return filterStore;
+   }
 }

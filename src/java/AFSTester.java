@@ -27,8 +27,6 @@ public class AFSTester {
 		command2.execute();
 		AFSCommand command3=new AFSCommand("2013-03-23_15:28","");
 		command3.execute();
-		
-
 	}
 
 }
