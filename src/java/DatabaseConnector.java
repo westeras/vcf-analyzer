@@ -487,7 +487,7 @@ class DatabaseConnector {
 		return rs;
 	}
 
-	public void insertEntryPass(int filterId, long entryId, char pass)
+	public void insertEntryPass(int filterId, long entryId, int pass)
 			throws SQLException, ClassNotFoundException {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
@@ -498,7 +498,7 @@ class DatabaseConnector {
 		this.stmt.executeUpdate(sql);
 	}
 
-	public void insertIndividualPass(int filterId, long entryId, char pass)
+	public void insertIndividualPass(int filterId, long entryId, int pass)
 			throws SQLException, ClassNotFoundException {
 		if (!hasOpenStatementAndConnection())
 			reopenConnectionAndStatement();
