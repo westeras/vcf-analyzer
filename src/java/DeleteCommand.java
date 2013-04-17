@@ -15,6 +15,7 @@ public class DeleteCommand extends Command {
 	public DeleteCommand(String table, String delValue, String columnName) {
 		this.table = table;
 		this.delValue = delValue;
+		this.columnName=columnName;
 		try {
 			this.conn = new DatabaseConnector();
 		} catch (Exception exception) {
