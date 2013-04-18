@@ -89,7 +89,7 @@ public class AFSCommand extends Command {
 			return "1";
 		}
 		String sql = "Select `FilterEntryPass`.`Pass` from `FilterEntryPass`,`Filter`  where `FilterEntryPass`.`EntryId`="+ entryID +
-				"`Filter`.`FilName`= '"+this.filterName+"' and `Filter`.`FilId` = `FilterEntryPass`.`FilId`";
+				"and `Filter`.`FilName`= '"+this.filterName+"' and `Filter`.`FilId` = `FilterEntryPass`.`FilId`";
 		System.out.println(sql);
 		ResultSet pass = this.conn.executeQuery(sql);
 		return pass.getString(1);
