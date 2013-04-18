@@ -40,7 +40,7 @@ public class AFSCommand extends Command {
 							.get(j));
 					
 					if (filterEntryPassFlag.equals("")){
-						System.out.println("Entry "+ entryIDs.get(j)+" not in filter. aborting");
+						System.out.println("Entry "+ entryIDs.get(j)+" not in filter. Aborting");
 						return "error";
 					}
 					if (filterEntryPassFlag.equals("0")) {
