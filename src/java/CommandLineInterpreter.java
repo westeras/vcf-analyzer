@@ -110,6 +110,13 @@ public class CommandLineInterpreter
 				System.out.println(sum);
 			}
 			
+			if (commandLine.hasOption("view")){
+				String[] args = commandLine.getOptionValues("view");
+						
+				View makeView = new View(args[0],args[1]);
+				return makeView.execute();
+			}
+			
 			if (commandLine.hasOption("help")){
 				
 				/*

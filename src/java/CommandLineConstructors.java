@@ -29,6 +29,7 @@ public class CommandLineConstructors {
                 .addOption(constructFilterWrite())
                 .addOption(constructFilterStore())
                 .addOption(constructFilterCreate())
+                .addOption(constructView())
                 .addOption("help", false, "Tells the user what functions there are.");
       return gnuOptions;  
    } 
@@ -156,5 +157,23 @@ public class CommandLineConstructors {
 	   			.create("filterstore");
 	   
 	   return filterStore;
+   }
+   
+   /**
+    * Constructs the view command.
+    */
+   
+   private static Option constructView(){
+	   @SuppressWarnings("static-access")
+	   Option view = OptionBuilder
+			    .withLongOpt("view")
+	   			.withArgName("Table")
+	   			.hasArg()
+	   			.withArgName("Column")
+	   			.hasArg()
+	   			.withDescription("Returns a non-editable column from a table.")
+	   			.create("view");
+	   
+	   return view;
    }
 }
