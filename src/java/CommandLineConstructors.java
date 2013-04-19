@@ -30,6 +30,7 @@ public class CommandLineConstructors {
                 .addOption(constructFilterStore())
                 .addOption(constructFilterCreate())
                 .addOption(constructView())
+                .addOption(constructDelete())
                 .addOption("help", false, "Tells the user what functions there are.");
       return gnuOptions;  
    } 
@@ -175,5 +176,21 @@ public class CommandLineConstructors {
 	   			.create("view");
 	   
 	   return view;
+   }
+   
+   private static Option constructDelete(){
+	   @SuppressWarnings("static-access")
+	   Option delete = OptionBuilder
+			    .withLongOpt("delete")
+	   			.withArgName("Table")
+	   			.hasArg()
+	   			.withArgName("delValue")
+	   			.hasArg()
+	   			.withArgName("Column")
+	   			.hasArg()
+	   			.withDescription("Deletes the given item.")
+	   			.create("delete");
+	   
+	   return delete;
    }
 }

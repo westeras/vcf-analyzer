@@ -113,7 +113,14 @@ public class CommandLineInterpreter
 			if (commandLine.hasOption("view")){
 				String[] args = commandLine.getOptionValues("view");
 						
-				View makeView = new View(args[0],args[1]);
+				Command makeView = new View(args[0],args[1]);
+				return makeView.execute();
+			}
+			
+			if (commandLine.hasOption("delete")){
+				String[] args = commandLine.getOptionValues("delete");
+						
+				Command makeView = new DeleteCommand(args[0],args[1],args[2]);
 				return makeView.execute();
 			}
 			
