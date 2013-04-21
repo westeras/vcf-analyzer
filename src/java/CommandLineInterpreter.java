@@ -52,7 +52,7 @@ public class CommandLineInterpreter
 				result = command.execute();
 			}
 			
-			//Allow for two optional arguments
+			//Allow for two optional arguments--
 			if (commandLine.hasOption("filterWrite")){
 				String[] args = commandLine.getOptionValues("filterWrite");
 				Command command = null;
