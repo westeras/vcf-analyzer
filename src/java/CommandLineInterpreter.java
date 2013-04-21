@@ -47,8 +47,8 @@ public class CommandLineInterpreter
 			if (commandLine.hasOption("asf")){
 				String[] args = commandLine.getOptionValues("asf");
 				Command command = null;
-				if(args.length == 1) command = new AFSCommand(args[0], "");
-				if(args.length == 2) command = new AFSCommand(args[0], args[1]);
+				if(args.length == 2) command = new AFSCommand(args[0], args[1], "");
+				if(args.length == 3) command = new AFSCommand(args[0], args[1], args[2]);
 				result = command.execute();
 			}
 			
