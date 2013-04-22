@@ -12,14 +12,7 @@ import java.util.ArrayList;
  */
 public class AFSTester {
 
-	/**
-	 * Tests both parsers
-	 *
-	 * @param args
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
-	 * @throws FileNotFoundException 
-	 */
+
 	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, SQLException {
 		AFSCommand command= new AFSCommand("testName","","");
 		command.execute();
