@@ -36,23 +36,19 @@ public class AFSCommand extends Command {
 			for (int i = 0; i < vcfIDs.size(); i++) {
 				ArrayList<String> entryIDs = getEntryIDs(vcfIDs.get(i));
 				for (int j = 0; j < entryIDs.size(); j++) {
-					String filterEntryPassFlag=filterEntryPasses(entryIDs
+					String filterEntryPassFlag = filterEntryPasses(entryIDs
 							.get(j));
-					
-					if (filterEntryPassFlag.equals("")){
-						System.out.println("Entry "+ entryIDs.get(j)+" not in filter. Aborting");
-						return "error";
-					}
+
 					if (filterEntryPassFlag.equals("0")) {
 						continue;
 					}
-					
+
 					int weirdThingsInEntry = 0;
 					ArrayList<String> individualIDs = getIndividualIDs(entryIDs
 							.get(j));
 					for (int k = 0; k < individualIDs.size(); k++) {
-						ResultSet individuals = getIndividuals(individualIDs
-								.get(k),filterEntryPassFlag);
+						ResultSet individuals = getIndividuals(
+								individualIDs.get(k), filterEntryPassFlag);
 						weirdThingsInEntry = countIndividuals(
 								weirdThingsInEntry, individuals);
 					}
@@ -67,9 +63,6 @@ public class AFSCommand extends Command {
 		return this.spectra.toString();
 
 	}
-	
-	
-	
 
 	private int countIndividuals(int weirdThingsInEntry, ResultSet individuals)
 			throws SQLException {
@@ -82,16 +75,23 @@ public class AFSCommand extends Command {
 		}
 		return weirdThingsInEntry;
 	}
-	
+
 	private String filterEntryPasses(String entryID)
 			throws ClassNotFoundException, SQLException {
 		if (this.filterName.equals("")) {
 			return "1";
 		}
-		String sql = "Select `FilterEntryPass`.`Pass` from `FilterEntryPass`,`Filter`  where `FilterEntryPass`.`EntryId`="+ entryID +
-				" and `Filter`.`FilName`= '"+this.filterName+"' and `Filter`.`FilId` = `FilterEntryPass`.`FilId`";
-		System.out.println(sql);
+		String sql = "Select `FilterEntryPass`.`Pass` from `FilterEntryPass`,`Filter`  where `FilterEntryPass`.`EntryId`="
+				+ entryID
+				+ " and `Filter`.`FilName`= '"
+				+ this.filterName
+				+ "' and `Filter`.`FilId` = `FilterEntryPass`.`FilId`";
 		ResultSet pass = this.conn.executeQuery(sql);
+		if (!pass.first()) {
+			System.out.println("Entry " + entryID + " not in filter. Aborting");
+			return "error";
+		}
+
 		return pass.getString(1);
 
 	}
@@ -136,7 +136,11 @@ public class AFSCommand extends Command {
 			throws ClassNotFoundException, SQLException {
 		String sql;
 		if (checkIndividualFlag.equals("2")) {
-			sql="Select * from `GT`, `FilterIndividualPass` where `GT`.`IndID`= '" + indId + "' and `FilterIndividualPass`.`IndID`='"+indId+"' and `FilterIndividualPass`.`IndID`=1";
+			sql = "Select * from `GT`, `FilterIndividualPass` where `GT`.`IndID`= '"
+					+ indId
+					+ "' and `FilterIndividualPass`.`IndID`='"
+					+ indId
+					+ "' and `FilterIndividualPass`.`IndID`=1";
 		} else {
 			sql = "Select * from `GT` where `IndID`= '" + indId + "'";
 		}
