@@ -25,59 +25,55 @@ public class UploadDivergenceCommand extends UploadCommand {
 		}
 	}
 
-
-
 	@Override
 	public String execute() {
 		try {
-			String result=upload(this.fileLocation);
+			String result = upload(this.fileLocation);
 			System.out.println(result);
 			return result;
 		} catch (Exception exception) {
-			exception.printStackTrace();}
+			exception.printStackTrace();
+		}
 		return "Upload Failed!";
 	}
 
-
 	@Override
-	public ArrayList<String[]> parseFile() throws FileNotFoundException{
-		FileInputStream fileIn=new FileInputStream(this.fileLocation);
-		Scanner reader=new Scanner(fileIn);
+	public ArrayList<String[]> parseFile() throws FileNotFoundException {
+		FileInputStream fileIn = new FileInputStream(this.fileLocation);
+		Scanner reader = new Scanner(fileIn);
 		ArrayList<String[]> rows = new ArrayList<String[]>();
-		while (reader.hasNextLine()){
-			String[] columns=parseLine(reader.nextLine());
+		while (reader.hasNextLine()) {
+			String[] columns = parseLine(reader.nextLine());
 			rows.add(columns);
 		}
 		return rows;
 	}
-	
-	private String[] parseLine(String line){
-		StringTokenizer tokenizer=new StringTokenizer(line);
-		String chrom =tokenizer.nextToken();
-		String position=tokenizer.nextToken();
-		String divValue=tokenizer.nextToken();
-		return new String[] {chrom, position, divValue};
+
+	private String[] parseLine(String line) {
+		StringTokenizer tokenizer = new StringTokenizer(line);
+		String chrom = tokenizer.nextToken();
+		String position = tokenizer.nextToken();
+		String divValue = tokenizer.nextToken();
+		return new String[] { chrom, position, divValue };
 	}
 
 	@Override
-	public String getSQLStatement(ArrayList<String[]> rowsToUpload) {
-		String sql="";
-		for (String[] row : rowsToUpload) {
-			String chromosome = row[0];
-			int position = Integer.valueOf(row[1]);
-			int divValue = Integer.valueOf(row[2]);
-			sql += String
-					.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
-							this.name, chromosome, position, divValue);
-			
-		}
+	public String getSQLStatement(String[] row) {
+
+		String chromosome = row[0];
+		int position = Integer.valueOf(row[1]);
+		int divValue = Integer.valueOf(row[2]);
+		String sql = String
+				.format("INSERT into `Divergence` (`DivName`, `Chromosome`, `Position`, `DivValue`) VALUES ('%s','%s','%d','%d');",
+						this.name, chromosome, position, divValue);
+
 		return sql;
 	}
-	
+
 	@Override
 	public void pipeOutput() {
 		// TODO Auto-generated method stub.
-		
+
 	}
 
 }

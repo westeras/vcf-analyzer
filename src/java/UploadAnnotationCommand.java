@@ -20,24 +20,19 @@ public class UploadAnnotationCommand extends UploadCommand {
 		}
 	}
 
-	/*
-	 * TODO: figure out how to tell if the upload was successful
-	 */
-
 	@Override
 	public String execute() {
-		
+
 		try {
-			String result=upload(this.fileLocation);
+			String result = upload(this.fileLocation);
 			System.out.println(result);
 			return result;
-			
+
 		} catch (Exception exception) {
-			exception.printStackTrace();}
+			exception.printStackTrace();
+		}
 		return "Upload Failed!";
 	}
-
-
 
 	@Override
 	public ArrayList<String[]> parseFile() throws FileNotFoundException {
@@ -63,26 +58,24 @@ public class UploadAnnotationCommand extends UploadCommand {
 	}
 
 	@Override
-	public String getSQLStatement(ArrayList<String[]> rowsToUpload) {
-		String sql="";
-		for (String[] row : rowsToUpload) {
-			String chromosome = row[0];
-			int startPosition = Integer.valueOf(row[1]);
-			int endPosition = Integer.valueOf(row[2]);
-			String geneName = row[3];
-			String geneDirection = row[4];
-			sql += String
-					.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, "
-							+ "`EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s');",
-							chromosome, startPosition, endPosition, geneName,
-							geneDirection, this.name);
-			
-		}
+	public String getSQLStatement(String[] row) {
+		String chromosome = row[0];
+		int startPosition = Integer.valueOf(row[1]);
+		int endPosition = Integer.valueOf(row[2]);
+		String geneName = row[3];
+		String geneDirection = row[4];
+		String sql = String
+				.format("INSERT into `Annotation` (`Chromosome`, `StartPosition`, "
+						+ "`EndPosition`, `GeneName`, `GeneDirection`, `AnnoName`) VALUES ('%s','%d','%d','%s','%s','%s'); ",
+						chromosome, startPosition, endPosition, geneName,
+						geneDirection, this.name);
+
 		return sql;
 	}
+
 	@Override
 	public void pipeOutput() {
 		// TODO Auto-generated method stub.
-		
+
 	}
 }
