@@ -12,7 +12,7 @@ public class InputHandler {
 	public static void main(String[] arg) throws ClassNotFoundException, SQLException {
 		Scanner input = new Scanner(System.in);
 		String[] commands = null;
-		System.out.println("Please input a command or type in '-help' for a list of commands.");
+		System.out.println("Please input a command or type in 'help' for a list of commands.");
 		while(true){
 			System.out.print("> ");
 		
@@ -23,11 +23,9 @@ public class InputHandler {
 			    System.out.println("Error: " + ex);
 			}
 			
-			if(commands[0].equals("quit") || commands[0].equals("")){
+			if(commands[0].equals("quit")){
 				break;
-			}else{
-				commands[0] = "-" + commands[0];
-				
+			}else{				
 				System.out.println(CommandLineInterpreter.interpreter(commands));
 			}
 		}

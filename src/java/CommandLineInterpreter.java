@@ -24,22 +24,62 @@ public class CommandLineInterpreter
 	 * @throws ClassNotFoundException 
 	 */
 
-	public static String useGnuParser(final String[] commandLineArguments) throws ClassNotFoundException, SQLException{  
-		final CommandLineParser cmdLineGnuParser = new GnuParser();  
-  
-		final Options gnuOptions = new CommandLineConstructors().getCommands();  
-		CommandLine commandLine;  
+	public static String parseCommand(final String[] commandLineArguments) throws ClassNotFoundException, SQLException{  
 		
 		String result = "";
-		
-		try{  
-			commandLine = cmdLineGnuParser.parse(gnuOptions, commandLineArguments);
 			
-			if (commandLine.hasOption("updiv")){
-				result = uploadCommand(commandLineArguments, commandLine, "updiv");
+		if (commandLineArguments[0].equals("upload") 
+				&& commandLineArguments[1].equals("divergence")){
+			String[] args = new String[commandLineArguments.length - 2];
+			for(int i = 0; i < args.length; i++){
+				args[i] = commandLineArguments[i+2];
 			}
+			result = uploadCommand(commandLineArguments, "updiv");
+		}
 			
-			if (commandLine.hasOption("upano")){
+		if (commandLineArguments[0].equals("updiv")){
+			String[] args = new String[commandLineArguments.length - 1];
+			for(int i = 0; i < args.length; i++){
+				args[i] = commandLineArguments[i+1];
+			}
+			result = uploadCommand(commandLineArguments, "updiv");
+		}
+		
+		if (commandLineArguments[0].equals("upload") 
+				&& commandLineArguments[1].equals("annotation")){
+			String[] args = new String[commandLineArguments.length - 2];
+			for(int i = 0; i < args.length; i++){
+				args[i] = commandLineArguments[i+2];
+			}
+			result = uploadCommand(commandLineArguments, "upano");
+		}
+			
+		if (commandLineArguments[0].equals("upano")){
+			String[] args = new String[commandLineArguments.length - 1];
+			for(int i = 0; i < args.length; i++){
+				args[i] = commandLineArguments[i+1];
+			}
+			result = uploadCommand(commandLineArguments, "upano");
+		}
+		
+		if (commandLineArguments[0].equals("afs")){
+			String[] args = new String[commandLineArguments.length - 1];
+			for(int i = 0; i < args.length; i++){
+				args[i] = commandLineArguments[i+1];
+			}
+			result = vcfCommand(commandLineArguments);
+		}
+		
+		if (commandLineArguments[0].equals("allele") 
+				&& commandLineArguments[1].equals("frequency") 
+				&& commandLineArguments[2].equals("spectra")){
+			String[] args = new String[commandLineArguments.length - 3];
+			for(int i = 0; i < args.length; i++){
+				args[i] = commandLineArguments[i+3];
+			}
+			result = vcfCommand(commandLineArguments);
+		}
+			/*if (commandLine.hasOption("upano")){
 				result = uploadCommand(commandLineArguments, commandLine, "upano");
 			}
 			
@@ -130,17 +170,40 @@ public class CommandLineInterpreter
 				 * Expand to a more general help function
 				 */
 				
-				System.out.println("hello\nn <arg>\nsum <arg0> <arg1> <arg2> ...");
-			}
-		}
+			/*	System.out.println("hello\nn <arg>\nsum <arg0> <arg1> <arg2> ...");
+			}*/
+		//}
       
-		catch (ParseException parsingException){  
+		/*catch (ParseException parsingException){  
 			System.err.println("Could not find argument: " + parsingException.getMessage());  
-		}
+		}*/
 		
 		return result;
 	}  
 	
+	private static String vcfCommand(String[] args) throws ClassNotFoundException, SQLException {
+		Command command = null;
+		
+		String result = "";
+		String fileLocation = "";
+		String fileName = "";
+		String filterName = "";
+		
+		for(int i = 0; i < args.length; i++){
+			if(args[i].equals("-name") && i != args.length - 1){fileName = args[i+1];}
+			if(args[i].equals("-file") && i != args.length - 1){fileLocation = args[i+1];}
+			if(args[i].equals("-filter") && i != args.length - 1){filterName = args[i+1];}
+		}
+		
+		if(fileLocation.equals("") && fileName.equals("") && filterName.equals("")){return "Please input proper arguments";}
+		if(fileLocation.equals("")){return "Please include a file location";}
+		
+		command = new AFSCommand(fileName, fileLocation, filterName);
+		result = command.execute();
+		
+		return result;
+	}
+
 	/**
 	 * Uploads either divergence file or annotation file
 	 * @param commandLineArguments
@@ -149,29 +212,25 @@ public class CommandLineInterpreter
 	 * @return the name of the upload
 	 */
 	
-	public static String uploadCommand(final String[] commandLineArguments, CommandLine commandLine, String type){
-		String[] args;
+	public static String uploadCommand(final String[] args, String type){
 		Command command = null;
-		
-		args = commandLine.getOptionValues(type);
 
 		String result = "";
+		String fileLocation = "";
+		String fileName = "";
 		
-		if(args == null){
-			result = "Please input arguments";
-		}else if(args.length == 1){
-			if(type=="updiv")command = new UploadDivergenceCommand(args[0], null,"");
-			if(type=="upano")command = new UploadAnnotationCommand(args[0], null,"");
-			
-			result = command.execute();
-		}else if(args.length == 2){
-			if(type=="updiv")command = new UploadDivergenceCommand(args[0], null,args[1]);
-			if(type=="upano")command = new UploadAnnotationCommand(args[0], null,args[1]);
-			
-			result = command.execute();
-		}else{
-			result = "Incorrect number of arguments";
+		for(int i = 0; i < args.length; i++){
+			if(args[i].equals("-name") && i != args.length - 1){fileName = args[i+1];}
+			if(args[i].equals("-file") && i != args.length - 1){fileLocation = args[i+1];}
 		}
+		
+		if(fileLocation.equals("") && fileName.equals("")){return "Please input proper arguments";}
+		if(fileLocation.equals("")){return "Please include a file location.";}
+		
+		if(type=="updiv"){command = new UploadDivergenceCommand(fileLocation, null,fileName);}
+		if(type=="upano"){command = new UploadAnnotationCommand(fileLocation, null,fileName);}
+			
+		result = command.execute();
 		
 		return result;
 	}
@@ -206,22 +265,8 @@ public class CommandLineInterpreter
 	      {  
 	         System.out.println("Please input help"); 
 	      }  
-	      displayInput(commandLineArguments);
-	      System.out.println("");
-	      return useGnuParser(commandLineArguments);  
+	      //displayInput(commandLineArguments);
+	      //System.out.println("");
+	      return parseCommand(commandLineArguments);  
    }
-  
-   /** 
-    * Main executable method used to demonstrate Apache Commons CLI. 
-    *  
-    * @param commandLineArguments Commmand-line arguments. 
- * @throws SQLException 
- * @throws ClassNotFoundException 
-    */  
-   public static void main(final String[] commandLineInput) throws ClassNotFoundException, SQLException{  
-	   System.out.println("Test Parser");
-	   System.out.println("Developed for the Gene-E project\n");
-	   
-	   interpreter(commandLineInput);
-   }  
 } 
