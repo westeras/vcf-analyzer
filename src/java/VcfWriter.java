@@ -96,7 +96,8 @@ public class VcfWriter
     
     public void writeIndividualStart() throws IOException
     {
-    	this.writeIndBuffer = "\t";
+    	this.writeBuffer += "\t";
+    	this.writeIndBuffer = "";
     	this.individualMiddle = false;
     	
     }
