@@ -326,7 +326,7 @@ public abstract class FilterApplier extends Command
 
 				for (String testValue: testValues)
 				{
-					boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
+					boolean pass = this.comparisonHandler.testFilterComparison(type, param, testValue );
 					if (!pass)
 					{
 						//if any fail return failure

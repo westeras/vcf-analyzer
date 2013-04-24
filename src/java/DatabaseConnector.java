@@ -276,12 +276,9 @@ class DatabaseConnector {
 				int comparison = rs.getInt("Comparison");
 				String comparator = rs.getString("Comparator");
 				String comparator2 = rs.getString("Comparator2");
-				int failureAllow = rs.getInt("FailureAllow");
-				int passExactly = rs.getInt("PassExactly");
 
 				FilterParameter temp = new FilterParameter(tableName,
-						comparison, comparator, comparator2, failureAllow,
-						passExactly);
+						comparison, comparator, comparator2);
 				filterIndividuals.add(temp);
 			}
 		} catch (SQLException se) {
