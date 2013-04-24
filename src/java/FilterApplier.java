@@ -90,13 +90,10 @@ public abstract class FilterApplier extends Command
 			this.passExactly = metadata[1];
 		}
 			
-		System.out.println("" + this.failureAllow + " "+ this.passExactly);
 		this.entryParameters = this.connection.getFilterEntries(this.filterId);
 		
 		this.individualParameters = this.connection.getFilterIndividuals(this.filterId);		
-		
-		//get metadata
-		
+
 		this.comparisonHandler = new FilterComparison();
 	}
 	

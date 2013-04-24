@@ -92,6 +92,7 @@ public class VcfWriter
     {
     	///TODO remove this.writeBuffer = "\t";
     	this.writer.write("\t");
+    	this.writeBuffer = "";
     	this.individualMiddle = false;
     	
     }
