@@ -139,6 +139,8 @@ public abstract class FilterApplier extends Command
 			
 		} catch (Exception exception) {
 			closeFiltering();
+			//TODO remove
+			exception.printStackTrace();
 			return exception.getMessage();
 		}
 	}
@@ -310,7 +312,7 @@ public abstract class FilterApplier extends Command
 		{
 			if (param.tableName.equals(genoName))
 			{
-				int type = this.nestedConnection2.getGenotypeDataType( genoName );
+				int type = this.nestedConnection3.getGenotypeDataType( genoName );
 				ArrayList<String> testValues;
 				if (indGenoData.next())
 				{
