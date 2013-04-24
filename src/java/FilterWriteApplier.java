@@ -69,7 +69,7 @@ public class FilterWriteApplier extends FilterApplier
 	
 	protected void finializeEntry() throws Exception
 	{
-		writer.writeEOL();
+		writer.finalizeEntry();
 	}
 	
 	protected void finializeEntryFailing() throws Exception

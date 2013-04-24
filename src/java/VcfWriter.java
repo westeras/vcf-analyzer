@@ -7,6 +7,7 @@ public class VcfWriter
     private BufferedWriter writer;
     private int infoCount = 0;
     private String writeBuffer = "";
+    private String writeIndBuffer = "";
 	private boolean individualMiddle;
     
     public VcfWriter( String filename ) throws IOException
@@ -53,11 +54,16 @@ public class VcfWriter
         }
     }
     
-    public void writeEntryEnd( ResultSet entryData ) throws IOException, SQLException
+    public void writeEntryEnd( ResultSet entryData )throws SQLException
     {
-    	this.writer.write( this.writeBuffer );
-    	this.writer.write("\t");
-    	this.writer.write( entryData.getString("Format") );
+    	this.writeBuffer += "\t";
+    	this.writeBuffer += entryData.getString("Format");
+    }
+    
+    public void finalizeEntry() throws IOException
+    {
+    	this.writer.write(this.writeBuffer);
+    	writeEOL();
     }
     
     public void writeInfoSection( String infoName, ResultSet infoData) throws IOException, SQLException
@@ -90,16 +96,14 @@ public class VcfWriter
     
     public void writeIndividualStart() throws IOException
     {
-    	///TODO remove this.writeBuffer = "\t";
-    	this.writer.write("\t");
-    	this.writeBuffer = "";
+    	this.writeIndBuffer = "\t";
     	this.individualMiddle = false;
     	
     }
     
     public void writeIndividualEnd() throws IOException
     {
-    	this.writer.write(this.writeBuffer);
+    	this.writeBuffer += this.writeIndBuffer;
     }
     
     public void writeIndividualDatum( 
@@ -115,7 +119,7 @@ public class VcfWriter
     	{
 			if ( this.individualMiddle )
 			{
-				this.writeBuffer +=(":");
+				this.writeIndBuffer +=(":");
 			}
 			else
 			{
@@ -125,11 +129,11 @@ public class VcfWriter
 			if ( isSpecialCase(genotypeName ) )
 			{
 					
-				this.writeBuffer +=( formatSpecialCase( genotypeName, genotypeData ) );
+				this.writeIndBuffer +=( formatSpecialCase( genotypeName, genotypeData ) );
 			}
 			else
 			{
-				this.writeBuffer +=( formatStandardCase( genotypeName, genotypeData ) );
+				this.writeIndBuffer +=( formatStandardCase( genotypeName, genotypeData ) );
 			}	
     	}
 		genotypeData.close();	
