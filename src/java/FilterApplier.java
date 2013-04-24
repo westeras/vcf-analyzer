@@ -310,7 +310,7 @@ public abstract class FilterApplier extends Command
 		{
 			if (param.tableName.equals(genoName))
 			{
-				int type = this.nestedConnection2.getInfoDataType( genoName );
+				int type = this.nestedConnection2.getGenotypeDataType( genoName );
 				ArrayList<String> testValues;
 				if (indGenoData.next())
 				{

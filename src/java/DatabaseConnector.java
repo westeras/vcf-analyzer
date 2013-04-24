@@ -291,7 +291,7 @@ class DatabaseConnector {
 		return getTableDataType(infoName, "InfoTable", "InfoName", "INFO");
 	}
 
-	public int getGenoTypeDataType(String genoName) throws SQLException {
+	public int getGenotypeDataType(String genoName) throws SQLException {
 		return getTableDataType(genoName, "GenotypeTable", "GenoName", "genotype");
 	}
 
