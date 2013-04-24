@@ -116,7 +116,7 @@ public class TestFilter {
 		System.out.println( command.execute() );
 		
 		filterName = "testFilterApplier6";
-		String[] operands6 = {"entry REF=T", "ind DP<41", "option pe 3"};
+		String[] operands6 = {"entry REF=T", "ind DP<41", "option pe equals 3"};
 		testCreator = new FilterCreator(filterName, operands6);
 		testCreator.uploadEntries();
 		command = new FilterWriteApplier("testFilter", "testFilterApplier6", "FilterTest7.txt" );

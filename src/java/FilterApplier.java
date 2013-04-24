@@ -410,6 +410,7 @@ public abstract class FilterApplier extends Command
 			gtData = "";
 		}
 		gtDataArray.add(gtData);
+		System.out.println(gtData);
 		return gtDataArray;		
 	}
 	
