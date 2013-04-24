@@ -253,7 +253,7 @@ class DatabaseConnector {
 				String comparator2 = rs.getString("Comparator2");
 
 				FilterParameter temp = new FilterParameter(tableName,
-						comparison, comparator, comparator2, 0, 0);
+						comparison, comparator, comparator2);
 				filterEntries.add(temp);
 			}
 		} catch (SQLException se) {

@@ -183,7 +183,7 @@ public abstract class FilterApplier extends Command
 				passCount++;
 				if (passCount == this.passExactly)
 				{
-					//finish remaining without test
+					//fail remaining without test
 					while (individuals.next() )
 					{
 						indId = individuals.getLong("IndID");
