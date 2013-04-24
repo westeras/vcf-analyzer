@@ -303,7 +303,7 @@ class DatabaseConnector {
 		
 		String sql = "";
 		try {
-			sql = String.format( "SELECT * FROM `vcf_analyzer`.`tableName` WHERE `columnName` = '%s'", 
+			sql = String.format( "SELECT * FROM `vcf_analyzer`.`%s` WHERE `%s` = '%s'", 
 					tableName,
 					columnName,
 					idName);

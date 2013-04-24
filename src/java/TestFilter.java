@@ -45,8 +45,10 @@ public class TestFilter {
 		String sql3 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier3'";
 		String sql4 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier4'";
 		String sql5 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier5'";
-		String sql6 = "DELETE FROM `vcf_analyzer`.`FilterEntryPass` WHERE 1";
-		String sql7 = "DELETE FROM `vcf_analyzer`.`FilterIndividualPass` WHERE 1";
+		String sql6 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier6'";
+		String sql7 = "DELETE FROM `vcf_analyzer`.`Filter` WHERE `FilName`='testFilterApplier7'";
+		String sql8 = "DELETE FROM `vcf_analyzer`.`FilterEntryPass` WHERE 1";
+		String sql9 = "DELETE FROM `vcf_analyzer`.`FilterIndividualPass` WHERE 1";
 		
 		try {
 			stmt.executeUpdate(sql);
@@ -56,6 +58,8 @@ public class TestFilter {
 			stmt.executeUpdate(sql5);
 			stmt.executeUpdate(sql6);
 			stmt.executeUpdate(sql7);
+			stmt.executeUpdate(sql8);
+			stmt.executeUpdate(sql9);
 
 		} catch (SQLException se) {
 			throw new SQLException(se.getMessage());
@@ -151,7 +155,7 @@ public class TestFilter {
 		}
 		else
 		{
-			System.out.println(String.format( "FAIL: Filter test\n\tgoal: %s\n\tfile: %s", goal, toTest) );
+			System.out.println(String.format( "FAIL: Filter test\n\tgoal: %s\n\tfile: %s", fileTestName, filePassName) );
 		}
 		
 		testBuffer.close();
