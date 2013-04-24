@@ -116,7 +116,7 @@ public class TestFilter {
 		System.out.println( command.execute() );
 		
 		filterName = "testFilterApplier6";
-		String[] operands6 = {"entry REF=T", "ind DP=41"};
+		String[] operands6 = {"entry REF=T", "ind DP=41", "option FailureAllow=20"};
 		testCreator = new FilterCreator(filterName, operands6);
 		testCreator.uploadEntries();
 		command = new FilterWriteApplier("testFilter", "testFilterApplier6", "FilterTest7.txt" );
@@ -124,7 +124,7 @@ public class TestFilter {
 		
 		
 		filterName = "testFilterApplier7";
-		String[] operands7 = {"ind GT=1/1"};
+		String[] operands7 = {"ind GT=1/1", "option FailureAllow=5"};
 		testCreator = new FilterCreator(filterName, operands7);
 		testCreator.uploadEntries();
 		command = new FilterWriteApplier("testFilter", "testFilterApplier7", "FilterTest8.txt" );
