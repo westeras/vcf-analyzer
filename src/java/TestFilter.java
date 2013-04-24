@@ -124,7 +124,7 @@ public class TestFilter {
 		
 		
 		filterName = "testFilterApplier7";
-		String[] operands7 = {"ind GT=0/1", "option FailureAllow=13"};
+		String[] operands7 = {"ind GT=0/0", "option FailureAllow=10"};
 		testCreator = new FilterCreator(filterName, operands7);
 		testCreator.uploadEntries();
 		command = new FilterWriteApplier("testFilter", "testFilterApplier7", "FilterTest8.txt" );

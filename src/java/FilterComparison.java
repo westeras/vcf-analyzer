@@ -502,8 +502,13 @@ public class FilterComparison {
 		}
 		case 5:
 		{
+			//TODO remove
+			System.out.println(testValue + filter.comparator);
 			//string
-			return operation.compareString(testValue, filter.comparator, filter.comparator2);
+			boolean bool = operation.compareString(testValue, filter.comparator, filter.comparator2);
+			System.out.println(bool);
+			return bool;
+			
 		}
 		}
 		throw new IllegalArgumentException("Invalid data type");
