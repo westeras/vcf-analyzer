@@ -306,7 +306,7 @@ public abstract class FilterApplier extends Command
 	private boolean filterOnGenotype(String genoName, ResultSet indGenoData) throws Exception {
 		
 
-		for( FilterParameter param : this.entryParameters )
+		for( FilterParameter param : this.individualParameters )
 		{
 			if (param.tableName.equals(genoName))
 			{
