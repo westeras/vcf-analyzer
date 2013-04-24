@@ -88,9 +88,10 @@ public class VcfWriter
 	    infoData.close();
     }
     
-    public void writeIndividualStart()
+    public void writeIndividualStart() throws IOException
     {
-    	this.writeBuffer = "\t";
+    	///TODO remove this.writeBuffer = "\t";
+    	this.writer.write("\t");
     	this.individualMiddle = false;
     	
     }

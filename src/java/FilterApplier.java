@@ -2,8 +2,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.sql.*;
-
 public abstract class FilterApplier extends Command
 {
 
@@ -12,8 +10,8 @@ public abstract class FilterApplier extends Command
 	protected String vcfName;
 	protected String fileName;
 	protected int filterId;
-	private int failureAllow;
-	private int passExactly;
+	private int failureAllow =0;
+	private int passExactly =0;
 	protected DatabaseConnector connection;	
 	protected DatabaseConnector nestedConnection;
 	protected DatabaseConnector nestedConnection2;
@@ -87,6 +85,9 @@ public abstract class FilterApplier extends Command
 		if (this.filterName.length() > 0)
 		{
 			this.filterId = this.connection.getFilterID(this.filterName);
+			int[] metadata = this.connection.getFilterMetaData(this.filterId);
+			this.failureAllow = metadata[0];
+			this.passExactly = metadata[1];
 		}
 			
 		this.entryParameters = this.connection.getFilterEntries(this.filterId);
@@ -140,8 +141,6 @@ public abstract class FilterApplier extends Command
 			
 		} catch (Exception exception) {
 			closeFiltering();
-			//TODO remove
-			exception.printStackTrace();
 			return exception.getMessage();
 		}
 	}
@@ -149,7 +148,10 @@ public abstract class FilterApplier extends Command
 	private boolean testIndividual( ResultSet entries, long entryId)
 			throws SQLException, Exception {
 		
-		boolean passing = true;
+		boolean entryPass = true;
+		int failCount = 0;
+		int passCount = 0;
+				
 		//individual level
 		String indFormat = entries.getString("Format");
 		ArrayList<String> genotypes = new ArrayList<String>( 
@@ -158,7 +160,7 @@ public abstract class FilterApplier extends Command
 		ResultSet individuals = this.nestedConnection.getIndividuals( entryId );
 		while (individuals.next() )
 		{
-	
+			boolean passing = true;
 			long indId = individuals.getLong("IndID");
 			processUntestedIndividual(indId);
 			for (int k=0; k< genotypes.size(); k++)
@@ -180,15 +182,35 @@ public abstract class FilterApplier extends Command
 			if (passing)
 			{
 				processPassingIndividual();
+				passCount++;
+				if (passCount == this.passExactly)
+				{
+					//finish remaining without test
+					while (individuals.next() )
+					{
+						indId = individuals.getLong("IndID");
+						processUntestedIndividual(indId);
+						processFailingIndividual();
+					}
+					break;
+				}
+				
 			}
 			else
 			{
 				processFailingIndividual();
+				failCount++;
+				if (failCount > this.failureAllow )
+				{
+					//individuals failed too many times
+					entryPass = false;
+					break;
+				}
 			}
 		}
 		
 		individuals.close();
-		return passing;
+		return entryPass;
 	}
 
 	private boolean testEntry(ResultSet entries)
@@ -283,42 +305,112 @@ public abstract class FilterApplier extends Command
 		return true;
 	}	
 
-	private boolean filterOnGenotype(String genoName, ResultSet entryInfoData) throws Exception {
+	private boolean filterOnGenotype(String genoName, ResultSet indGenoData) throws Exception {
 		
-		/*
+
 		for( FilterParameter param : this.entryParameters )
 		{
 			if (param.tableName.equals(genoName))
 			{
 				int type = this.nestedConnection2.getInfoDataType( genoName );
-				String testValue = null;
-				if (entryInfoData.next())
+				ArrayList<String> testValues;
+				if (indGenoData.next())
 				{
-				    ResultSetMetaData rsMetaData = entryInfoData.getMetaData();
-				    int numberOfColumns = rsMetaData.getColumnCount();
-			    	
-				    if (numberOfColumns > 1)
-				    {
-				    	testValue = entryInfoData.getString(2);
-				    }
-				    else
-				    {
-				    	testValue = "";
-				    }
+					testValues = getAllGenotypeData(genoName, indGenoData);
 					//move cursor to the first for later uses
-					entryInfoData.previous();
+					indGenoData.previous();
+				}
+				else
+				{
+					testValues = new ArrayList<String>();
+					testValues.add(null);
 				}
 
-				
-				boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
-				if (!pass)
+				for (String testValue: testValues)
 				{
-					return pass;
+					boolean pass = comparisonHandler.testFilterComparison(type, param, testValue );
+					if (!pass)
+					{
+						//if any fail return failure
+						return pass;
+					}
 				}
 			}
 		}
-		*/
 		return true;
+	}
+	
+	private ArrayList<String> getAllGenotypeData(String genoName, ResultSet indGenoData) throws SQLException
+	{
+		if (genoName.equals("GT"))
+		{
+			return getAllGenoTypeDataGT(indGenoData);
+		}
+		ArrayList<String> genoData = new ArrayList<String>();
+	    ResultSetMetaData rsMetaData = indGenoData.getMetaData();
+	    int numberOfColumns = rsMetaData.getColumnCount();
+    	
+	    if (numberOfColumns > 1)
+	    {
+	    	for(int i=2; i<=numberOfColumns; i++)
+	    	{
+	    		genoData.add( indGenoData.getString(i) );
+	    	}
+	    }
+	    else
+	    {
+	    	//exists and not null
+	    	genoData.add("");
+	    }
+	    
+	    return genoData;
+	}
+	
+	private ArrayList<String> getAllGenoTypeDataGT(ResultSet indGenoData) throws SQLException
+	{
+		ArrayList<String> gtDataArray = new ArrayList<String>();
+		String gtData = "";
+		for( int i=2; i<=6; i++)
+		{
+			if (i%2 == 0)
+			{
+				//allele data
+				String allele = indGenoData.getString(2);
+				if (indGenoData.wasNull())
+				{
+					gtData += ".";
+				}
+				else
+				{
+					gtData += allele;
+				}
+			}
+			else
+			{
+				//phase data
+				String phase = indGenoData.getString(2);
+				if (indGenoData.wasNull())
+				{
+					//end of data
+					break;
+				}
+				else if (phase.equals("0"))
+				{
+					gtData += "/";
+				}
+				else if (phase.equals("1"))
+				{
+					gtData += "|";
+				}
+			}
+		}
+		
+		if (gtData.equals("."))
+		{
+			gtData = "";
+		}
+		gtDataArray.add(gtData);
+		return gtDataArray;		
 	}
 	
 	//@Override

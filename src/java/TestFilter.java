@@ -111,6 +111,21 @@ public class TestFilter {
 		command = new FilterWriteApplier("testFilter", "testFilterApplier5", "FilterTest6.txt" );
 		System.out.println( command.execute() );
 		
+		filterName = "testFilterApplier6";
+		String[] operands6 = {"entry REF=T", "ind DP=41"};
+		testCreator = new FilterCreator(filterName, operands6);
+		testCreator.uploadEntries();
+		command = new FilterWriteApplier("testFilter", "testFilterApplier6", "FilterTest7.txt" );
+		System.out.println( command.execute() );
+		
+		
+		filterName = "testFilterApplier7";
+		String[] operands7 = {"ind GT=1/1"};
+		testCreator = new FilterCreator(filterName, operands7);
+		testCreator.uploadEntries();
+		command = new FilterWriteApplier("testFilter", "testFilterApplier7", "FilterTest8.txt" );
+		System.out.println( command.execute() );
+		
 	}
 
 	private static void fileCompare(String fileTestName, String filePassName) throws FileNotFoundException, IOException {

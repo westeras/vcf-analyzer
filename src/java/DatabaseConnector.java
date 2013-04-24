@@ -213,6 +213,29 @@ class DatabaseConnector {
 			throw new SQLException("Invalid Query " + sql);
 		}
 	}
+	
+	public int[] getFilterMetaData(int filId ) throws IllegalArgumentException,
+		SQLException
+	{
+		int[] metadata = new int[2];
+		String sql = "";
+		try {
+			sql = "SELECT * FROM `vcf_analyzer`.`Filter` WHERE `FilId` = '"
+					+ filId + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				metadata[0] = rs.getInt("FailureAllow");
+				metadata[1] = rs.getInt("PassExactly");
+				rs.close();
+				return metadata;
+			}
+
+			throw new IllegalArgumentException("Filter not found");
+		} catch (SQLException se) {
+			throw new SQLException("Invalid Query " + sql);
+		}
+	}
 
 	public ArrayList<FilterParameter> getFilterEntries(int FilId)
 			throws SQLException {
@@ -268,35 +291,29 @@ class DatabaseConnector {
 	}
 
 	public int getInfoDataType(String infoName) throws SQLException {
-		String sql = "";
-		try {
-			sql = "SELECT * FROM `vcf_analyzer`.`InfoTable` WHERE `InfoName` = '"
-					+ infoName + "'";
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				int type = Integer.parseInt(rs.getString("Type"));
-				rs.close();
-				return type;
-			}
-			throw new SQLException("Invalid INFO name " + infoName);
-
-		} catch (SQLException se) {
-			throw new SQLException("Invalid Query " + sql);
-		}
+		return getTableDataType(infoName, "InfoTable", "InfoName", "INFO");
 	}
 
 	public int getGenoTypeDataType(String genoName) throws SQLException {
+		return getTableDataType(genoName, "GenotypeTable", "GenoName", "genotype");
+	}
+
+	private int getTableDataType(String idName, String tableName,
+			String columnName, String errorName) throws SQLException {
+		
 		String sql = "";
 		try {
-			sql = "SELECT * FROM `vcf_analyzer`.`GenotypeTable` WHERE `GenoName` = '"
-					+ genoName + "'";
+			sql = String.format( "SELECT * FROM `vcf_analyzer`.`tableName` WHERE `columnName` = '%s'", 
+					tableName,
+					columnName,
+					idName);
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				int type = Integer.parseInt(rs.getString("Type"));
 				rs.close();
 				return type;
 			}
-			throw new SQLException("Invalid genotype name " + genoName);
+			throw new SQLException("Invalid " +errorName+ " name " + idName);
 
 		} catch (SQLException se) {
 			throw new SQLException("Invalid Query " + sql);
