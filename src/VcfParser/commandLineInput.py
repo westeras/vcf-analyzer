@@ -53,7 +53,7 @@ if args.command is None:
                 if len(command) == 3:
                     uploadVcfWithName(command[1], command[2])
             else:
-                command = "java -cp " + cp  + " CommandLineInterpreter -" + inputString
+                command = "java -cp " + cp  + " CommandLineInterpreter " + inputString
                 print command
                 subprocess.call(command, shell=True)
 else:
