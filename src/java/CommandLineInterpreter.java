@@ -373,8 +373,8 @@ public class CommandLineInterpreter
    }
    
 	public static void main(String[] args) throws ClassNotFoundException, SQLException{
-		
-		interpreter(args);
+
+		System.out.println(interpreter(args));
 	
 	}
 } 
