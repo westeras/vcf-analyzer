@@ -81,23 +81,9 @@ public class TestFilter {
 		command = new FilterStoreApplier("2013-04-10_13:54", filterName );
 		System.out.println( command.execute() );
 		
-		filterName = "testFilterApplier2";
-		String[] operands2 = {"entry REF=T"};//, "entry MQ between 78.8 79.0"};
-		testCreator = new FilterCreator(filterName, operands2);
-		testCreator.uploadEntries();
+		//Test 3 removed
 		
-		command = new FilterWriteApplier("testFilter", "testFilterApplier2", "FilterTest3.txt" );
-		System.out.println( command.execute() );
-		fileCompare("FilterTest3.txt", "FilterPass3.txt");
-		
-		filterName = "testFilterApplier3";
-		String[] operands3 = {"entry REF=T", "entry MQ not equals 0", "entry Dels=0"};//"entry MQ between 78.8 79.0"};
-		testCreator = new FilterCreator(filterName, operands3);
-		testCreator.uploadEntries();
-		
-		command = new FilterWriteApplier("testFilter", "testFilterApplier3", "FilterTest4.txt" );
-		System.out.println( command.execute() );
-		//fileCompare("FilterTest4.txt", "FilterPass4.txt");	
+		//Test 4 removed	
 		
 		filterName = "testFilterApplier4";
 		String[] operands4 = {"entry Dels=0", "entry MQ between 78.8 79"};
@@ -114,6 +100,7 @@ public class TestFilter {
 		
 		command = new FilterWriteApplier("testFilter", "testFilterApplier5", "FilterTest6.txt" );
 		System.out.println( command.execute() );
+		fileCompare("FilterTest6.txt", "FilterPass6.txt");
 		
 		filterName = "testFilterApplier6";
 		String[] operands6 = {"entry REF=T", "ind DP<41", "option pe equals 3"};
@@ -121,7 +108,7 @@ public class TestFilter {
 		testCreator.uploadEntries();
 		command = new FilterWriteApplier("testFilter", "testFilterApplier6", "FilterTest7.txt" );
 		System.out.println( command.execute() );
-		
+		fileCompare("FilterTest7.txt", "FilterPass7.txt");
 		
 		filterName = "testFilterApplier7";
 		String[] operands7 = {"ind GT=0/0", "option FailureAllow=10"};
