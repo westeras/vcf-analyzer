@@ -375,7 +375,7 @@ public abstract class FilterApplier extends Command
 			if (i%2 == 0)
 			{
 				//allele data
-				String allele = indGenoData.getString(2);
+				String allele = indGenoData.getString(i);
 				if (indGenoData.wasNull())
 				{
 					gtData += ".";
@@ -388,7 +388,7 @@ public abstract class FilterApplier extends Command
 			else
 			{
 				//phase data
-				String phase = indGenoData.getString(2);
+				String phase = indGenoData.getString(i);
 				if (indGenoData.wasNull())
 				{
 					//end of data
