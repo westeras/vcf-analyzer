@@ -502,12 +502,8 @@ public class FilterComparison {
 		}
 		case 5:
 		{
-			//TODO remove
-			System.out.println(testValue + filter.comparator);
 			//string
-			boolean bool = operation.compareString(testValue, filter.comparator, filter.comparator2);
-			System.out.println(bool);
-			return bool;
+			return operation.compareString(testValue, filter.comparator, filter.comparator2);
 			
 		}
 		}

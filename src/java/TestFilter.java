@@ -129,6 +129,7 @@ public class TestFilter {
 		testCreator.uploadEntries();
 		command = new FilterWriteApplier("testFilter", "testFilterApplier7", "FilterTest8.txt" );
 		System.out.println( command.execute() );
+		fileCompare("FilterTest8.txt", "FilterPass8.txt");
 		
 	}
 
