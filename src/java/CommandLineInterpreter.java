@@ -3,14 +3,6 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import org.apache.commons.cli.CommandLine;  
-import org.apache.commons.cli.CommandLineParser;  
-import org.apache.commons.cli.GnuParser;  
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;  
-import org.apache.commons.cli.ParseException;
   
 public class CommandLineInterpreter
 {  
@@ -155,104 +147,6 @@ public class CommandLineInterpreter
 			}
 			result = filterCommand(commandLineArguments);
 		}
-			/*if (commandLine.hasOption("upano")){
-				result = uploadCommand(commandLineArguments, commandLine, "upano");
-			}
-			
-			//allows for three arguments, afs(vcfname, filename, filtername)
-			if (commandLine.hasOption("asf")){
-				String[] args = commandLine.getOptionValues("asf");
-				Command command = null;
-				if(args.length == 2) command = new AFSCommand(args[0], args[1], "");
-				if(args.length == 3) command = new AFSCommand(args[0], args[1], args[2]);
-				result = command.execute();
-			}
-			
-			//Allow for two optional arguments--
-			if (commandLine.hasOption("filterWrite")){
-				String[] args = commandLine.getOptionValues("filterWrite");
-				Command command = null;
-				if(args.length == 3) command = new FilterWriteApplier(args[0], args[1], args[2]);
-				result = command.execute();
-			}
-			
-			if (commandLine.hasOption("filterStore")){
-				String[] args = commandLine.getOptionValues("filterStore");
-				Command command = null;
-				if(args.length == 2) command = new FilterStoreApplier(args[0], args[1]);
-				result = command.execute();
-			}
-			
-			if(commandLine.hasOption("createfilter")){
-				String[] args = commandLine.getOptionValues("createfilter");
-				FilterCreator filter = null;
-				if(args.length == 1){
-					input = new Scanner(System.in);
-					ArrayList<String> additionalArguments = new ArrayList<String>();
-					System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
-					while(true){
-						System.out.print(">> ");
-						String line = input.nextLine().trim();
-						if(line.equals("done") || line.equals("")){
-							break;
-						}
-						System.out.println(line);
-						additionalArguments.add(line);
-					}
-					String[] arguments = new String[additionalArguments.size()];
-					arguments = additionalArguments.toArray(arguments);
-					filter = new FilterCreator(args[0],arguments);
-				}else{
-					String[] additionalArguments = new String[args.length-1];
-					
-					for(int i = 0; i < additionalArguments.length; i++){
-						additionalArguments[i] = args[i+1];
-					}
-					
-					filter = new FilterCreator(args[0],additionalArguments);
-				}
-				filter.uploadEntries();
-			}
-			
-			if (commandLine.hasOption("sum")){
-				
-				String[] stringNumbers = commandLine.getOptionValues("sum");
-				int sum = 0;
-
-				for(int i = 0; i < stringNumbers.length; i++){
-					sum += Integer.parseInt(stringNumbers[i]);
-				}
-        	 
-				System.out.println(sum);
-			}
-			
-			if (commandLine.hasOption("view")){
-				String[] args = commandLine.getOptionValues("view");
-						
-				Command makeView = new View(args[0],args[1]);
-				return makeView.execute();
-			}
-			
-			if (commandLine.hasOption("delete")){
-				String[] args = commandLine.getOptionValues("delete");
-						
-				Command makeView = new DeleteCommand(args[0],args[1],args[2]);
-				return makeView.execute();
-			}
-			
-			if (commandLine.hasOption("help")){
-				
-				/*
-				 * Expand to a more general help function
-				 */
-				
-			/*	System.out.println("hello\nn <arg>\nsum <arg0> <arg1> <arg2> ...");
-			}*/
-		//}
-      
-		/*catch (ParseException parsingException){  
-			System.err.println("Could not find argument: " + parsingException.getMessage());  
-		}*/
 		
 		return result;
 	}  
