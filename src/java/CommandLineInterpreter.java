@@ -22,72 +22,55 @@ public class CommandLineInterpreter
 		
 		String result = "";
 			
-		if (isTheCommandName(commandLineArguments, "upload divergence")){
-			String[] args = new String[commandLineArguments.length - 2];
-			for(int i = 0; i < args.length; i++){
-				args[i] = commandLineArguments[i+2];
-			}
+		String commandName = "upload divergence";
+		if (isTheCommandName(commandLineArguments, commandName)){
 			result = uploadCommand(commandLineArguments, "updiv");
 		}
 			
-		if (isTheCommandName(commandLineArguments, "updiv")){
-			String[] args = new String[commandLineArguments.length - 1];
-			for(int i = 0; i < args.length; i++){
-				args[i] = commandLineArguments[i+1];
-			}
+		commandName = "updiv";
+		if (isTheCommandName(commandLineArguments, commandName)){
 			result = uploadCommand(commandLineArguments, "updiv");
 		}
 		
-		if (isTheCommandName(commandLineArguments, "upload annotation")){
-			String[] args = new String[commandLineArguments.length - 2];
-			for(int i = 0; i < args.length; i++){
-				args[i] = commandLineArguments[i+2];
-			}
-			result = uploadCommand(commandLineArguments, "upano");
-		}
-			
-		if (isTheCommandName(commandLineArguments, "upano")){
-			String[] args = new String[commandLineArguments.length - 1];
-			for(int i = 0; i < args.length; i++){
-				args[i] = commandLineArguments[i+1];
-			}
+		commandName = "upload annotation";
+		if (isTheCommandName(commandLineArguments, commandName)){
 			result = uploadCommand(commandLineArguments, "upano");
 		}
 		
-		if (isTheCommandName(commandLineArguments, "afs")){
-			String[] args = new String[commandLineArguments.length - 1];
-			for(int i = 0; i < args.length; i++){
-				args[i] = commandLineArguments[i+1];
-			}
+		commandName = "upano";
+		if (isTheCommandName(commandLineArguments, commandName)){
+			result = uploadCommand(commandLineArguments, "upano");
+		}
+		
+		commandName = "afs";
+		if (isTheCommandName(commandLineArguments, commandName)){
 			result = vcfCommand(commandLineArguments);
 		}
 		
-		if (isTheCommandName(commandLineArguments, "allele frequency spectra")){
-			String[] args = new String[commandLineArguments.length - 3];
-			for(int i = 0; i < args.length; i++){
-				args[i] = commandLineArguments[i+3];
-			}
+		commandName = "allele frequency spectra";
+		if (isTheCommandName(commandLineArguments, commandName)){
 			result = vcfCommand(commandLineArguments);
 		}
 		
-		if (isTheCommandName(commandLineArguments, "delete")){						
+		//Fix this later, somehow missed it the first time.
+		commandName = "delete";
+		if (isTheCommandName(commandLineArguments, commandName)){						
 			Command makeView = new DeleteCommand(commandLineArguments[1],commandLineArguments[2],commandLineArguments[3]);
 			return makeView.execute();
 		}
 		
-		if(isTheCommandName(commandLineArguments, "create filter")){
+		commandName = "create filter";
+		if(isTheCommandName(commandLineArguments, commandName)){
 			createFilterLoop(commandLineArguments);
 		}
 		
-		if(isTheCommandName(commandLineArguments, "crefil")){
+		commandName = "crefil";
+		if(isTheCommandName(commandLineArguments, commandName)){
 			createFilterLoop(commandLineArguments);
 		}
 		
-		if(commandLineArguments[0].equals("filter")){
-			String[] args = new String[commandLineArguments.length - 1];
-			for(int i = 0; i < args.length; i++){
-				args[i] = commandLineArguments[i+1];
-			}
+		commandName = "filter";
+		if(isTheCommandName(commandLineArguments, commandName)){
 			result = filterCommand(commandLineArguments);
 		}
 		
