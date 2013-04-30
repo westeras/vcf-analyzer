@@ -52,7 +52,7 @@ public class DivergenceSummary extends Command {
 		
 	}
 
-	private void count(ResultSet tuples) {
+	void count(ResultSet tuples) {
 		ArrayList<String> results;
 		try {
 			results = convertToArrayList(tuples);
