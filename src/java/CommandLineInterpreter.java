@@ -22,8 +22,7 @@ public class CommandLineInterpreter
 		
 		String result = "";
 			
-		if (commandLineArguments[0].equals("upload") 
-				&& commandLineArguments[1].equals("divergence")){
+		if (isTheCommandName(commandLineArguments, "upload divergence")){
 			String[] args = new String[commandLineArguments.length - 2];
 			for(int i = 0; i < args.length; i++){
 				args[i] = commandLineArguments[i+2];
@@ -229,6 +228,16 @@ public class CommandLineInterpreter
 		result = command.execute();
 		
 		return result;
+	}
+	
+	public static boolean isTheCommandName(String[] command, String commandName){
+		String[] commandNameArray = commandName.split("\\s+");
+		for(int i = 0; i < commandNameArray.length; i++){
+			if(!commandNameArray[i].equals(command[i])){
+				return false;
+			}
+		}
+		return true;
 	}
   
 
