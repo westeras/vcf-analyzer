@@ -26,6 +26,10 @@ public class AFSCommand extends Command {
 		this.conn = new DatabaseConnector();
 		this.spectra = new TreeMap<Integer, Integer>();
 	}
+	
+	
+	
+	
 
 	@Override
 	public String execute() {

@@ -15,8 +15,11 @@ public class DivergenceSummary extends Command {
 	private String div_name;
 	private String filter; 
 	private DatabaseConnector conn;
+	private int numOnes;
+	private int numZeros;
 	public DivergenceSummary(String vcf_name,String div_name, String filter) throws ClassNotFoundException, SQLException{
-		this.conn=new DatabaseConnector();
+		this.numOnes=0;
+		this.numZeros=0;
 		this.vcf_name=vcf_name;
 		this.div_name=div_name;
 		this.filter=filter;				
@@ -24,15 +27,15 @@ public class DivergenceSummary extends Command {
 	
 	@Override
 	public String execute() {
+		
 		String sql= buildSQLStatment();
-		int summary;
 		try {
+			this.conn=new DatabaseConnector();
 			ResultSet tuples=this.conn.executeQuery(sql);
 			ArrayList<String> results=convertToArrayList(tuples); 
-			if (this.filter!=""){
-				results=applyFilter(results);
-			}
-			summary=count(results);
+			count(results);
+			String summary=printSummary();
+			System.out.println(summary);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -42,14 +45,23 @@ public class DivergenceSummary extends Command {
 	
 	
 	
-	private int count(ArrayList<String> results) {
-		// TODO Auto-generated method stub.
-		return 0;
+	String printSummary() {
+		String toRet="0s: "+this.numZeros+"\n"+
+					"1s: "+this.numOnes+"\n";
+		return toRet;
+		
 	}
 
-	private ArrayList<String> applyFilter(ArrayList<String> results) {
-		// TODO Auto-generated method stub.
-		return null;
+	private void count(ArrayList<String> results) {
+		for (String s: results){
+			if (s.equals("1")){
+				numOnes++;
+			}
+			else if (s.equals("0")){
+				numZeros++;
+			}
+		}
+		
 	}
 
 	private ArrayList<String> convertToArrayList(ResultSet r)
@@ -64,11 +76,21 @@ public class DivergenceSummary extends Command {
 
 	
 	protected String buildSQLStatment() {
-		String sql = "Select `DivValue` from `Vcf`, `VcfEntry`, `Divergence`  "+
+		if (this.filter.equals("")){
+		return "Select `DivValue` from `Vcf`, `VcfEntry`, `Divergence`  "+
 				"where `Vcf`.`VcfName`='"+this.vcf_name+"' and `Vcf`.`VcfId`=`VcfEntry`.`VcfId` and"+
-				"`VcfEntry`.`VcfId`=`Divergence`.`VcfId` and `VcfEntry`.`Chrom`= `Divergence`.`Chromosome`"+
+				" `VcfEntry`.`Chrom`= `Divergence`.`Chromosome`"+
 				" and `VcfEntry`.`Pos`= `Divergence`.`Position` and `Divergence`.`DivName`='"+this.div_name+"'";
-		return sql;
+		}
+		else {
+			return "Select `DivValue` from `Vcf`, `VcfEntry`, `Divergence`, `Filter`, `FilterEntryPass` "+
+					"where `Vcf`.`VcfName`='"+this.vcf_name+"' and `Vcf`.`VcfId`=`VcfEntry`.`VcfId` and"+
+					" `VcfEntry`.`Chrom`= `Divergence`.`Chromosome`"+
+					" and `VcfEntry`.`Pos`= `Divergence`.`Position` and `Divergence`.`DivName`='"+this.div_name+"' "+
+					"and `Filter`.`FilName`='"+this.filter+"' and `Filter`.`FilId`=`FilterEntryPass`.`FilId` and `FilterEntryPass`.`Pass`=1 and `VcfEntry`.`EntryId`=`FilterEntryPass`.`EntryId`";				
+		}
+		
+
 	}
 
 	@Override
