@@ -54,11 +54,12 @@ public class DivergenceSummary extends Command {
 
 	private void count(ArrayList<String> results) {
 		for (String s: results){
+			System.out.println(s);
 			if (s.equals("1")){
-				numOnes++;
+				this.numOnes++;
 			}
 			else if (s.equals("0")){
-				numZeros++;
+				this.numZeros++;
 			}
 		}
 		
