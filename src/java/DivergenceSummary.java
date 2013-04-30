@@ -32,8 +32,8 @@ public class DivergenceSummary extends Command {
 		try {
 			this.conn=new DatabaseConnector();
 			ResultSet tuples=this.conn.executeQuery(sql);
-			ArrayList<String> results=convertToArrayList(tuples); 
-			count(results);
+			 
+			count(tuples);
 			String summary=printSummary();
 			System.out.println(summary);
 		} catch (Exception exception) {
@@ -52,16 +52,23 @@ public class DivergenceSummary extends Command {
 		
 	}
 
-	private void count(ArrayList<String> results) {
-		for (String s: results){
-			System.out.println(s);
-			if (s.equals("1")){
-				this.numOnes++;
+	private void count(ResultSet tuples) {
+		ArrayList<String> results;
+		try {
+			results = convertToArrayList(tuples);
+			for (String s: results){
+				System.out.println(s);
+				if (s.equals("1")){
+					this.numOnes++;
+				}
+				else if (s.equals("0")){
+					this.numZeros++;
+				}
 			}
-			else if (s.equals("0")){
-				this.numZeros++;
-			}
+		} catch (SQLException exception) {
+			exception.printStackTrace();
 		}
+		
 		
 	}
 

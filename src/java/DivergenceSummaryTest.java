@@ -1,16 +1,13 @@
 import static org.junit.Assert.*;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
 
-/**
- * TODO Put here a description of what this class does.
- *
- * @author schepedw.
- *         Created Apr 23, 2013.
- */
+
 public class DivergenceSummaryTest {
 	
 		
@@ -33,8 +30,20 @@ public class DivergenceSummaryTest {
 	@Test
 	public void testSummary() throws ClassNotFoundException, SQLException{
 		DivergenceSummary summary=new DivergenceSummary("2013-03-23_15:28","2013-04-24_14-19","testFilter");
-		assertEquals(summary.printSummary(),"0s: 0\n1s: 1\n");
+		assertEquals(summary.printSummary(),"0s: 0\n1s: 0\n");
 	}
+	
+	@Test
+	public void testExecute() throws ClassNotFoundException, SQLException{
+		DivergenceSummary summary=new DivergenceSummary("2013-03-23_15:28","2013-04-24_14-19","testFilter");
+		DatabaseConnector conn=new DatabaseConnector();
+		String sql= summary.buildSQLStatment();
+		ResultSet tuples=conn.executeQuery(sql);
+		summary.count(tuples);
+		String test=summary.printSummary();
+		assertEquals(test,"0s: 0\n1s: 0\n");
+	}
+	
 	
 	
 
