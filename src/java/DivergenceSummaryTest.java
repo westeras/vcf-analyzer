@@ -41,7 +41,7 @@ public class DivergenceSummaryTest {
 		ResultSet tuples=conn.executeQuery(sql);
 		summary.count(tuples);
 		String test=summary.printSummary();
-		assertEquals(test,"0s: 0\n1s: 0\n");
+		assertEquals(test,"0s: 0\n1s: 1\n");
 	}
 	
 	
