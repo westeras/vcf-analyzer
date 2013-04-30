@@ -30,7 +30,7 @@ public class CommandLineInterpreter
 			result = uploadCommand(commandLineArguments, "updiv");
 		}
 			
-		if (commandLineArguments[0].equals("updiv")){
+		if (isTheCommandName(commandLineArguments, "updiv")){
 			String[] args = new String[commandLineArguments.length - 1];
 			for(int i = 0; i < args.length; i++){
 				args[i] = commandLineArguments[i+1];
@@ -38,8 +38,7 @@ public class CommandLineInterpreter
 			result = uploadCommand(commandLineArguments, "updiv");
 		}
 		
-		if (commandLineArguments[0].equals("upload") 
-				&& commandLineArguments[1].equals("annotation")){
+		if (isTheCommandName(commandLineArguments, "upload annotation")){
 			String[] args = new String[commandLineArguments.length - 2];
 			for(int i = 0; i < args.length; i++){
 				args[i] = commandLineArguments[i+2];
@@ -47,7 +46,7 @@ public class CommandLineInterpreter
 			result = uploadCommand(commandLineArguments, "upano");
 		}
 			
-		if (commandLineArguments[0].equals("upano")){
+		if (isTheCommandName(commandLineArguments, "upano")){
 			String[] args = new String[commandLineArguments.length - 1];
 			for(int i = 0; i < args.length; i++){
 				args[i] = commandLineArguments[i+1];
@@ -55,7 +54,7 @@ public class CommandLineInterpreter
 			result = uploadCommand(commandLineArguments, "upano");
 		}
 		
-		if (commandLineArguments[0].equals("afs")){
+		if (isTheCommandName(commandLineArguments, "afs")){
 			String[] args = new String[commandLineArguments.length - 1];
 			for(int i = 0; i < args.length; i++){
 				args[i] = commandLineArguments[i+1];
@@ -63,9 +62,7 @@ public class CommandLineInterpreter
 			result = vcfCommand(commandLineArguments);
 		}
 		
-		if (commandLineArguments[0].equals("allele") 
-				&& commandLineArguments[1].equals("frequency") 
-				&& commandLineArguments[2].equals("spectra")){
+		if (isTheCommandName(commandLineArguments, "allele frequency spectra")){
 			String[] args = new String[commandLineArguments.length - 3];
 			for(int i = 0; i < args.length; i++){
 				args[i] = commandLineArguments[i+3];
@@ -73,13 +70,12 @@ public class CommandLineInterpreter
 			result = vcfCommand(commandLineArguments);
 		}
 		
-		if (commandLineArguments[0].equals("delete")){						
+		if (isTheCommandName(commandLineArguments, "delete")){						
 			Command makeView = new DeleteCommand(commandLineArguments[1],commandLineArguments[2],commandLineArguments[3]);
 			return makeView.execute();
 		}
 		
-		if(commandLineArguments[0].equals("create")
-				&& commandLineArguments[1].equals("filter")){
+		if(isTheCommandName(commandLineArguments, "create filter")){
 			FilterCreator filter = null;
 			if(commandLineArguments.length == 2){
 				input = new Scanner(System.in);
@@ -109,7 +105,7 @@ public class CommandLineInterpreter
 			filter.uploadEntries();
 		}
 		
-		if(commandLineArguments[0].equals("crefil")){
+		if(isTheCommandName(commandLineArguments, "crefil")){
 			FilterCreator filter = null;
 			if(commandLineArguments.length == 1){
 				input = new Scanner(System.in);
