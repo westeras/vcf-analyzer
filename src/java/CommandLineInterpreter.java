@@ -76,63 +76,11 @@ public class CommandLineInterpreter
 		}
 		
 		if(isTheCommandName(commandLineArguments, "create filter")){
-			FilterCreator filter = null;
-			if(commandLineArguments.length == 2){
-				input = new Scanner(System.in);
-				ArrayList<String> additionalArguments = new ArrayList<String>();
-				System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
-				while(true){
-					System.out.print(">> ");
-					String line = input.nextLine().trim();
-					if(line.equals("done") || line.equals("")){
-						break;
-					}
-					System.out.println(line);
-					additionalArguments.add(line);
-				}
-				String[] arguments = new String[additionalArguments.size()];
-				arguments = additionalArguments.toArray(arguments);
-				filter = new FilterCreator(commandLineArguments[0],arguments);
-			}else{
-				String[] additionalArguments = new String[commandLineArguments.length-2];
-				
-				for(int i = 0; i < additionalArguments.length; i++){
-					additionalArguments[i] = commandLineArguments[i+2];
-				}
-				
-				filter = new FilterCreator(commandLineArguments[0],additionalArguments);
-			}
-			filter.uploadEntries();
+			createFilterLoop(commandLineArguments);
 		}
 		
 		if(isTheCommandName(commandLineArguments, "crefil")){
-			FilterCreator filter = null;
-			if(commandLineArguments.length == 1){
-				input = new Scanner(System.in);
-				ArrayList<String> additionalArguments = new ArrayList<String>();
-				System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
-				while(true){
-					System.out.print(">> ");
-					String line = input.nextLine().trim();
-					if(line.equals("done") || line.equals("")){
-						break;
-					}
-					System.out.println(line);
-					additionalArguments.add(line);
-				}
-				String[] arguments = new String[additionalArguments.size()];
-				arguments = additionalArguments.toArray(arguments);
-				filter = new FilterCreator(commandLineArguments[0],arguments);
-			}else{
-				String[] additionalArguments = new String[commandLineArguments.length-1];
-				
-				for(int i = 0; i < additionalArguments.length; i++){
-					additionalArguments[i] = commandLineArguments[i+1];
-				}
-				
-				filter = new FilterCreator(commandLineArguments[0],additionalArguments);
-			}
-			filter.uploadEntries();
+			createFilterLoop(commandLineArguments);
 		}
 		
 		if(commandLineArguments[0].equals("filter")){
@@ -144,6 +92,37 @@ public class CommandLineInterpreter
 		}
 		
 		return result;
+	}
+
+	public static void createFilterLoop(final String[] commandLineArguments)
+			throws ClassNotFoundException, SQLException {
+		FilterCreator filter = null;
+		if(commandLineArguments.length == 2){
+			input = new Scanner(System.in);
+			ArrayList<String> additionalArguments = new ArrayList<String>();
+			System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
+			while(true){
+				System.out.print(">> ");
+				String line = input.nextLine().trim();
+				if(line.equals("done") || line.equals("")){
+					break;
+				}
+				System.out.println(line);
+				additionalArguments.add(line);
+			}
+			String[] arguments = new String[additionalArguments.size()];
+			arguments = additionalArguments.toArray(arguments);
+			filter = new FilterCreator(commandLineArguments[0],arguments);
+		}else{
+			String[] additionalArguments = new String[commandLineArguments.length-2];
+			
+			for(int i = 0; i < additionalArguments.length; i++){
+				additionalArguments[i] = commandLineArguments[i+2];
+			}
+			
+			filter = new FilterCreator(commandLineArguments[0],additionalArguments);
+		}
+		filter.uploadEntries();
 	}  
 	
 	private static String filterCommand(String[] args) {
