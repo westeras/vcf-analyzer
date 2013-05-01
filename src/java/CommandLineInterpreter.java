@@ -155,7 +155,7 @@ public class CommandLineInterpreter
 		String vcf = "";
 		
 		for(int i = 0; i < args.length; i++){
-			if(args[i].equals("store") && i != args.length - 1){store = true;}
+			if(args[i].equals("store")){store = true;}
 			if(args[i].equals("write") && i != args.length - 1){write = args[i+1];}
 			if(args[i].equals("filterby") && i != args.length - 1){by = args[i+1];}
 			if(args[i].equals("vcf") && i != args.length - 1){vcf = args[i+1];}
