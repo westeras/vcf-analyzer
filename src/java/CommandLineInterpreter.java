@@ -164,8 +164,14 @@ public class CommandLineInterpreter
 		if(vcf.equals("")){return "Please include the vcf that is being used.";}
 		if(by.equals("")){return "Please include what this is being filtered by";}
 		
-		if(!write.equals("")){applier = new FilterWriteApplier(vcf, by, write);}
-		if(store == true){applier = new FilterStoreApplier(vcf, by);}
+		if(!write.equals("")){
+			applier = new FilterWriteApplier(vcf, by, write);
+			applier.execute();
+		}
+		if(store == true){
+			applier = new FilterStoreApplier(vcf, by);
+			applier.execute();
+		}
 				
 		return result;
 	}
