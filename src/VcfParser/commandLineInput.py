@@ -29,9 +29,9 @@ else:
 
 if args.command is None:
     breaker = 0
-    name = ""
-    fileName = ""
     while(breaker == 0):
+        name = ""
+        fileName = ""
         print('Please input a command')
         inputString = raw_input('>')
         if inputString == "" or inputString == "help":
