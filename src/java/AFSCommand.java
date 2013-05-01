@@ -27,9 +27,6 @@ public class AFSCommand extends Command {
 		this.spectra = new TreeMap<Integer, Integer>();
 	}
 	
-	
-	
-	
 
 	@Override
 	public String execute() {
@@ -63,7 +60,7 @@ public class AFSCommand extends Command {
 
 			e.printStackTrace();
 		}
-		printSpectra();
+		String toRet=printSpectra();
 		return this.spectra.toString();
 
 	}
@@ -185,10 +182,10 @@ public class AFSCommand extends Command {
 		return count;
 	}
 
-	private void printSpectra() {
+	private String printSpectra() {
 		String output = getOutputContent();
 		if (this.outputFileName.equals("")) {
-			System.out.println(output);
+			return output;
 		} else {
 			FileWriter fstream;
 			try {
@@ -199,6 +196,7 @@ public class AFSCommand extends Command {
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
+			return "";
 		}
 	}
 
