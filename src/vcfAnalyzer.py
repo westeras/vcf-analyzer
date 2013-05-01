@@ -1,6 +1,8 @@
 import argparse
 import subprocess
-import VcfParser.vcf
+import sys
+sys.path.append('/VcfParser/vcf')
+import vcf
 
 def uploadVcfWithoutName(location):
     vcf_reader = vcf.Reader(open(location))
@@ -23,7 +25,7 @@ parser.add_argument("-com","--command")
 args = parser.parse_args()
 
 if args.classpath is None:
-    cp = "../java:$CLASSPATH"
+    cp = "java:$CLASSPATH"
 else:
     cp = args.classpath
 
@@ -35,7 +37,7 @@ if args.command is None:
         fileName = ""
         inputString = raw_input('>')
         if inputString == "" or inputString == "help":
-            print('Please see the User Guide') #Call to java properly later
+            print('Please see the User Guide')
         else:
             command = inputString.split()
             if command[0] == "quit":
