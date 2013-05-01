@@ -61,7 +61,7 @@ if args.command is None:
                     
             else:
                 command = "java -cp " + cp  + " CommandLineInterpreter " + inputString
-                print command
+                #print command
                 subprocess.call(command, shell=True)
 else:
     command = "java -cp " + cp  + " " + args.command

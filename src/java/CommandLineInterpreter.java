@@ -187,7 +187,7 @@ public class CommandLineInterpreter
 		}
 		
 		if(fileLocation.equals("") && fileName.equals("") && filterName.equals("")){return "Please input proper arguments";}
-		if(fileLocation.equals("")){return "Please include a file location";}
+		//if(fileLocation.equals("")){return "Please include a file location";}
 		
 		command = new AFSCommand(fileName, fileLocation, filterName);
 		result = command.execute();
