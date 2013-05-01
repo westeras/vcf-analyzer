@@ -196,7 +196,7 @@ public class AFSCommand extends Command {
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
-			return "";
+			return "Output located in "+this.outputFileName;
 		}
 	}
 
