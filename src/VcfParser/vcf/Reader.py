@@ -183,7 +183,6 @@ class Reader(object):
         NOTE: this method has a cython equivalent and care must be taken
         to keep the two methods equivalent
         '''
-        print samp_fmt
         individGeno = samp_fmt.split(":")
         IndividualFunctions = []
         CustomGeno = []
