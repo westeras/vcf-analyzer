@@ -149,26 +149,24 @@ public class CommandLineInterpreter
 		FilterApplier applier  = null;
 		
 		String result = "";
-		String store = "";
+		boolean store = false;
 		String write = "";
 		String by = "";
 		String vcf = "";
 		
 		for(int i = 0; i < args.length; i++){
-			if(args[i].equals("store") && i != args.length - 1){store = args[i+1];}
+			if(args[i].equals("store") && i != args.length - 1){store = true;}
 			if(args[i].equals("write") && i != args.length - 1){write = args[i+1];}
-			if(args[i].equals("by") && i != args.length - 1){by = args[i+1];}
+			if(args[i].equals("filterby") && i != args.length - 1){by = args[i+1];}
 			if(args[i].equals("vcf") && i != args.length - 1){vcf = args[i+1];}
 		}
 		
 		if(vcf.equals("")){return "Please include the vcf that is being used.";}
-		if(store.equals("") && write.equals("")){return "Please include the file name output.";}
 		if(by.equals("")){return "Please include what this is being filtered by";}
 		
 		if(!write.equals("")){applier = new FilterWriteApplier(vcf, by, write);}
-		if(!store.equals("")){applier = new FilterWriteApplier(vcf, by, store);}
-		
-		//Ask about this		
+		if(store == true){applier = new FilterStoreApplier(vcf, by);}
+				
 		return result;
 	}
 
