@@ -25,7 +25,7 @@ parser.add_argument("-com","--command")
 args = parser.parse_args()
 
 if args.classpath is None:
-    cp = "/java:$CLASSPATH"
+    cp = "./java:$CLASSPATH"
 else:
     cp = args.classpath
 
