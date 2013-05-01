@@ -20,7 +20,7 @@ public abstract class TestViewAndDelete {
 		String table=input.next();
 		System.out.println("enter the column name");
 		String column=input.next();
-		View view=new View(table, column);
+		View view=new View(table);
 		view.execute();
 		
 		System.out.println("delete takes a table name, column name, and a delete value\n please enter the column name");
