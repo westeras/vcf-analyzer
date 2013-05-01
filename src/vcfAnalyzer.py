@@ -11,12 +11,16 @@ def uploadVcfWithoutName(location):
     while (not fileEnded):
         fileEnded = vcf_reader.next()
 
+    return "Upload successful"
+
 def uploadVcfWithName(location, name):
     vcf_reader = vcf.Reader(vcfName=name, fsock=open(location))
 
     fileEnded = False
     while (not fileEnded):
         fileEnded = vcf_reader.next()
+
+    return "Upload successful"
 
 parser = argparse.ArgumentParser(description='Reads input for the VCF Handler')
 parser.add_argument("-cp", "--classpath")
@@ -49,9 +53,9 @@ if args.command is None:
                     if command[pos] == "file" and pos != len(command) - 1:
                         fileName = command[pos + 1]
                 if fileName != "" and name != "":
-                    uploadVcfWithName(fileName, name)
+                    print(uploadVcfWithName(fileName, name))
                 if fileName != "" and name == "":
-                    uploadVcfWithoutName(fileName)
+                    print(uploadVcfWithoutName(fileName))
                 if fileName == "":
                     print('Please include additional arguments')
                     
