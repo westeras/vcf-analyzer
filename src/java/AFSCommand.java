@@ -61,7 +61,7 @@ public class AFSCommand extends Command {
 			e.printStackTrace();
 		}
 		String toRet=printSpectra();
-		return this.spectra.toString();
+		return toRet;
 
 	}
 
