@@ -12,11 +12,15 @@ public class DeleteCommand extends Command {
 	private String columnName;
 	private DatabaseConnector conn;
 
-	public DeleteCommand(String table, String delValue, String columnName) {
+	public DeleteCommand(String table, String delValue) {
 		this.table = table;
 		this.delValue = delValue;
-		this.columnName=columnName;
-		
+	
+		this.table=table;
+		if (this.table.equals("Divergence"))
+			this.columnName="DivName";
+		else if (this.table.equals("Annotation"))
+			this.columnName="AnnoName";
 		try {
 			this.conn = new DatabaseConnector();
 		} catch (Exception exception) {

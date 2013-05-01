@@ -27,7 +27,7 @@ public abstract class TestViewAndDelete {
 		column=input.next();
 		System.out.println("enter the delete value");
 		String deleteValue=input.next();
-		DeleteCommand delete=new DeleteCommand(table,deleteValue,column);
+		DeleteCommand delete=new DeleteCommand(table,deleteValue);
 		delete.execute();
 		input.close();
 	}
