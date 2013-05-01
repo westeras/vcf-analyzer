@@ -95,6 +95,17 @@ public class CommandLineInterpreter
 	public static void createFilterLoop(final String[] commandLineArguments)
 			throws ClassNotFoundException, SQLException {
 		FilterCreator filter = null;
+		String name = "";
+		
+		for(int i = 0; i < commandLineArguments.length; i++){
+			if(commandLineArguments[i].equals("name") && i != commandLineArguments.length - 1){name = commandLineArguments[i+1];}
+		}
+		
+		if(name.equals("")){
+			System.out.println("Please input a name");
+			return;
+		}
+		
 		if(commandLineArguments.length == 2 && commandLineArguments[0].equals("create") && commandLineArguments[1].equals("filter")
 				|| commandLineArguments.length == 1 && commandLineArguments[0].equals("crefil")){
 			input = new Scanner(System.in);
