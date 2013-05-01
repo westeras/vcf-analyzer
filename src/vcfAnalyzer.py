@@ -1,6 +1,8 @@
 import argparse
 import subprocess
-import VcfParser/vcf
+import sys
+sys.path.insert(0, '/VcfParser')
+import vcf
 
 def uploadVcfWithoutName(location):
     vcf_reader = vcf.Reader(open(location))
