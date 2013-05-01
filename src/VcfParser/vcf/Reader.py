@@ -1,6 +1,7 @@
 import collections
 import re
 import itertools
+import datetime
 
 from vcf.DatabaseConnection import DatabaseConnection
 from vcf.parser import _vcf_metadata_parser
