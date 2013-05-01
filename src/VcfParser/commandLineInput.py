@@ -29,10 +29,10 @@ else:
 
 if args.command is None:
     breaker = 0
+    print('Please input a command')
     while(breaker == 0):
         name = ""
         fileName = ""
-        print('Please input a command')
         inputString = raw_input('>')
         if inputString == "" or inputString == "help":
             print('Please see the User Guide') #Call to java properly later
@@ -50,8 +50,8 @@ if args.command is None:
                     uploadVcfWithName(fileName, name)
                 if fileName != "" and name == "":
                     uploadVcfWithoutName(fileName)
-                if fileName == "" and name == "":
-                    print('Please include arguments')
+                if fileName == "":
+                    print('Please include additional arguments')
                     
             else:
                 command = "java -cp " + cp  + " CommandLineInterpreter " + inputString
