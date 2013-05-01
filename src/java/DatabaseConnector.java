@@ -117,8 +117,7 @@ class DatabaseConnector {
 				firstOperand = "'" + operands[0] + "'";
 				secondOperand = "'" + operands[1] + "'";
 			} else {
-				System.out.println("Too many operands given");
-				return 0;
+				throw new SQLException("Too many operands given");
 			}
 
 			sql = String
@@ -133,7 +132,6 @@ class DatabaseConnector {
 
 			return filterEntryID;
 		} catch (SQLException se) {
-			System.out.println("SQL: " + sql);
 			throw new SQLException(se.getMessage());
 		}
 	}
@@ -156,8 +154,7 @@ class DatabaseConnector {
 				firstOperand = "'" + operands[0] + "'";
 				secondOperand = "'" + operands[0] + "'";
 			} else {
-				System.out.println("Too many operands given");
-				return 0;
+				throw new SQLException("Too many operands given");
 			}
 
 			sql = String
@@ -177,8 +174,6 @@ class DatabaseConnector {
 	}
 	
 	public void createOption(int filterID, String optionName, String argument) throws SQLException {
-		System.out.println("OptName: " + optionName);
-		System.out.println("Argument: " + argument);
 		String sql = "";
 		if (optionName.toLowerCase().equals("failureallow") || optionName.toLowerCase().equals("fa")) {
 			sql = String.format("UPDATE `vcf_analyzer`.`Filter` SET `FailureAllow`='%s' WHERE `FilId`='%s'", argument, filterID);

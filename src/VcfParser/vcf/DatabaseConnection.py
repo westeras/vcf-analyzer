@@ -28,7 +28,6 @@ class DatabaseConnection():
         print query
         return -1
     
-    ########### Kind of a long method
     def handleInfo(self, infoName, infoData):
         query = ("SELECT count(*) FROM InfoTable WHERE InfoName='" + infoName + "'")
         self.cursor.execute(query)
@@ -39,13 +38,9 @@ class DatabaseConnection():
             typeEnum, dataType = stringToTypeEnum( infoData.type )    
             
             rowCount = 1
-            print ">>>>>",
-            print infoData
             if (infoData.type == "Flag"):
                 rowCount = 0;
             elif ( infoData.num != None ):
-                print ">>>>>",
-                print infoData.num
                 rowCount = int(infoData.num)
                 
             createQuery = ("CREATE TABLE `{}` ( EntryId BIGINT NOT NULL PRIMARY KEY").format( infoName )
