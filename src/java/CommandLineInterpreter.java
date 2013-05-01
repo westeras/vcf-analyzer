@@ -106,8 +106,8 @@ public class CommandLineInterpreter
 			return;
 		}
 		
-		if(commandLineArguments.length == 2 && commandLineArguments[0].equals("create") && commandLineArguments[1].equals("filter")
-				|| commandLineArguments.length == 1 && commandLineArguments[0].equals("crefil")){
+		if(commandLineArguments.length == 4 && commandLineArguments[0].equals("create") && commandLineArguments[1].equals("filter")
+				|| commandLineArguments.length == 3 && commandLineArguments[0].equals("crefil")){
 			input = new Scanner(System.in);
 			ArrayList<String> additionalArguments = new ArrayList<String>();
 			System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
