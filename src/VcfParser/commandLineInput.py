@@ -41,7 +41,7 @@ if args.command is None:
             if command[0] == "quit":
                 breaker = 1
             elif command[0] == "upload" and command[1] == "vcf" or command[0] == "upvcf" or command[0] == "uploadvcf":
-                for pos in len(command):
+                for pos in range(len(command)):
                     if command[pos] == "name" and pos != len(command) - 1:
                         name = command[pos + 1]
                     if command[pos] == "file" and pos != len(command) - 1:
