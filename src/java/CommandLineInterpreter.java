@@ -52,11 +52,14 @@ public class CommandLineInterpreter
 			result = vcfCommand(commandLineArguments);
 		}
 		
-		//Fix this later, somehow missed it the first time.
 		commandName = "delete";
 		if (isTheCommandName(commandLineArguments, commandName)){						
-			Command makeView = new DeleteCommand(commandLineArguments[1],commandLineArguments[2],commandLineArguments[3]);
-			return makeView.execute();
+			return deleteCommand(commandLineArguments);
+		}
+		
+		commandName = "view";
+		if(isTheCommandName(commandLineArguments, commandName)){
+			return viewCommand(commandLineArguments);
 		}
 		
 		commandName = "create filter";
@@ -77,13 +80,27 @@ public class CommandLineInterpreter
 		return result;
 	}
 
+	//Fix this, ask Daniel about it
+	private static String viewCommand(String[] commandLineArguments) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//Fix this, ask Daniel about it
+	public static String deleteCommand(final String[] commandLineArguments) {
+		Command makeView = new DeleteCommand(commandLineArguments[1],commandLineArguments[2],commandLineArguments[3]);
+		return makeView.execute();
+	}
+
 	public static void createFilterLoop(final String[] commandLineArguments)
 			throws ClassNotFoundException, SQLException {
 		FilterCreator filter = null;
-		if(commandLineArguments.length == 2){
+		if(commandLineArguments.length == 2 && commandLineArguments[0].equals("create") && commandLineArguments[1].equals("filter")
+				|| commandLineArguments.length == 1 && commandLineArguments[0].equals("crefil")){
 			input = new Scanner(System.in);
 			ArrayList<String> additionalArguments = new ArrayList<String>();
 			System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
+			
 			while(true){
 				System.out.print(">> ");
 				String line = input.nextLine().trim();
@@ -93,9 +110,17 @@ public class CommandLineInterpreter
 				System.out.println(line);
 				additionalArguments.add(line);
 			}
-			String[] arguments = new String[additionalArguments.size()];
-			arguments = additionalArguments.toArray(arguments);
-			filter = new FilterCreator(commandLineArguments[0],arguments);
+			
+			if(additionalArguments.size() == 0){
+				System.out.println("Error: Please input arguments");
+			}else{
+			
+				String[] arguments = new String[additionalArguments.size()];
+				arguments = additionalArguments.toArray(arguments);
+				filter = new FilterCreator(commandLineArguments[0],arguments);
+				filter.uploadEntries();
+			}
+			
 		}else{
 			String[] additionalArguments = new String[commandLineArguments.length-2];
 			
@@ -104,8 +129,9 @@ public class CommandLineInterpreter
 			}
 			
 			filter = new FilterCreator(commandLineArguments[0],additionalArguments);
+			filter.uploadEntries();
 		}
-		filter.uploadEntries();
+		
 	}  
 	
 	private static String filterCommand(String[] args) {
@@ -131,6 +157,7 @@ public class CommandLineInterpreter
 		if(!write.equals("")){applier = new FilterWriteApplier(vcf, by, write);}
 		if(!store.equals("")){applier = new FilterWriteApplier(vcf, by, store);}
 		
+		//Ask about this		
 		return result;
 	}
 
@@ -156,14 +183,6 @@ public class CommandLineInterpreter
 		
 		return result;
 	}
-
-	/**
-	 * Uploads either divergence file or annotation file
-	 * @param commandLineArguments
-	 * @param commandLine
-	 * @param type
-	 * @return the name of the upload
-	 */
 	
 	public static String uploadCommand(final String[] args, String type){
 		Command command = null;
