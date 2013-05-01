@@ -181,9 +181,9 @@ public class CommandLineInterpreter
 		String filterName = "";
 		
 		for(int i = 0; i < args.length; i++){
-			if(args[i].equals("name") && i != args.length - 1){fileName = args[i+1];}
-			if(args[i].equals("file") && i != args.length - 1){fileLocation = args[i+1];}
-			if(args[i].equals("filter") && i != args.length - 1){filterName = args[i+1];}
+			if(args[i].equals("vcf") && i != args.length - 1){fileName = args[i+1];}
+			if(args[i].equals("write") && i != args.length - 1){fileLocation = args[i+1];}
+			if(args[i].equals("filterby") && i != args.length - 1){filterName = args[i+1];}
 		}
 		
 		if(fileLocation.equals("") && fileName.equals("") && filterName.equals("")){return "Please input proper arguments";}
