@@ -13,10 +13,14 @@ public class View extends Command {
 	private DatabaseConnector conn;
 	private String columnName;
 	
-	
-	public View (String table, String columnName){
+	//Could be made more extendable by passing the column name as a parameter
+	public View (String table){
+		
 		this.table=table;
-		this.columnName=columnName;
+		if (this.table.equals("Divergence"))
+			this.columnName="DivName";
+		else if (this.table.equals("Annotation"))
+			this.columnName="AnnoName";
 		try {
 			this.conn=new DatabaseConnector();
 		} catch (Exception exception) {
