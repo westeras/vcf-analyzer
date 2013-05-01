@@ -118,7 +118,7 @@ public class CommandLineInterpreter
 				if(line.equals("done") || line.equals("")){
 					break;
 				}
-				System.out.println(line);
+				//System.out.println(line);
 				additionalArguments.add(line);
 			}
 			
@@ -128,7 +128,7 @@ public class CommandLineInterpreter
 			
 				String[] arguments = new String[additionalArguments.size()];
 				arguments = additionalArguments.toArray(arguments);
-				filter = new FilterCreator(commandLineArguments[0],arguments);
+				filter = new FilterCreator(name,arguments);
 				filter.uploadEntries();
 			}
 			
