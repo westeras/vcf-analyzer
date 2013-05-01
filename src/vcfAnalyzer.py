@@ -1,7 +1,6 @@
 import argparse
 import subprocess
-import sys
-from /VcfParser import vcf
+import VcfParser.vcf
 
 def uploadVcfWithoutName(location):
     vcf_reader = vcf.Reader(open(location))
@@ -24,35 +23,36 @@ parser.add_argument("-com","--command")
 args = parser.parse_args()
 
 if args.classpath is None:
-    cp = "java:$CLASSPATH"
+    cp = "../java:$CLASSPATH"
 else:
     cp = args.classpath
 
 if args.command is None:
     breaker = 0
+    print('Please input a command')
     while(breaker == 0):
-        print('Please input a command')
+        name = ""
+        fileName = ""
         inputString = raw_input('>')
         if inputString == "" or inputString == "help":
-            print('Get help') #Call to java properly later
+            print('Please see the User Guide') #Call to java properly later
         else:
             command = inputString.split()
             if command[0] == "quit":
                 breaker = 1
-            elif command[0] == "upload" and command[1] == "vcf":
-                if len(command) == 2:
-                    print('Please input file location')
-                if len(command) == 3:
-                    uploadVcfWithoutName(command[2])
-                if len(command) == 4:
-                    uploadVcfWithName(command[2], command[3])
-            elif command[0] == "upvcf" or command[0] == "uploadvcf":
-                if len(command) == 1:
-                    print('Please input file location')
-                if len(command) == 2:
-                    uploadVcfWithoutName(command[1])
-                if len(command) == 3:
-                    uploadVcfWithName(command[1], command[2])
+            elif command[0] == "upload" and command[1] == "vcf" or command[0] == "upvcf" or command[0] == "uploadvcf":
+                for pos in range(len(command)):
+                    if command[pos] == "name" and pos != len(command) - 1:
+                        name = command[pos + 1]
+                    if command[pos] == "file" and pos != len(command) - 1:
+                        fileName = command[pos + 1]
+                if fileName != "" and name != "":
+                    uploadVcfWithName(fileName, name)
+                if fileName != "" and name == "":
+                    uploadVcfWithoutName(fileName)
+                if fileName == "":
+                    print('Please include additional arguments')
+                    
             else:
                 command = "java -cp " + cp  + " CommandLineInterpreter " + inputString
                 print command
