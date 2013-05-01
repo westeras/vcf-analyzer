@@ -166,11 +166,14 @@ public class CommandLineInterpreter
 		
 		if(!write.equals("")){
 			applier = new FilterWriteApplier(vcf, by, write);
-			applier.execute();
+			result = applier.execute();
 		}
 		if(store == true){
 			applier = new FilterStoreApplier(vcf, by);
-			applier.execute();
+			result = applier.execute();
+		}
+		if(store == false && write.equals("")){
+			result = "Please include write or store.";
 		}
 				
 		return result;
