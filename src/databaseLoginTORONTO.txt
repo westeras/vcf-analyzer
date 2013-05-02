@@ -1,0 +1,5 @@
+user team.gene.e
+password Vcf_user1
+host localhost
+database vcf_analyzer
+port 3307

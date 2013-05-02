@@ -5,8 +5,16 @@ class DatabaseConnection():
 
     def __init__(self):
         #Connect to database
-        ########### Why are there hard coded username and password information
-        self.cnx = mysql.connector.connect(user = 'vcf_user', password = 'vcf', host = 'localhost', database = 'vcf_analyzer', buffered=True)
+        loginFile = open('../../databaseLogin.txt', 'r')
+        dbUser = (loginFile.readline()).split()[1];
+        dbPass = (loginFile.readline()).split()[1];
+        dbHost = (loginFile.readline()).split()[1];
+        dbName = (loginFile.readline()).split()[1];
+        dbPort = (loginFile.readline()).split()[1];
+        loginFile.close();
+        
+        self.cnx = mysql.connector.connect(user = dbUser,
+            password = dbPass, host = dbHost, database = dbName, buffered=True, port=dbPort)
         self.cursor = self.cnx.cursor()
         
     def dbClose(self):
@@ -43,16 +51,16 @@ class DatabaseConnection():
             elif ( infoData.num != None ):
                 rowCount = int(infoData.num)
                 
-            createQuery = ("CREATE TABLE `{}` ( EntryId BIGINT NOT NULL PRIMARY KEY").format( infoName )
+            createQuery = ("CREATE TABLE `{0}` ( EntryId BIGINT NOT NULL PRIMARY KEY").format( infoName )
             for i in range(rowCount):
-                createQuery += (", `val{}` {} DEFAULT NULL").format( i, dataType )
+                createQuery += (", `val{0}` {1} DEFAULT NULL").format( i, dataType )
             createQuery += ")"
             
-            constraint = ("ALTER TABLE  `{}` ADD FOREIGN KEY ( `EntryId` ) ").format(infoName)
+            constraint = ("ALTER TABLE  `{0}` ADD FOREIGN KEY ( `EntryId` ) ").format(infoName)
             constraint += " REFERENCES `vcf_analyzer`.`VcfEntry` (`EntryId`) ON DELETE CASCADE ON UPDATE CASCADE"
             
             infoQuery = ("INSERT INTO `vcf_analyzer`.`InfoTable` (`InfoName`, `Type`, `Count`, `Description`) " +
-                        "VALUES ( '{}', '{}', '{}', '{}' )").format(
+                        "VALUES ( '{0}', '{1}', '{2}', '{3}' )").format(
                         infoName, typeEnum, rowCount, infoData.desc[:150] )
             try:
                 self.cursor.execute(createQuery)
@@ -66,9 +74,9 @@ class DatabaseConnection():
     def insertInfo(self, entryDbId, entry):
         
         if (len(entry) == 2):
-            query = "INSERT INTO `vcf_analyzer`.`{}` VALUES ('{}', '{}')".format(entry[0], entryDbId, entry[1])
+            query = "INSERT INTO `vcf_analyzer`.`{0}` VALUES ('{1}', '{2}')".format(entry[0], entryDbId, entry[1])
         else:
-            query = "INSERT INTO `vcf_analyzer`.`{}` VALUES ('{}')".format(entry[0], entryDbId)
+            query = "INSERT INTO `vcf_analyzer`.`{0}` VALUES ('{1}')".format(entry[0], entryDbId)
         
         self.commitQuery(query)
 
@@ -94,16 +102,16 @@ class DatabaseConnection():
             elif ( formatData.num != None ):
                 rowCount = int(formatData.num)
                 
-            createQuery = ("CREATE TABLE `{}` ( IndID BIGINT NOT NULL PRIMARY KEY").format( formatName )
+            createQuery = ("CREATE TABLE `{0}` ( IndID BIGINT NOT NULL PRIMARY KEY").format( formatName )
             for i in range(rowCount):
-                createQuery += (", `val{}` {}").format( i, dataType )
+                createQuery += (", `val{0}` {1}").format( i, dataType )
             createQuery += ")"
             
-            constraint = ("ALTER TABLE  `{}` ADD FOREIGN KEY ( `IndID` ) ").format(formatName)
+            constraint = ("ALTER TABLE  `{0}` ADD FOREIGN KEY ( `IndID` ) ").format(formatName)
             constraint += " REFERENCES `vcf_analyzer`.`IndividualEntry` (`IndID`) ON DELETE CASCADE ON UPDATE CASCADE"
             
             infoQuery = ("INSERT INTO `vcf_analyzer`.`GenotypeTable` (`GenoName`, `Type`, `Count`, `Description`) " +
-                        "VALUES ( '{}', '{}', '{}', '{}' )").format(
+                        "VALUES ( '{0}', '{1}', '{2}', '{3}' )").format(
                         formatName, typeEnum, rowCount, formatData.desc[:150] )
             try:
                 self.cursor.execute(createQuery)
@@ -118,7 +126,7 @@ class DatabaseConnection():
     ########### Many many parameters being passed in 
     def createEntry(self, vcfId, chrom, pos, id, ref, alt, qual, filter, format):
         query = ("INSERT INTO `vcf_analyzer`.`VcfEntry` (`EntryId`, `VcfId`, `Chrom`, `Pos`, `Id`, `Ref`, `Alt`, `Qual`, `Filter`, `Format`) " +
-                "VALUES ( NULL, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')").format(
+                "VALUES ( NULL, '{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}')").format(
                 vcfId, chrom, pos, id, ref, alt, qual, filter, format )
         
         try:
@@ -136,7 +144,7 @@ class DatabaseConnection():
         indNo = 0
         for name in names:
             queries.append( ("INSERT INTO `vcf_analyzer`.`VcfIndividual` ( `VcfId`, `IndNoVcf`, `IndName`) " +
-                            "VALUES ( '{}', '{}', '{}' )").format(
+                            "VALUES ( '{0}', '{1}', '{2}' )").format(
                             vcfId, indNo, name[:25] ) )
             indNo += 1
         
@@ -150,7 +158,7 @@ class DatabaseConnection():
             
     def createIndividualEntry(self, entryId, indNo ):
         query = ("INSERT INTO `vcf_analyzer`.`IndividualEntry` ( `IndID`, `EntryId`, `IndNoVcf`) " +
-                "VALUES ( NULL, '{}', '{}' )").format(
+                "VALUES ( NULL, '{0}', '{1}' )").format(
                 entryId, indNo )
         
         try:
@@ -174,6 +182,7 @@ class DatabaseConnection():
             self.exceptionHandle(query)   
             
         lastName = None
+        
         if ( first!= None and len(first) > 0 ):
             lastName = first[0]
         if ( lastName != None ):
@@ -184,8 +193,7 @@ class DatabaseConnection():
                     name = lastName[:-1] + str( int(lastName[-1]) + 1 )
 
         query = ("INSERT INTO `vcf_analyzer`.`Vcf` (`VcfId`, `VcfName`) " +
-                "VALUES ( NULL, '{}')").format(
-                name[:75] )
+                "VALUES ( NULL, '{0}')").format( name[:75] )
 
         try:
             self.execAndCommit(query)
@@ -202,7 +210,7 @@ class DatabaseConnection():
             return;
             
         query = ("INSERT INTO `vcf_analyzer`.`DP` (`IndID`, `ReadDepth`) " +
-                "VALUES ( '{}', '{}' )").format(
+                "VALUES ( '{0}', '{1}' )").format(
                 indId, dpStr )
         
         self.commitQuery(query)
@@ -218,11 +226,11 @@ class DatabaseConnection():
 
             if ( len(entries) == 3 ):
                 query = ("INSERT INTO `vcf_analyzer`.`GL` (`IndID`, `AA`, `AB`, `BB`) " +
-                        "VALUES ( {}, {}, {}, {} )").format(
+                        "VALUES ( {0}, {1}, {2}, {3} )").format(
                         indId, entries[0], entries[1], entries[2] )
             elif (len(entries) == 6 ):
                 query = ("INSERT INTO `vcf_analyzer`.`GL` (`IndID`, `AA`, `AB`, `BB`, `AC`, `BC`, `CC`) " +
-                        "VALUES ( {}, {}, {}, {}, {}, {}, {} )").format(
+                        "VALUES ( {0}, {1}, {2}, {3}, {4}, {5}, {6} )").format(
                         indId, entries[0], entries[1], entries[2], entries[3], entries[4], entries[5] )
             else:
                 #invalid number of GL values
@@ -250,15 +258,15 @@ class DatabaseConnection():
         
         ########### This is a place where doing the static query builder along with Python arrays could reduce this
         if (n == 1):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, NULL, NULL, NULL, NULL)".format(indID, outList[0])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({0}, {1}, NULL, NULL, NULL, NULL)".format(indID, outList[0])
         elif (n == 2):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, NULL, NULL, NULL)".format(indID, outList[0], outList[1])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({0}, {1}, {2}, NULL, NULL, NULL)".format(indID, outList[0], outList[1])
         elif (n == 3):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, NULL, NULL)".format(indID, outList[0], outList[1], outList[2])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({0}, {1}, {2}, {3}, NULL, NULL)".format(indID, outList[0], outList[1], outList[2])
         elif (n == 4):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, {}, NULL)".format(indID, outList[0], outList[1], outList[2], outList[3])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({0}, {1}, {2}, {3}, {4}, NULL)".format(indID, outList[0], outList[1], outList[2], outList[3])
         elif (n == 5):
-            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({}, {}, {}, {}, {}, {})".format(indID, outList[0], outList[1], outList[2], outList[3], outList[4])
+            query = "INSERT INTO `vcf_analyzer`.`GT` VALUES ({0}, {1}, {2}, {3}, {4}, {5})".format(indID, outList[0], outList[1], outList[2], outList[3], outList[4])
         
         self.commitQuery(query)
         
@@ -279,13 +287,13 @@ class DatabaseConnection():
             values = plStr.split(',')
             
             if (len(values) == 1):
-                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{}', '{}', NULL, NULL, NULL)".format(indId, values[0])
+                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{0}', '{1}', NULL, NULL, NULL)".format(indId, values[0])
             elif (len(values) == 2):
-                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{}', '{}', '{}', NULL, NULL)".format(indId, values[0], values[1])
+                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{0}', '{1}', '{2}', NULL, NULL)".format(indId, values[0], values[1])
             elif (len(values) == 3):
-                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{}', '{}', '{}', '{}', NULL)".format(indId, values[0], values[1], values[2])
+                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{0}', '{1}', '{2}', '{3}', NULL)".format(indId, values[0], values[1], values[2])
             elif (len(values) == 4):
-                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{}', '{}', '{}', '{}', '{}')".format(indId, values[0], values[1], values[2], values[3])
+                query = "INSERT INTO `vcf_analyzer`.`PL` VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')".format(indId, values[0], values[1], values[2], values[3])
             
             self.commitQuery(query)
         
@@ -293,7 +301,7 @@ class DatabaseConnection():
         if (gqStr == "."):
             return #not sure what to do about this case
     
-        query = "INSERT INTO `vcf_analyzer`.`GQ` VALUES ('{}', '{}')".format(indID, gqStr)
+        query = "INSERT INTO `vcf_analyzer`.`GQ` VALUES ('{0}', '{1}')".format(indID, gqStr)
         
         self.commitQuery(query)
     
@@ -303,7 +311,7 @@ class DatabaseConnection():
             return #not sure what to do about this case
         else:
             haplos = hqStr.split(',')
-            query = "INSERT INTO `vcf_analyzer`.`HQ` VALUES ('{}', '{}', '{}')".format(indID, haplos[0], haplos[1])
+            query = "INSERT INTO `vcf_analyzer`.`HQ` VALUES ('{0}', '{1}', '{2}')".format(indID, haplos[0], haplos[1])
 
             self.commitQuery(query)
         
@@ -311,7 +319,7 @@ class DatabaseConnection():
     
         if (psStr == "."):
             return #not sure what to do about this case
-        query = "INSERT INTO `vcf_analyzer`.`PS` VALUES ('{}', '{}')".format(indID, psStr)
+        query = "INSERT INTO `vcf_analyzer`.`PS` VALUES ('{0}', '{1}')".format(indID, psStr)
         
         self.commitQuery(query)
             
@@ -319,7 +327,7 @@ class DatabaseConnection():
     
         if (pqStr == "."):
             return #not sure what to do about this case
-        query = "INSERT INTO `vcf_analyzer`.`PQ` VALUES ('{}', '{}')".format(indID, pqStr)
+        query = "INSERT INTO `vcf_analyzer`.`PQ` VALUES ('{0}', '{1}')".format(indID, pqStr)
         
         self.commitQuery(query)
             
@@ -333,7 +341,7 @@ class DatabaseConnection():
         for i in range (len(values), 9):
             values.append("NULL")
             
-        query = "INSERT INTO `vcf_analyzer`.`GLE` VALUES ({},{},{},{},{},{},{},{},{},{})".format(
+        query = "INSERT INTO `vcf_analyzer`.`GLE` VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9})".format(
                     indId, values[0], values[1], values[2], values[3],
                     values[4], values[5], values[6], values[7], values[8] )
 
@@ -348,7 +356,7 @@ class DatabaseConnection():
         for i in range (len(values), 4):
             values.append("NULL")
             
-        query = "INSERT INTO `vcf_analyzer`.`EC` VALUES ({}, {}, {}, {}, {} )".format(
+        query = "INSERT INTO `vcf_analyzer`.`EC` VALUES ({0}, {1}, {2}, {3}, {4} )".format(
                     indId, values[0], values[1], values[2], values[3])
         
         self.commitQuery(query)
@@ -372,7 +380,7 @@ class DatabaseConnection():
         for i in range (len(values), 3):
             values.append("NULL")
             
-        query = "INSERT INTO `vcf_analyzer`.`AD` VALUES ({}, {}, {}, {} )".format(
+        query = "INSERT INTO `vcf_analyzer`.`AD` VALUES ({0}, {1}, {2}, {3} )".format(
                     indId, values[0], values[1], values[2])
         
         self.commitQuery(query)
@@ -386,7 +394,7 @@ class DatabaseConnection():
         for i in range (len(values), 6):
             values.append("NULL")
             
-        query = "INSERT INTO `vcf_analyzer`.`GP` VALUES ({}, {}, {}, {}, {}, {}, {} )".format(
+        query = "INSERT INTO `vcf_analyzer`.`GP` VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6} )".format(
                     indId, values[0], values[1], values[2], values[3], values[4], values[5])
 
         self.commitQuery(query)
@@ -404,7 +412,7 @@ class DatabaseConnection():
                 #table DNE
                 return -1
             valCount = retrieved[0]
-            query = "INSERT INTO `vcf_analyzer`.`{}` VALUES ('{}'".format(tableName, indId)
+            query = "INSERT INTO `vcf_analyzer`.`{0}` VALUES ('{1}'".format(tableName, indId)
             
             if (valCount ==0 ):
                 query.append( ")" )
@@ -428,7 +436,7 @@ class DatabaseConnection():
     def createVcfHeader(self, vcfId, header):
         header = header.replace("'", "`")
         
-        query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ('{}', '{}')".format(vcfId, header)
+        query = "INSERT INTO `vcf_analyzer`.`VcfHeader` VALUES ('{0}', '{1}')".format(vcfId, header)
         self.commitQuery(query)
 
     #See the following link for VCF information

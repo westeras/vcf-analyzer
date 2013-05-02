@@ -1,0 +1,5 @@
+user vcf_user
+password vcf
+host localhost
+database vcf_analyzer
+port 3306
