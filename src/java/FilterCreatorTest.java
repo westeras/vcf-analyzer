@@ -5,20 +5,20 @@ import java.sql.Statement;
 
 
 public class FilterCreatorTest {
-	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_URL = "jdbc:mysql://localhost/vcf_analyzer";
-	
-	static final String USER = "vcf_user";
-	static final String PASS = "vcf";
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Connection conn = null;
 		Statement stmt = null;
 		
 		try {
-			Class.forName(JDBC_DRIVER);
+			if (DatabaseLogin.DB_URL == null)
+			{
+				DatabaseLogin.uploadLogin();
+			}
+			Class.forName(DatabaseLogin.JDBC_DRIVER);
 	
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = DriverManager.getConnection(DatabaseLogin.DB_URL, DatabaseLogin.USER, DatabaseLogin.PASS);
+			
 			stmt = conn.createStatement();
 		}
 		catch (Exception e) {
