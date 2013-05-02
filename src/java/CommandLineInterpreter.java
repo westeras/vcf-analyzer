@@ -80,16 +80,37 @@ public class CommandLineInterpreter
 		return result;
 	}
 
-	//Fix this, ask Daniel about it
-	private static String viewCommand(String[] commandLineArguments) {
-		// TODO Auto-generated method stub
-		return null;
+	//Ask about delete vcfs
+	private static String viewCommand(String[] args) {
+		String type = "";
+		
+		for(int i = 0; i < args.length; i++){
+			if(args[i].equals("divergence")){type = "divergence";}
+			if(args[i].equals("annotation")){type = "annotation";}
+			if(args[i].equals("vcf")){type = "vcf";}
+		}
+		
+		if(type.equals("")){return "Please include the table type you would lik to view.";}
+		
+		View view = new View(type);
+		return view.execute();
 	}
 
-	//Fix this, ask Daniel about it
-	public static String deleteCommand(final String[] commandLineArguments) {
-		Command makeView = new DeleteCommand(commandLineArguments[1],commandLineArguments[2],commandLineArguments[3]);
-		return makeView.execute();
+	//Again, ask about vcf
+	public static String deleteCommand(final String[] args) {
+		String type = "";
+		String name = "";
+		
+		for(int i = 0; i < args.length; i++){
+			if(args[i].equals("divergence")){type = "divergence";}
+			if(args[i].equals("annotation")){type = "annotation";}
+			if(args[i].equals("vcf")){type = "vcf";}
+			if(args[i].equals("name") && i != args.length - 1){name = args[i+1];}
+		}
+		
+		Command delete = new DeleteCommand(type, name);
+		
+		return delete.execute();
 	}
 
 	public static void createFilterLoop(final String[] commandLineArguments)
@@ -105,9 +126,6 @@ public class CommandLineInterpreter
 			System.out.println("Please input a name");
 			return;
 		}
-		
-		//if(commandLineArguments.length == 4 && commandLineArguments[0].equals("create") && commandLineArguments[1].equals("filter")
-		//		|| commandLineArguments.length == 3 && commandLineArguments[0].equals("crefil")){
 			input = new Scanner(System.in);
 			ArrayList<String> additionalArguments = new ArrayList<String>();
 			System.out.println("Please input additional arguments for creating a filter. Enter 'done' or hit enter twice when finished.");
@@ -118,7 +136,6 @@ public class CommandLineInterpreter
 				if(line.equals("done") || line.equals("")){
 					break;
 				}
-				//System.out.println(line);
 				additionalArguments.add(line);
 			}
 			
@@ -131,17 +148,6 @@ public class CommandLineInterpreter
 				filter = new FilterCreator(name,arguments);
 				filter.uploadEntries();
 			}
-			
-		/*}else{
-			String[] additionalArguments = new String[commandLineArguments.length-2];
-			
-			for(int i = 0; i < additionalArguments.length; i++){
-				additionalArguments[i] = commandLineArguments[i+2];
-			}
-			
-			filter = new FilterCreator(commandLineArguments[0],additionalArguments);
-			filter.uploadEntries();
-		}*/
 		
 	}  
 	
