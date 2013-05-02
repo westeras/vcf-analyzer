@@ -8,11 +8,6 @@ import java.util.List;
 import java.util.Properties;
 
 class DatabaseConnector {
-	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_URL = "jdbc:mysql://localhost/vcf_analyzer";
-
-	static final String USER = "vcf_user";
-	static final String PASS = "vcf";
 
 	public static final ArrayList<String> EntryFixedInfo = new ArrayList<String>(
 			Arrays.asList("CHROM", "FILTER", "ID", "POS", "REF", "QUAL", "ALT"));
@@ -27,10 +22,15 @@ class DatabaseConnector {
 			this.conn = null;
 			this.stmt = null;
 
-			// ########### What is this supposed to do?
-			Class.forName(JDBC_DRIVER);
+			if (DatabaseLogin.DB_URL == null)
+			{
+				DatabaseLogin.uploadLogin();
+			}
+			
+			Class.forName(DatabaseLogin.JDBC_DRIVER);
 
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = DriverManager.getConnection(DatabaseLogin.DB_URL,
+					DatabaseLogin.USER, DatabaseLogin.PASS);
 			stmt = conn.createStatement();
 		} catch (Exception e) {
 			throw new SQLException("Could not connect to database");
@@ -462,7 +462,8 @@ class DatabaseConnector {
 	private void reopenConnectionAndStatement() throws SQLException,
 			ClassNotFoundException {
 		if (this.conn == null || this.conn.isClosed())
-			this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			this.conn = DriverManager.getConnection(DatabaseLogin.DB_URL,
+					DatabaseLogin.USER, DatabaseLogin.PASS);
 		if (this.stmt == null || this.stmt.isClosed())
 			this.stmt = this.conn.createStatement();
 	}

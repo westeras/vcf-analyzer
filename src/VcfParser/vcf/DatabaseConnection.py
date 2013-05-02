@@ -5,12 +5,12 @@ class DatabaseConnection():
 
     def __init__(self):
         #Connect to database
-        loginFile = open('../../databaseLogin.txt', 'r')
-        dbUser = (loginFile.readline()).split()[1];
-        dbPass = (loginFile.readline()).split()[1];
-        dbHost = (loginFile.readline()).split()[1];
-        dbName = (loginFile.readline()).split()[1];
-        dbPort = (loginFile.readline()).split()[1];
+        loginFile = open('databaseLogin.txt', 'r')
+        dbUser = (loginFile.readline()).split(' ')[1];
+        dbPass = (loginFile.readline()).split(' ')[1];
+        dbHost = (loginFile.readline()).split(' ')[1];
+        dbName = (loginFile.readline()).split(' ')[1];
+        dbPort = (loginFile.readline()).split(' ')[1];
         loginFile.close();
         
         self.cnx = mysql.connector.connect(user = dbUser,
