@@ -3,64 +3,37 @@ import java.util.Scanner;
   
 public class CommandLineInterpreter
 {  
-	private static Scanner input;
+	//private static Scanner input;
 
 	public static String parseCommand(final String[] commandLineArguments) throws ClassNotFoundException, SQLException{  
 		
 		String result = "";
 			
-		String commandName = "upload divergence";
-		if (isTheCommandName(commandLineArguments, commandName)){
+		if (isTheCommandName(commandLineArguments, "upload divergence") || isTheCommandName(commandLineArguments, "updiv")){
 			result = CallCommands.uploadCommand(commandLineArguments, "updiv");
 		}
-			
-		commandName = "updiv";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.uploadCommand(commandLineArguments, "updiv");
-		}
-		
-		commandName = "upload annotation";
-		if (isTheCommandName(commandLineArguments, commandName)){
+
+		if (isTheCommandName(commandLineArguments, "upload annotation") || isTheCommandName(commandLineArguments, "upano")){
 			result = CallCommands.uploadCommand(commandLineArguments, "upano");
 		}
 		
-		commandName = "upano";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.uploadCommand(commandLineArguments, "upano");
-		}
-		
-		commandName = "afs";
-		if (isTheCommandName(commandLineArguments, commandName)){
+		if (isTheCommandName(commandLineArguments, "allele frequency spectra") || isTheCommandName(commandLineArguments, "afs")){
 			result = CallCommands.vcfCommand(commandLineArguments);
 		}
 		
-		commandName = "allele frequency spectra";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.vcfCommand(commandLineArguments);
-		}
-		
-		commandName = "delete";
-		if (isTheCommandName(commandLineArguments, commandName)){						
+		if (isTheCommandName(commandLineArguments, "delete") || isTheCommandName(commandLineArguments, "del")){						
 			return CallCommands.deleteCommand(commandLineArguments);
 		}
 		
-		commandName = "view";
-		if(isTheCommandName(commandLineArguments, commandName)){
+		if(isTheCommandName(commandLineArguments, "view")){
 			return CallCommands.viewCommand(commandLineArguments);
 		}
 		
-		commandName = "create filter";
-		if(isTheCommandName(commandLineArguments, commandName)){
+		if(isTheCommandName(commandLineArguments, "create filter") || isTheCommandName(commandLineArguments, "crefil")){
 			CallCommands.createFilterLoop(commandLineArguments);
 		}
 		
-		commandName = "crefil";
-		if(isTheCommandName(commandLineArguments, commandName)){
-			CallCommands.createFilterLoop(commandLineArguments);
-		}
-		
-		commandName = "filter";
-		if(isTheCommandName(commandLineArguments, commandName)){
+		if(isTheCommandName(commandLineArguments, "filter") || isTheCommandName(commandLineArguments, "fil")){
 			result = CallCommands.filterCommand(commandLineArguments);
 		}
 		
