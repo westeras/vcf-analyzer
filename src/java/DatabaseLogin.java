@@ -14,7 +14,10 @@ public class DatabaseLogin {
 	public static void uploadLogin() throws IOException
 	{
 		
-		BufferedReader loginFile = new BufferedReader(new FileReader("../../databaseLogin.txt"));
+		String userHomeDir = System.getProperty("user.home", ".");
+		String filePath = userHomeDir + "/databaseLogin.txt";
+		
+		BufferedReader loginFile = new BufferedReader(new FileReader(filePath) );
 		
 		DatabaseLogin.USER = loginFile.readLine().split(" ")[1];
 		DatabaseLogin.PASS = loginFile.readLine().split(" ")[1];
