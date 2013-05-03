@@ -1,5 +1,4 @@
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Scanner;
   
 public class CommandLineInterpreter
@@ -12,64 +11,64 @@ public class CommandLineInterpreter
 			
 		String commandName = "upload divergence";
 		if (isTheCommandName(commandLineArguments, commandName)){
-			result = uploadCommand(commandLineArguments, "updiv");
+			result = CallCommands.uploadCommand(commandLineArguments, "updiv");
 		}
 			
 		commandName = "updiv";
 		if (isTheCommandName(commandLineArguments, commandName)){
-			result = uploadCommand(commandLineArguments, "updiv");
+			result = CallCommands.uploadCommand(commandLineArguments, "updiv");
 		}
 		
 		commandName = "upload annotation";
 		if (isTheCommandName(commandLineArguments, commandName)){
-			result = uploadCommand(commandLineArguments, "upano");
+			result = CallCommands.uploadCommand(commandLineArguments, "upano");
 		}
 		
 		commandName = "upano";
 		if (isTheCommandName(commandLineArguments, commandName)){
-			result = uploadCommand(commandLineArguments, "upano");
+			result = CallCommands.uploadCommand(commandLineArguments, "upano");
 		}
 		
 		commandName = "afs";
 		if (isTheCommandName(commandLineArguments, commandName)){
-			result = vcfCommand(commandLineArguments);
+			result = CallCommands.vcfCommand(commandLineArguments);
 		}
 		
 		commandName = "allele frequency spectra";
 		if (isTheCommandName(commandLineArguments, commandName)){
-			result = vcfCommand(commandLineArguments);
+			result = CallCommands.vcfCommand(commandLineArguments);
 		}
 		
 		commandName = "delete";
 		if (isTheCommandName(commandLineArguments, commandName)){						
-			return deleteCommand(commandLineArguments);
+			return CallCommands.deleteCommand(commandLineArguments);
 		}
 		
 		commandName = "view";
 		if(isTheCommandName(commandLineArguments, commandName)){
-			return viewCommand(commandLineArguments);
+			return CallCommands.viewCommand(commandLineArguments);
 		}
 		
 		commandName = "create filter";
 		if(isTheCommandName(commandLineArguments, commandName)){
-			createFilterLoop(commandLineArguments);
+			CallCommands.createFilterLoop(commandLineArguments);
 		}
 		
 		commandName = "crefil";
 		if(isTheCommandName(commandLineArguments, commandName)){
-			createFilterLoop(commandLineArguments);
+			CallCommands.createFilterLoop(commandLineArguments);
 		}
 		
 		commandName = "filter";
 		if(isTheCommandName(commandLineArguments, commandName)){
-			result = filterCommand(commandLineArguments);
+			result = CallCommands.filterCommand(commandLineArguments);
 		}
 		
 		return result;
 	}
 
 	//Ask about delete vcfs
-	private static String viewCommand(String[] args) {
+	/*private static String viewCommand(String[] args) {
 		String type = "";
 		
 		for(int i = 0; i < args.length; i++){
@@ -216,7 +215,7 @@ public class CommandLineInterpreter
 		result = command.execute();
 		
 		return result;
-	}
+	}*/
 	
 	public static boolean isTheCommandName(String[] command, String commandName){
 		String[] commandNameArray = commandName.split("\\s+");
