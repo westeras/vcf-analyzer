@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.net.URL;
+
 
 public class DatabaseLogin {
 
@@ -14,8 +16,8 @@ public class DatabaseLogin {
 	public static void uploadLogin() throws IOException
 	{
 		
-		String userHomeDir = System.getProperty("user.home", ".");
-		String filePath = userHomeDir + "/databaseLogin.txt";
+		URL currentLocation = DatabaseLogin.class.getProtectionDomain().getCodeSource().getLocation();
+		String filePath = currentLocation.getPath() + "../databaseLogin.txt";
 		
 		BufferedReader loginFile = new BufferedReader(new FileReader(filePath) );
 		
