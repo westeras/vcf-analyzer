@@ -21,6 +21,8 @@ public class View extends Command {
 			this.columnName="DivName";
 		else if (this.table.equals("Annotation"))
 			this.columnName="AnnoName";
+		else if (this.table.equals("Vcf"))
+			this.columnName="VcfName";
 		try {
 			this.conn=new DatabaseConnector();
 		} catch (Exception exception) {

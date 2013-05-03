@@ -1,12 +1,6 @@
 import java.util.Scanner;
 
 
-/**
- * TODO Put here a description of what this class does.
- *
- * @author schepedw.
- *         Created Apr 16, 2013.
- */
 public abstract class TestViewAndDelete {
 
 	/**
