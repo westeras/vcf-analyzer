@@ -1,77 +1,18 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-  
-public class CommandLineInterpreter
-{  
-	private static Scanner input;
 
-	public static String parseCommand(final String[] commandLineArguments) throws ClassNotFoundException, SQLException{  
+
+public class CallCommands {
+	
+	public CallCommands(){
 		
-		String result = "";
-			
-		String commandName = "upload divergence";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.uploadCommand(commandLineArguments, "updiv");
-		}
-			
-		commandName = "updiv";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.uploadCommand(commandLineArguments, "updiv");
-		}
-		
-		commandName = "upload annotation";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.uploadCommand(commandLineArguments, "upano");
-		}
-		
-		commandName = "upano";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.uploadCommand(commandLineArguments, "upano");
-		}
-		
-		commandName = "afs";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.vcfCommand(commandLineArguments);
-		}
-		
-		commandName = "allele frequency spectra";
-		if (isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.vcfCommand(commandLineArguments);
-		}
-		
-		commandName = "delete";
-		if (isTheCommandName(commandLineArguments, commandName)){						
-			return CallCommands.deleteCommand(commandLineArguments);
-		}
-		
-		commandName = "view";
-		if(isTheCommandName(commandLineArguments, commandName)){
-			return CallCommands.viewCommand(commandLineArguments);
-		}
-		
-		commandName = "create filter";
-		if(isTheCommandName(commandLineArguments, commandName)){
-			CallCommands.createFilterLoop(commandLineArguments);
-		}
-		
-		commandName = "crefil";
-		if(isTheCommandName(commandLineArguments, commandName)){
-			CallCommands.createFilterLoop(commandLineArguments);
-		}
-		
-		commandName = "filter";
-		if(isTheCommandName(commandLineArguments, commandName)){
-			result = CallCommands.filterCommand(commandLineArguments);
-		}
-		
-		return result;
 	}
-
+	
+	private static Scanner input;
+	
 	//Ask about delete vcfs
-	/*private static String viewCommand(String[] args) {
+	public static String viewCommand(String[] args) {
 		String type = "";
 		
 		for(int i = 0; i < args.length; i++){
@@ -141,7 +82,7 @@ public class CommandLineInterpreter
 		
 	}  
 	
-	private static String filterCommand(String[] args) {
+	public static String filterCommand(String[] args) {
 		FilterApplier applier  = null;
 		
 		String result = "";
@@ -175,7 +116,7 @@ public class CommandLineInterpreter
 		return result;
 	}
 
-	private static String vcfCommand(String[] args) throws ClassNotFoundException, SQLException {
+	public static String vcfCommand(String[] args) throws ClassNotFoundException, SQLException {
 		Command command = null;
 		
 		String result = "";
@@ -218,38 +159,5 @@ public class CommandLineInterpreter
 		result = command.execute();
 		
 		return result;
-	}*/
-	
-	public static boolean isTheCommandName(String[] command, String commandName){
-		String[] commandNameArray = commandName.split("\\s+");
-		for(int i = 0; i < commandNameArray.length; i++){
-			if(!commandNameArray[i].equals(command[i])){
-				return false;
-			}
-		}
-		return true;
 	}
-   
-   public static void displayInput(final String[] commandLineArguments){  
-	   
-	   int length = commandLineArguments.length;
-	   String output = "";
-	   
-	   for(int i = 0; i < length; i++){
-		   output += commandLineArguments[i];
-		   output += " ";
-	   }
-	   
-	   System.out.println(output);
-   }
-   
-   
-   public static String interpreter(String[] commandLineArguments) throws ClassNotFoundException, SQLException{
-	    if (commandLineArguments.length < 1) {System.out.println("Please input help");}
-	      return parseCommand(commandLineArguments);  
-   }
-   
-	public static void main(String[] args) throws ClassNotFoundException, SQLException{
-		System.out.println(interpreter(args));
-	}
-} 
+}
