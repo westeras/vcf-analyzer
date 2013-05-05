@@ -65,5 +65,5 @@ if args.command is None:
                 subprocess.call(command, shell=True)
 else:
     command = "java -cp " + cp  + " " + args.command
-    print command
+    #print command
     subprocess.call(command, shell=True)
