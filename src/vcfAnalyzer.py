@@ -1,7 +1,7 @@
 import argparse
 import subprocess
 import sys
-sys.path.append('/VcfParser/vcf')
+sys.path.append('/VcfParser')
 import vcf
 
 def uploadVcfWithoutName(location):
