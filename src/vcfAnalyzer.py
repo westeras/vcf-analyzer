@@ -29,7 +29,7 @@ parser.add_argument("-com","--command")
 args = parser.parse_args()
 
 if args.classpath is None:
-    cp = "./java:$CLASSPATH"
+    cp = "./java:$CLASSPATH:/storage/team.gene.e/vcf-analyzer/src/java/lib/mysql.jar"
 else:
     cp = args.classpath
 
