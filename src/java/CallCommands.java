@@ -22,7 +22,7 @@ public class CallCommands {
 			if(args[i].equals("filter")){type = "Filter";}
 		}
 		
-		if(type.equals("")){return "Please include the table type you would lik to view.";}
+		if(type.equals("")){return "Please include the table type you would like to view.";}
 		
 		View view = new View(type);
 		return view.execute();
