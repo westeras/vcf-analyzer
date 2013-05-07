@@ -336,7 +336,7 @@ class Reader(object):
         
         if (self.totalSize != None ):
             percentComplete = round( self.totalUpoaded / self.totalSize )
-            if ( percentComplete > (self.lastPrinted +10):
+            if ( percentComplete > (self.lastPrinted +10) ):
                 print " " + percentComplete + "% Complete"
                 self.lastPrinted = percentComplete
 
