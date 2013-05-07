@@ -13,7 +13,7 @@ public class DeleteCommand extends Command {
 	private DatabaseConnector conn;
 
 	public DeleteCommand(String table, String delValue) {
-		this.table = table;
+		this.table=table.substring(0,1).toUpperCase() + table.substring(1);//Automatically capitalize whatever's passed in 
 		this.delValue = delValue;
 	
 		this.table=table;
