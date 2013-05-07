@@ -16,7 +16,6 @@ public class DeleteCommand extends Command {
 		this.table=table.substring(0,1).toUpperCase() + table.substring(1);//Automatically capitalize whatever's passed in 
 		this.delValue = delValue;
 	
-		this.table=table;
 		if (this.table.equals("Divergence"))
 			this.columnName="DivName";
 		else if (this.table.equals("Annotation"))
@@ -34,7 +33,6 @@ public class DeleteCommand extends Command {
 	public String execute() {
 		String sql = "DELETE FROM `" + this.table + "` where `"
 				+ this.columnName + "`=" + this.delValue+";" ;
-		System.out.println("Sequel in delete: "+sql);
 		try {
 			if (this.conn.executeUpdate(sql)==1) {
 				System.out.printf("Succesfully deleted %s from %s", this.delValue,
