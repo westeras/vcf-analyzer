@@ -13,15 +13,19 @@ public class DeleteCommand extends Command {
 	private DatabaseConnector conn;
 
 	public DeleteCommand(String table, String delValue) {
-		this.table=table.substring(0,1).toUpperCase() + table.substring(1);//Automatically capitalize whatever's passed in 
+		this.table = table.substring(0, 1).toUpperCase() + table.substring(1);// Automatically
+																				// capitalize
+																				// whatever's
+																				// passed
+																				// in
 		this.delValue = delValue;
-	
+
 		if (this.table.equals("Divergence"))
-			this.columnName="DivName";
+			this.columnName = "DivName";
 		else if (this.table.equals("Annotation"))
-			this.columnName="AnnoName";
+			this.columnName = "AnnoName";
 		else if (this.table.equals("Vcf"))
-			this.columnName="VcfName";
+			this.columnName = "VcfName";
 		try {
 			this.conn = new DatabaseConnector();
 		} catch (Exception exception) {
@@ -34,17 +38,18 @@ public class DeleteCommand extends Command {
 		String sql = "DELETE FROM `" + this.table + "` where `"
 				+ this.columnName + "`='" + this.delValue+"';" ;
 		try {
-			if (this.conn.executeUpdate(sql)==1) {
+			this.conn.executeUpdate(sql);
 				System.out.printf("Succesfully deleted %s from %s", this.delValue,
 						this.table);
 
 				return "Success";
-			}
+			
 		} catch (Exception exception) {
 			System.out.println("Exception: sql:= "+sql);
 			exception.printStackTrace();
+			return "Fail!";
 		} 
-		return "Fail!";
+		
 	}
 
 	@Override
