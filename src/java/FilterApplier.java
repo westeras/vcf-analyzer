@@ -50,8 +50,7 @@ public abstract class FilterApplier extends Command
 			this.nestedConnection2 = new DatabaseConnector();
 			this.nestedConnection3 = new DatabaseConnector();
 		}
-		// ########### doing this Pokemon exception handling is usually a sign that maybe
-		// it isn't this class's responsibility to handle this exception. Should probably reconsider
+
 		catch( Exception e)
 		{
 			this.output = "Cannot connect to database";
@@ -139,8 +138,6 @@ public abstract class FilterApplier extends Command
 			
 		} catch (Exception exception) {
 			closeFiltering();
-			//TODO remove
-			exception.printStackTrace();
 			return exception.getMessage();
 		}
 	}
@@ -415,7 +412,6 @@ public abstract class FilterApplier extends Command
 	
 	//@Override
 	public void pipeOutput() {
-	// TODO Auto-generated method stub.
 	
 	}
 

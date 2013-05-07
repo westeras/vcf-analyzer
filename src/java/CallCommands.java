@@ -19,6 +19,7 @@ public class CallCommands {
 			if(args[i].equals("divergence")){type = "divergence";}
 			if(args[i].equals("annotation")){type = "annotation";}
 			if(args[i].equals("vcf")){type = "vcf";}
+			if(args[i].equals("filter")){type = "filter";}
 		}
 		
 		if(type.equals("")){return "Please include the table type you would lik to view.";}

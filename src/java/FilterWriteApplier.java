@@ -64,7 +64,7 @@ public class FilterWriteApplier extends FilterApplier
 	
 	protected void processFailingIndividual() throws Exception
 	{
-
+		writer.writeIndividualEndFailing();
 	}
 	
 	protected void finializeEntry() throws Exception

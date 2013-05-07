@@ -33,6 +33,8 @@ class DatabaseConnector {
 					DatabaseLogin.USER, DatabaseLogin.PASS);
 			stmt = conn.createStatement();
 		} catch (Exception e) {
+			//TODO remove print
+			e.printStackTrace();
 			throw new SQLException("Could not connect to database");
 		}
 

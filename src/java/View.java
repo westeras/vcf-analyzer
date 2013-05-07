@@ -23,6 +23,8 @@ public class View extends Command {
 			this.columnName="AnnoName";
 		else if (this.table.equals("Vcf"))
 			this.columnName="VcfName";
+		else if (this.table.equals("Filter"))
+			this.columnName="FilName";
 		try {
 			this.conn=new DatabaseConnector();
 		} catch (Exception exception) {

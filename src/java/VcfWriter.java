@@ -107,6 +107,12 @@ public class VcfWriter
     	this.writeBuffer += this.writeIndBuffer;
     }
     
+    public void writeIndividualEndFailing() throws IOException
+    {
+    	//fixed as per request; failing inds are ./.
+    	this.writeBuffer += "./.";
+    }    
+    
     public void writeIndividualDatum( 
             ResultSet genotypeData,
             String genotypeName ) throws SQLException
