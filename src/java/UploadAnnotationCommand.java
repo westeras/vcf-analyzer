@@ -25,7 +25,6 @@ public class UploadAnnotationCommand extends UploadCommand {
 
 		try {
 			String result = upload(this.fileLocation);
-			System.out.println(result);
 			return result;
 
 		} catch (Exception exception) {
