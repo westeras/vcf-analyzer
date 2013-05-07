@@ -83,6 +83,10 @@ class Reader(object):
         self._parse_metainfo()
         self._format_cache = {}
         
+        
+    def getVcfName():
+        return self.db.getVcfName()
+        
     def __iter__(self):
         return self
 

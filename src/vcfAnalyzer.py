@@ -11,7 +11,7 @@ def uploadVcfWithoutName(location):
     while (not fileEnded):
         fileEnded = vcf_reader.next()
 
-    return "Upload successful"
+    return vcf_reader.getVcfName() + " uploaded"
 
 def uploadVcfWithName(location, name):
     vcf_reader = vcf.Reader(vcfName=name, fsock=open(location))
@@ -20,7 +20,7 @@ def uploadVcfWithName(location, name):
     while (not fileEnded):
         fileEnded = vcf_reader.next()
 
-    return "Upload successful"
+    return vcf_reader.getVcfName() + " uploaded"
 
 parser = argparse.ArgumentParser(description='Reads input for the VCF Handler')
 parser.add_argument("-cp", "--classpath")

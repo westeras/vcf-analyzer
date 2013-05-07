@@ -195,6 +195,8 @@ class DatabaseConnection():
         query = ("INSERT INTO `vcf_analyzer`.`Vcf` (`VcfId`, `VcfName`) " +
                 "VALUES ( NULL, '{0}')").format( name[:75] )
 
+        self.vcfName = name[:75]
+        
         try:
             self.execAndCommit(query)
         
@@ -203,6 +205,9 @@ class DatabaseConnection():
             return self.cursor.fetchone()[0]
         except:
             self.exceptionHandle(query)
+            
+    def getVcfName():
+        return self.vcfName
             
     def createDP( self, indId, dpStr ):
     
