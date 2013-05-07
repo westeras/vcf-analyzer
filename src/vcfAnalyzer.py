@@ -8,7 +8,7 @@ import vcf
 def uploadVcfWithoutName(location):
     vcf_reader = vcf.Reader(open(location))
 
-    vcf.Reader.setVcfSize(os.path.getsize(location))
+    vcf_reader.setVcfSize(os.path.getsize(location))
     
     print os.path.getsize(location)
     
