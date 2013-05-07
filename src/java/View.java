@@ -36,7 +36,7 @@ public class View extends Command {
 		{
 			this.conn=new DatabaseConnector();
 		
-			String sql = "Select `"+this.columnName+"` from `" +this.table+"`";
+			String sql = "Select DISTINCT `"+this.columnName+"` from `" +this.table+"`";
 
 			ResultSet names;
 
