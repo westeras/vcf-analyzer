@@ -1,15 +1,16 @@
 import argparse
 import subprocess
 import sys
+import os
 sys.path.append('/VcfParser')
 import vcf
 
 def uploadVcfWithoutName(location):
     vcf_reader = vcf.Reader(open(location))
 
-    vcf.Reader.setVcfSize(os.stat(location).st_size)
+    vcf.Reader.setVcfSize(os.path.getsize(location))
     
-    print os.stat(location).st_size
+    print os.path.getsize(location)
     
     fileEnded = False
     while (not fileEnded):
