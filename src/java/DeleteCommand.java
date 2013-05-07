@@ -34,7 +34,7 @@ public class DeleteCommand extends Command {
 	public String execute() {
 		String sql = "DELETE FROM `" + this.table + "` where `"
 				+ this.columnName + "`=" + this.delValue+";" ;
-		
+		System.out.println("Sequel in delete: "+sql);
 		try {
 			if (this.conn.executeUpdate(sql)==1) {
 				System.out.printf("Succesfully deleted %s from %s", this.delValue,
@@ -43,6 +43,7 @@ public class DeleteCommand extends Command {
 				return "Success";
 			}
 		} catch (Exception exception) {
+			System.out.println("Exception: sql:= "+sql);
 			exception.printStackTrace();
 		} 
 		return "Fail!";
