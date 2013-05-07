@@ -11,12 +11,10 @@ public abstract class UploadCommand extends Command {
 	public String upload(File file) throws ClassNotFoundException, SQLException, FileNotFoundException{
 		DatabaseConnector connection=new DatabaseConnector();
 		ArrayList<String[]> rowsToUpload=parseFile();
-		
 		for (String[] row: rowsToUpload){
 			String sql= getSQLStatement(row);
 			connection.upload(sql);
 		}
-		
 		return file.toString()+" Uploaded Successfully!";
 	}
 	

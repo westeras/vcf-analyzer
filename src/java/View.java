@@ -32,11 +32,12 @@ public class View extends Command {
 	@Override
 	public String execute() {
 		String sql = "Select `"+this.columnName+"` from `" +this.table+"`";
+		String result="";
 		ResultSet names;
 		try {
 			names=this.conn.executeQuery(sql);
 			while (names.next()){
-				System.out.println(names.getString(1));
+				result+=names.getString(1)+"\n";
 				
 			}
 		} catch (Exception exception) {
@@ -44,7 +45,7 @@ public class View extends Command {
 		} 
 		
 		
-		return null;
+		return result;
 	}
 
 	@Override

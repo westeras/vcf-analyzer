@@ -29,7 +29,6 @@ public class UploadDivergenceCommand extends UploadCommand {
 	public String execute() {
 		try {
 			String result = upload(this.fileLocation);
-			System.out.println(result);
 			return result;
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -46,6 +45,7 @@ public class UploadDivergenceCommand extends UploadCommand {
 			String[] columns = parseLine(reader.nextLine());
 			rows.add(columns);
 		}
+		reader.close();
 		return rows;
 	}
 
