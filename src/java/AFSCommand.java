@@ -57,8 +57,9 @@ public class AFSCommand extends Command {
 				}
 			}
 		} catch (Exception e) {
-
 			e.printStackTrace();
+			System.err.println(e.getMessage());
+			return "error";
 		}
 		String toRet=printSpectra();
 		return toRet;
@@ -90,7 +91,7 @@ public class AFSCommand extends Command {
 		ResultSet pass = this.conn.executeQuery(sql);
 		if (!pass.first()) {
 			System.out.println("Entry " + entryID + " not in filter. Aborting");
-			return "error";
+			throw new SQLException("Entry not in filter");
 		}
 
 		return pass.getString(1);

@@ -36,20 +36,18 @@ public class DeleteCommand extends Command {
 	@Override
 	public String execute() {
 		String sql = "DELETE FROM `" + this.table + "` where `"
-				+ this.columnName + "`='" + this.delValue+"';" ;
+				+ this.columnName + "`='" + this.delValue + "';";
 		try {
 			this.conn.executeUpdate(sql);
-			return String.format("Succesfully deleted %s from %s", this.delValue,
-						this.table);
+			return String.format("Succesfully deleted %s from %s",
+					this.delValue, this.table);
 
-				 
-			
 		} catch (Exception exception) {
-			System.out.println("Exception: sql:= "+sql);
+			System.out.println("Exception: sql:= " + sql);
 			exception.printStackTrace();
 			return "Fail!";
-		} 
-		
+		}
+
 	}
 
 	@Override
