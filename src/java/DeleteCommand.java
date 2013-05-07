@@ -39,10 +39,10 @@ public class DeleteCommand extends Command {
 				+ this.columnName + "`='" + this.delValue+"';" ;
 		try {
 			this.conn.executeUpdate(sql);
-				System.out.printf("Succesfully deleted %s from %s", this.delValue,
+			return String.format("Succesfully deleted %s from %s", this.delValue,
 						this.table);
 
-				return "Success";
+				 
 			
 		} catch (Exception exception) {
 			System.out.println("Exception: sql:= "+sql);
