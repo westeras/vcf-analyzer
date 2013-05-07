@@ -206,7 +206,7 @@ class DatabaseConnection():
         except:
             self.exceptionHandle(query)
             
-    def getVcfName():
+    def getVcfName(self):
         return self.vcfName
             
     def createDP( self, indId, dpStr ):

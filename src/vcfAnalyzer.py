@@ -57,7 +57,7 @@ if args.command is None:
                 if fileName != "" and name == "":
                     print(uploadVcfWithoutName(fileName))
                 if fileName == "":
-                    print('Please include additional arguments')
+                    print('Please include the \"file\" option followed by the location of a vcf file')
                     
             else:
                 command = "java -cp " + cp  + " CommandLineInterpreter " + inputString

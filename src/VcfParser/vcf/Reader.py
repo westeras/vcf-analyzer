@@ -84,7 +84,7 @@ class Reader(object):
         self._format_cache = {}
         
         
-    def getVcfName():
+    def getVcfName(self):
         return self.db.getVcfName()
         
     def __iter__(self):
