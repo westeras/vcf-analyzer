@@ -16,10 +16,10 @@ public class CallCommands {
 		String type = "";
 		
 		for(int i = 0; i < args.length; i++){
-			if(args[i].equals("divergence")){type = "divergence";}
-			if(args[i].equals("annotation")){type = "annotation";}
-			if(args[i].equals("vcf")){type = "vcf";}
-			if(args[i].equals("filter")){type = "filter";}
+			if(args[i].equals("divergence")){type = "Divergence";}
+			if(args[i].equals("annotation")){type = "Annotation";}
+			if(args[i].equals("vcf")){type = "Vcf";}
+			if(args[i].equals("filter")){type = "Filter";}
 		}
 		
 		if(type.equals("")){return "Please include the table type you would lik to view.";}

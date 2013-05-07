@@ -25,27 +25,29 @@ public class View extends Command {
 			this.columnName="VcfName";
 		else if (this.table.equals("Filter"))
 			this.columnName="FilName";
-		try {
-			this.conn=new DatabaseConnector();
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
+		else
+			throw new IllegalArgumentException("Invalid view option: " + this.table);
 	}
 	@Override
 	public String execute() {
-		String sql = "Select `"+this.columnName+"` from `" +this.table+"`";
+		
 		String result="";
-		ResultSet names;
-		try {
+		try
+		{
+			this.conn=new DatabaseConnector();
+		
+			String sql = "Select `"+this.columnName+"` from `" +this.table+"`";
+
+			ResultSet names;
+
 			names=this.conn.executeQuery(sql);
 			while (names.next()){
 				result+=names.getString(1)+"\n";
-				
-			}
+			}	
+
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		} 
-		
 		
 		return result;
 	}
