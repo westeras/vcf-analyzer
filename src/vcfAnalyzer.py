@@ -7,6 +7,8 @@ import vcf
 def uploadVcfWithoutName(location):
     vcf_reader = vcf.Reader(open(location))
 
+    print os.stat(location).st_size
+    
     fileEnded = False
     while (not fileEnded):
         fileEnded = vcf_reader.next()

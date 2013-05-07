@@ -45,6 +45,10 @@ class Reader(object):
             vcfName = now.strftime("%Y-%m-%d_%H:%M")
         self.vcfId = self.db.createVcf( vcfName )
         
+        self.totalUpoaded = 0
+        self.lastPrinted = 0
+        self.totalSize = None
+        
         #add vcf header
         self.vcfHeader = "";
         
@@ -83,6 +87,9 @@ class Reader(object):
         self._parse_metainfo()
         self._format_cache = {}
         
+        
+    def setVcfSize(self, vcfSize):
+        self.totalSize = vcfSize
         
     def getVcfName(self):
         return self.db.getVcfName()
@@ -324,6 +331,14 @@ class Reader(object):
             line = self.reader.next()
         except:
             return True
+            
+        self.totalUpoaded += getSize(line);
+        
+        if (self.totalSize != None ):
+            percentComplete = round( self.totalUpoaded / self.totalSize )
+            if ( percentComplete > (self.lastPrinted +10):
+                print " " + percentComplete + "% Complete"
+                self.lastPrinted = percentComplete
 
         row = re.split('\t| +', line.strip())
         
