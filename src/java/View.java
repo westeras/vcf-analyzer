@@ -15,8 +15,17 @@ public class View extends Command {
 	
 	//Could be made more extendable by passing the column name as a parameter
 	public View (String table){
-		
-		this.table=table;
+		try {
+			this.conn=new DatabaseConnector();
+		} catch (ClassNotFoundException exception) {
+			// TODO Auto-generated catch-block stub.
+			exception.printStackTrace();
+		} catch (SQLException exception) {
+			// TODO Auto-generated catch-block stub.
+			exception.printStackTrace();
+		}
+	
+		this.table=table; 
 		if (this.table.equals("Divergence"))
 			this.columnName="DivName";
 		else if (this.table.equals("Annotation"))
@@ -34,9 +43,7 @@ public class View extends Command {
 		String result="";
 		try
 		{
-			this.conn=new DatabaseConnector();
-		
-			String sql = "Select DISTINCT `"+this.columnName+"` from `" +this.table+"`";
+		String sql = "Select DISTINCT `"+this.columnName+"` from `" +this.table+"`";
 
 			ResultSet names;
 
