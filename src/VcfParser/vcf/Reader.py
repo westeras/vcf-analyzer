@@ -338,7 +338,7 @@ class Reader(object):
         if (self.totalSize != None ):
             percentComplete = round( 100 * self.totalUpoaded / self.totalSize )
             if ( percentComplete > (self.lastPrinted +10) ):
-                print " " + percentComplete + "% Complete"
+                print " " + str(percentComplete).rstrip('0') + "% Complete\n"
                 self.lastPrinted = percentComplete
 
         row = re.split('\t| +', line.strip())

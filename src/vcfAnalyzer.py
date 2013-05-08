@@ -10,8 +10,6 @@ def uploadVcfWithoutName(location):
 
     vcf_reader.setVcfSize(os.path.getsize(location))
     
-    print os.path.getsize(location)
-    
     fileEnded = False
     while (not fileEnded):
         fileEnded = vcf_reader.next()
@@ -20,7 +18,9 @@ def uploadVcfWithoutName(location):
 
 def uploadVcfWithName(location, name):
     vcf_reader = vcf.Reader(vcfName=name, fsock=open(location))
-
+    
+    vcf_reader.setVcfSize(os.path.getsize(location))
+    
     fileEnded = False
     while (not fileEnded):
         fileEnded = vcf_reader.next()
