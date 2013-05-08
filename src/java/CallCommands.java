@@ -161,4 +161,25 @@ public class CallCommands {
 		
 		return result;
 	}
+
+	public static String divsummaryCommand(String[] args) {
+		Command command = null;
+		
+		String vcf = "";
+		String div = "";
+		String filterby = "";
+		
+		for(int i = 0; i< args.length; i++){
+			if(args[i].equals("vcf") && i != args.length - 1){vcf = args[i+1];}
+			if(args[i].equals("div") && i != args.length - 1){div = args[i+1];}
+			if(args[i].equals("filterby") && i != args.length - 1){filterby = args[i+1];}
+		}
+		
+		if(vcf.equals("")){return "Please include a vcf file.";}
+		if(div.equals("")){return "Please include a divergence file.";}
+		
+		command = new DivergenceSummary(vcf, div, filterby);
+		
+		return command.execute();
+	}
 }

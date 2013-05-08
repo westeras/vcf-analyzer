@@ -37,9 +37,14 @@ public class CommandLineInterpreter
 			result = CallCommands.filterCommand(commandLineArguments);
 		}
 		
+<<<<<<< HEAD
 		else
 		{
 			result = "Invalid command";
+=======
+		if(isTheCommandName(commandLineArguments, "divergencesummary") || isTheCommandName(commandLineArguments, "divsum") ||isTheCommandName(commandLineArguments, "divergence summary")){
+			result = CallCommands.divsummaryCommand(commandLineArguments);
+>>>>>>> Adding in divergence summary command
 		}
 		
 		return result;
