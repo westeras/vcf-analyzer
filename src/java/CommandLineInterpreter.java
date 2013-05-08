@@ -13,28 +13,33 @@ public class CommandLineInterpreter
 			result = CallCommands.uploadCommand(commandLineArguments, "updiv");
 		}
 
-		if (isTheCommandName(commandLineArguments, "upload annotation") || isTheCommandName(commandLineArguments, "upano")){
+		else if (isTheCommandName(commandLineArguments, "upload annotation") || isTheCommandName(commandLineArguments, "upano")){
 			result = CallCommands.uploadCommand(commandLineArguments, "upano");
 		}
 		
-		if (isTheCommandName(commandLineArguments, "allele frequency spectra") || isTheCommandName(commandLineArguments, "afs")){
+		else if (isTheCommandName(commandLineArguments, "allele frequency spectra") || isTheCommandName(commandLineArguments, "afs")){
 			result = CallCommands.vcfCommand(commandLineArguments);
 		}
 		
-		if (isTheCommandName(commandLineArguments, "delete") || isTheCommandName(commandLineArguments, "del")){						
+		else if (isTheCommandName(commandLineArguments, "delete") || isTheCommandName(commandLineArguments, "del")){						
 			return CallCommands.deleteCommand(commandLineArguments);
 		}
 		
-		if(isTheCommandName(commandLineArguments, "view")){
+		else if(isTheCommandName(commandLineArguments, "view")){
 			return CallCommands.viewCommand(commandLineArguments);
 		}
 		
-		if(isTheCommandName(commandLineArguments, "create filter") || isTheCommandName(commandLineArguments, "crefil")){
+		else if(isTheCommandName(commandLineArguments, "create filter") || isTheCommandName(commandLineArguments, "crefil")){
 			CallCommands.createFilterLoop(commandLineArguments);
 		}
 		
-		if(isTheCommandName(commandLineArguments, "filter") || isTheCommandName(commandLineArguments, "fil")){
+		else if(isTheCommandName(commandLineArguments, "filter") || isTheCommandName(commandLineArguments, "fil")){
 			result = CallCommands.filterCommand(commandLineArguments);
+		}
+		
+		else
+		{
+			result = "Invalid command";
 		}
 		
 		return result;

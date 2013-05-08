@@ -336,7 +336,7 @@ class Reader(object):
         self.totalUpoaded += sys.getsizeof(line);
         
         if (self.totalSize != None ):
-            percentComplete = round( self.totalUpoaded / self.totalSize )
+            percentComplete = round( 100 * self.totalUpoaded / self.totalSize )
             if ( percentComplete > (self.lastPrinted +10) ):
                 print " " + percentComplete + "% Complete"
                 self.lastPrinted = percentComplete
