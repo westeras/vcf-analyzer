@@ -2,6 +2,7 @@ import collections
 import re
 import itertools
 import datetime
+import sys
 
 from vcf.DatabaseConnection import DatabaseConnection
 from vcf.parser import _vcf_metadata_parser
@@ -332,7 +333,7 @@ class Reader(object):
         except:
             return True
             
-        self.totalUpoaded += getSize(line);
+        self.totalUpoaded += sys.getsizeof(line);
         
         if (self.totalSize != None ):
             percentComplete = round( self.totalUpoaded / self.totalSize )
