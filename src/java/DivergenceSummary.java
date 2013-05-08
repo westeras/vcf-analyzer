@@ -17,7 +17,7 @@ public class DivergenceSummary extends Command {
 	private int numZeros;
 
 	public DivergenceSummary(String vcf_name, String div_name, String filter)
-			throws ClassNotFoundException, SQLException {
+	{
 		this.numOnes = 0;
 		this.numZeros = 0;
 		this.vcf_name = vcf_name;

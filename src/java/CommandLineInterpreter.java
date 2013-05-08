@@ -36,15 +36,13 @@ public class CommandLineInterpreter
 		else if(isTheCommandName(commandLineArguments, "filter") || isTheCommandName(commandLineArguments, "fil")){
 			result = CallCommands.filterCommand(commandLineArguments);
 		}
-		
-<<<<<<< HEAD
+		else if(isTheCommandName(commandLineArguments, "divergencesummary") || isTheCommandName(commandLineArguments, "divsum") ||isTheCommandName(commandLineArguments, "divergence summary"))
+        {
+			result = CallCommands.divsummaryCommand(commandLineArguments);
+        }
 		else
 		{
 			result = "Invalid command";
-=======
-		if(isTheCommandName(commandLineArguments, "divergencesummary") || isTheCommandName(commandLineArguments, "divsum") ||isTheCommandName(commandLineArguments, "divergence summary")){
-			result = CallCommands.divsummaryCommand(commandLineArguments);
->>>>>>> Adding in divergence summary command
 		}
 		
 		return result;
